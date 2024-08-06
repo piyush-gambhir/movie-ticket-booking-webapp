@@ -38,3 +38,6 @@ next-env.d.ts
 
 # vim
 *.swp
+
+# next.config
+next.config.*

@@ -2,7 +2,7 @@ import "./globals.css";
 
 import { Inter } from "@/fonts/fonts";
 
-import { Providers } from "@/providers/providers";
+import Providers from "@/providers/providers";
 
 export const metadata = {
   title: "Movie Booking App",

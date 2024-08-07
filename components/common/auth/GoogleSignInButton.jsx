@@ -1,5 +1,3 @@
-import React from "react";
-
 import { signIn } from "@/auth";
 
 export default function GoogleSignInButton() {
@@ -10,7 +8,7 @@ export default function GoogleSignInButton() {
         await signIn("google");
       }}
     >
-      <button type="submit">Google Sign In</button>
+      <button type="submit">Signin with Google</button>
     </form>
   );
 }

@@ -38,6 +38,3 @@ next-env.d.ts
 
 # vim
 *.swp
-
-# pnpm lock file
-pnpm-lock.yaml

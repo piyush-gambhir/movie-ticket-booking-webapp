@@ -1,5 +1,5 @@
 {
-  "id": "afce9497-9aed-4687-be0a-1e894444862a",
+  "id": "6eaa0e10-09b1-4662-91a9-e15ff99fcb8d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -15,15 +15,45 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "imdb_id": {
+          "name": "imdb_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "title": {
           "name": "title",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "image_url": {
-          "name": "image_url",
+        "poster_path": {
+          "name": "poster_path",
           "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "overview": {
+          "name": "overview",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "release_date": {
+          "name": "release_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "runtime": {
+          "name": "runtime",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "genres": {
+          "name": "genres",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },
@@ -33,15 +63,15 @@
           "primaryKey": false,
           "notNull": false
         },
-        "genre": {
-          "name": "genre",
+        "director": {
+          "name": "director",
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         },
-        "director": {
-          "name": "director",
-          "type": "varchar(100)",
+        "cast": {
+          "name": "cast",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },
@@ -51,27 +81,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "duration": {
-          "name": "duration",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "release_date": {
-          "name": "release_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "end_date": {
-          "name": "end_date",
-          "type": "date",
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },
@@ -86,13 +98,20 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "movies_imdb_id_unique": {
+          "name": "movies_imdb_id_unique",
+          "nullsNotDistinct": false,
+          "columns": ["imdb_id"]
+        }
+      }
     },
     "public.reservations": {
       "name": "reservations",
@@ -174,12 +193,8 @@
           "name": "reservations_showtime_id_showtimes_id_fk",
           "tableFrom": "reservations",
           "tableTo": "showtimes",
-          "columnsFrom": [
-            "showtime_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["showtime_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -187,12 +202,8 @@
           "name": "reservations_user_id_users_id_fk",
           "tableFrom": "reservations",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -202,9 +213,7 @@
         "reservations_order_id_unique": {
           "name": "reservations_order_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "order_id"
-          ]
+          "columns": ["order_id"]
         }
       }
     },
@@ -269,12 +278,8 @@
           "name": "showtimes_movie_id_movies_id_fk",
           "tableFrom": "showtimes",
           "tableTo": "movies",
-          "columnsFrom": [
-            "movie_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["movie_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -282,12 +287,8 @@
           "name": "showtimes_theatre_id_theatres_id_fk",
           "tableFrom": "showtimes",
           "tableTo": "theatres",
-          "columnsFrom": [
-            "theatre_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["theatre_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -359,7 +360,8 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
@@ -430,9 +432,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
@@ -441,20 +441,12 @@
     "public.reservation_status": {
       "name": "reservation_status",
       "schema": "public",
-      "values": [
-        "pending",
-        "confirmed",
-        "cancelled"
-      ]
+      "values": ["pending", "confirmed", "cancelled"]
     },
     "public.user_role": {
       "name": "user_role",
       "schema": "public",
-      "values": [
-        "admin",
-        "user",
-        "superadmin"
-      ]
+      "values": ["admin", "user", "superadmin"]
     }
   },
   "schemas": {},

@@ -12,18 +12,21 @@ END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "movies" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"imdb_id" integer,
 	"title" varchar(255) NOT NULL,
-	"image_url" varchar(255),
+	"poster_path" varchar(255),
+	"overview" text,
+	"release_date" date,
+	"runtime" integer,
+	"genres" jsonb,
 	"language" varchar(50),
-	"genre" varchar(100),
 	"director" varchar(100),
+	"cast" jsonb,
 	"trailer_url" varchar(255),
-	"description" text,
-	"duration" integer,
-	"release_date" date NOT NULL,
-	"end_date" date,
+	"metadata" jsonb,
 	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "movies_imdb_id_unique" UNIQUE("imdb_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reservations" (
@@ -62,7 +65,7 @@ CREATE TABLE IF NOT EXISTS "theatres" (
 	"contact_number" varchar(20),
 	"email" varchar(100),
 	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (

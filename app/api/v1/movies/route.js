@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { db } from "../../../../lib/db";
-import { movies, movieSchema } from "../../../../lib/db/schemas/movies.schema";
+import { db } from "@/lib/db";
+import { movies, movieSchema } from "@/lib/db/schemas/movies.schema";
 
 export async function GET() {
   try {

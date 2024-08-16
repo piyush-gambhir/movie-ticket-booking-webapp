@@ -1,13 +1,10 @@
-import { config } from "dotenv";
+import { defineConfig } from "drizzle-kit";
 
-config({ path: ".env" });
-
-/** @type { import("drizzle-kit").Config } */
-module.exports = {
+export default defineConfig({
   schema: "./lib/db/schemas/*",
   out: "./lib/db/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DRIZZLE_DATABASE_URL,
+    url: "postgresql://movie-booking-web-app_owner:JsiWlTj5PG9M@ep-snowy-field-a5twi3ca.us-east-2.aws.neon.tech/movie-booking-web-app?sslmode=require",
   },
-};
+});

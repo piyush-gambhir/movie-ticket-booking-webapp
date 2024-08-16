@@ -1,14 +1,22 @@
+import { NextResponse } from "next/server";
+
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schemas/users.schema";
-import { userSchema } from "@/lib/db/schemas/user.schema";
+import {
+  users,
+  insertUserSchema,
+  selectUserSchema,
+} from "@/lib/db/schemas/users.schema";
+import { customUserSchema } from "@/lib/db/schemas/user.schema";
 
 export async function GET(request) {
   try {
     const { page = 1, limit = 10 } = request.query;
     const offset = (page - 1) * limit;
     const allUsers = await db.select().from(users);
+    const parsedUsers = allUsers.map((user) => selectUserSchema.parse(user));
+
     return NextResponse.json({
-      data: allUsers.slice(offset, offset + limit),
+      data: parsedUsers.slice(offset, offset + limit),
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -24,7 +32,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const userData = await request.json();
-    const parsedData = userSchema.parse(userData);
+    const parsedData = customUserSchema.parse(userData);
     const newUser = await db.insert(users).values(parsedData).returning("*");
     return NextResponse.json(newUser[0], { status: 201 });
   } catch (error) {

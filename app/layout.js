@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "@/fonts/fonts";
 
 import Providers from "@/providers/providers";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Movie Booking App",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

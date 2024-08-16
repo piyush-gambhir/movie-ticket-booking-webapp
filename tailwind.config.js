@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        // shadcn/ui
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -51,6 +52,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        // Custom Defined Colors
+        error: "hsl(var(--error))",
       },
       borderRadius: {
         lg: "var(--radius)",

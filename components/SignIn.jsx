@@ -10,13 +10,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import GoogleSignInButton from "@/components/common/auth/GoogleSignInButton";
 
+import BookMyShowLogo from "@/icons/BookMyShowLogo";
+
 export default function SignIn() {
   return (
-    <div className="grid grid-cols-5">
-      <div className="col-span-2 grid w-full items-center p-24">
+    <div className="grid h-screen w-screen grid-cols-5">
+      <div className="col-span-2 flex h-full w-full flex-col justify-center px-24 py-12">
+        <BookMyShowLogo className={"h-24 w-24"} />
         <div className="grid gap-6">
           <div className="grid gap-2">
-            <h1 className="text-3xl font-bold">Sign in</h1>
+            <h1 className="text-3xl font-bold">Sign In</h1>
             <p className="text-balance text-muted-foreground">
               New to the platform?{" "}
               <Link href="/signup" className="font-medium text-primary">
@@ -76,12 +79,13 @@ export default function SignIn() {
           </div> */}
         </div>
       </div>
-      <div className="col-span-3 grid">
+      <div className="col-span-3 grid h-full w-full bg-black">
         <Image
-          src="/images/signin.svg"
+          src="/login-bg.jpg"
           alt="Sign in to your account"
-          width={600}
-          height={600}
+          width={1440}
+          height={1024}
+          className="h-full"
         />
       </div>
     </div>

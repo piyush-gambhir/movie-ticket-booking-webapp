@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import Facebook from "next-auth/providers/facebook";
+
 import { z } from "zod";
 
 import { db } from "@/lib/db";
@@ -37,11 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const pwHash = saltAndHashPassword(credentials.password);
 
           // logic to verify if the user exists
-          user = await db
-            .select("*")
-            .from(users)
-            .where("email", credentials.email)
-            .first();
+          user = await db("users").select("*").where({ email }).first();
 
           if (!user) {
             // No user found, so this is their first attempt to login
@@ -63,5 +61,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
     Google,
+    Facebook,
   ],
 });

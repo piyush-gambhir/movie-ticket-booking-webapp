@@ -11,10 +11,14 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import BookMyShowLogo from "@/icons/BookMyShowLogo";
 
 export default function Header() {
   return (
     <div className="sticky top-0 flex w-full items-center justify-between gap-x-4 px-8 py-4">
+      <div className="">
+        <BookMyShowLogo />
+      </div>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

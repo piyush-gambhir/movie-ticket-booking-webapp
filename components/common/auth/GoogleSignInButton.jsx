@@ -1,5 +1,7 @@
 import { signIn } from "@/auth";
 
+import { Button } from "@/components/ui/button";
+
 export default function GoogleSignInButton() {
   return (
     <form
@@ -8,7 +10,9 @@ export default function GoogleSignInButton() {
         await signIn("google");
       }}
     >
-      <button type="submit">Signin with Google</button>
+      <Button variant="outline" className="flex w-full gap-x-4">
+        Login with Google
+      </Button>
     </form>
   );
 }

@@ -1,4 +1,5 @@
 import { signIn } from "@/auth";
+import SignupForm from "@/components/SignUpForm";
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schemas/users.schema";

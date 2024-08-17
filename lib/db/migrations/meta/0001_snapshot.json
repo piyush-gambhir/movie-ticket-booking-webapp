@@ -1,6 +1,6 @@
 {
-  "id": "c2df3fc7-bcc6-4534-9255-4f95cf62f48e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "55e694bc-f1f3-4d72-ad06-ff093a5504fe",
+  "prevId": "c2df3fc7-bcc6-4534-9255-4f95cf62f48e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -552,20 +552,6 @@
         "dob": {
           "name": "dob",
           "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "gender": {
-          "name": "gender",
-          "type": "gender",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "marrital_status": {
-          "name": "marrital_status",
-          "type": "marrital_status",
-          "typeSchema": "public",
           "primaryKey": false,
           "notNull": false
         },

@@ -1,6 +1,6 @@
 {
-  "id": "c2df3fc7-bcc6-4534-9255-4f95cf62f48e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "0e63315b-442f-4bb4-9466-7541271a7f8b",
+  "prevId": "b35d7511-c9c2-4d58-8061-e5cfd4ce87d4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -540,8 +540,7 @@
           "name": "email_verified",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
+          "notNull": false
         },
         "phone": {
           "name": "phone",
@@ -555,26 +554,13 @@
           "primaryKey": false,
           "notNull": false
         },
-        "gender": {
-          "name": "gender",
-          "type": "gender",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "marrital_status": {
-          "name": "marrital_status",
-          "type": "marrital_status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false
-        },
         "role": {
           "name": "role",
           "type": "user_role",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": "'user'"
         },
         "created_at": {
           "name": "created_at",

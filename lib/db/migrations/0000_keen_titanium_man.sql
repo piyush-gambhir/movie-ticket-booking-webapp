@@ -4,12 +4,6 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-DO $$ BEGIN
- CREATE TYPE "public"."user_role" AS ENUM('admin', 'user', 'superadmin');
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "accounts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
@@ -90,12 +84,16 @@ CREATE TABLE IF NOT EXISTS "theatres" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"name" varchar(255) NOT NULL,
+	"first_name" varchar(255) NOT NULL,
+	"last_name" varchar(255) NOT NULL,
 	"email" varchar(255) NOT NULL,
 	"password" varchar(255) NOT NULL,
 	"image" varchar(255),
 	"email_verified" timestamp DEFAULT now(),
 	"phone" jsonb,
+	"dob" timestamp,
+	"gender" "gender",
+	"marrital_status" "marrital_status",
 	"role" "user_role" NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp,

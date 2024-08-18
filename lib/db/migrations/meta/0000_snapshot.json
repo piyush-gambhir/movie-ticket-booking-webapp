@@ -1,5 +1,5 @@
 {
-  "id": "abfba2fe-e8fa-4f46-b6ee-66d78eedf7bd",
+  "id": "93f4fd22-79cd-4acb-8e87-3d63d8d99ca1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -136,12 +136,6 @@
         "release_date": {
           "name": "release_date",
           "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "genre_ids": {
-          "name": "genre_ids",
-          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },

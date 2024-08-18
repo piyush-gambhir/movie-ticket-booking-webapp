@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS "movies" (
 	"poster_path" varchar(255),
 	"overview" text,
 	"release_date" date,
-	"genre_ids" jsonb,
 	"popularity" double precision,
 	"adult" boolean,
 	"media_type" varchar(50),

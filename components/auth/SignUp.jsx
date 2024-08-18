@@ -8,8 +8,8 @@ import SignUpWithPasswordForm from "./SignUpWithPasswordForm";
 
 export default function SignUp() {
   return (
-    <div className="grid h-screen w-screen grid-cols-5">
-      <div className="col-span-2 flex h-full w-full flex-col justify-center px-24 py-12">
+    <div className="h-screen w-screen md:grid md:grid-cols-5">
+      <div className="flex h-full w-full flex-col justify-center px-8 md:col-span-2 md:px-24 md:py-12">
         <BookMyShowLogo className="h-24 w-24" />
         <div className="grid gap-6">
           <div className="grid gap-2">
@@ -25,7 +25,7 @@ export default function SignUp() {
           <GoogleSignInButton />
         </div>
       </div>
-      <div className="col-span-3 grid h-full w-full bg-black">
+      <div className="hidden h-full w-full bg-black md:col-span-3 md:grid">
         <Image
           src="/login-bg.jpg"
           alt="Sign up for an account"

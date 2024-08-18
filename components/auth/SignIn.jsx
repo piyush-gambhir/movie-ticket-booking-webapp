@@ -11,8 +11,8 @@ import SignInWithPasswordForm from "./SignInWithPasswordForm";
 
 export default function SignIn() {
   return (
-    <div className="grid h-screen w-screen grid-cols-5">
-      <div className="col-span-2 flex h-full w-full flex-col justify-center px-24 py-12">
+    <div className="h-screen w-screen md:grid md:grid-cols-5">
+      <div className="flex h-full w-full flex-col justify-center px-24 py-12 md:col-span-2">
         <BookMyShowLogo className={"h-24 w-24"} />
         <div className="grid gap-6">
           <div className="grid gap-2">
@@ -48,7 +48,7 @@ export default function SignIn() {
           </div> */}
         </div>
       </div>
-      <div className="col-span-3 grid h-full w-full bg-black">
+      <div className="col-span-3 hidden h-full w-full bg-black md:grid">
         <Image
           src="/login-bg.jpg"
           alt="Sign in to your account"

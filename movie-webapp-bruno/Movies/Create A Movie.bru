@@ -1,0 +1,30 @@
+meta {
+  name: Create A Movie
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base}}/v1/movies
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "imdbId": "tt27510174",
+    "title": "Stree 2",
+    "originalTitle": "स्त्री २",
+    "backdropPath": "/jDxqjLUBpOVeKhLPJFKSyneKwF7.jpg",
+    "posterPath": "/zgxpT5Q5pe3FtL99F0UOIglPGrQ.jpg",
+    "overview": "A hollow headless creature 'Sarkata' is spreading terror in the sleepy small town of Chanderi. The trio of Vicky, Jana and Bittu, along with the wise man Rudra summon 'Stree', who has her own secrets, to save them and the town from the new monster.",
+    "releaseDate": "2024-08-15",
+    "popularity": 83.164,
+    "adult": false,
+    "mediaType": "movie",
+    "originalLanguage": "hi",
+    "voteAverage": 7,
+    "voteCount": 4
+  }
+  
+}

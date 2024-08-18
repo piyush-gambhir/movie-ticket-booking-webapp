@@ -19,18 +19,23 @@ CREATE TABLE IF NOT EXISTS "accounts" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "movies" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"imdb_id" integer,
 	"title" varchar(255) NOT NULL,
-	"image_url" varchar(255),
-	"language" varchar(50),
-	"genre" varchar(100),
-	"director" varchar(100),
-	"trailer_url" varchar(255),
-	"description" text,
-	"duration" integer,
-	"release_date" date NOT NULL,
-	"end_date" date,
+	"original_title" varchar(255) NOT NULL,
+	"backdrop_path" varchar(255),
+	"poster_path" varchar(255),
+	"overview" text,
+	"release_date" date,
+	"genre_ids" jsonb,
+	"popularity" double precision,
+	"adult" boolean,
+	"media_type" varchar(50),
+	"original_language" varchar(50),
+	"vote_average" double precision,
+	"vote_count" integer,
 	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "movies_imdb_id_unique" UNIQUE("imdb_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reservations" (
@@ -79,7 +84,7 @@ CREATE TABLE IF NOT EXISTS "theatres" (
 	"contact_number" varchar(20),
 	"email" varchar(100),
 	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp
+	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
@@ -87,14 +92,12 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"first_name" varchar(255) NOT NULL,
 	"last_name" varchar(255) NOT NULL,
 	"email" varchar(255) NOT NULL,
-	"password" varchar(255) NOT NULL,
+	"password" varchar(255),
 	"image" varchar(255),
-	"email_verified" timestamp DEFAULT now(),
+	"email_verified" timestamp,
 	"phone" jsonb,
 	"dob" timestamp,
-	"gender" "gender",
-	"marrital_status" "marrital_status",
-	"role" "user_role" NOT NULL,
+	"role" "user_role" DEFAULT 'user',
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp,
 	CONSTRAINT "users_email_unique" UNIQUE("email")

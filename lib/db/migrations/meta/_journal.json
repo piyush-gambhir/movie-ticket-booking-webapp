@@ -5,29 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1723873861442,
-      "tag": "0000_keen_titanium_man",
+      "when": 1723988557780,
+      "tag": "0000_nifty_scream",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1723874131930,
-      "tag": "0001_high_arclight",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1723874431416,
-      "tag": "0002_spicy_thing",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1723876509985,
-      "tag": "0003_fine_mysterio",
+      "when": 1723988746725,
+      "tag": "0001_brown_bishop",
       "breakpoints": true
     }
   ]

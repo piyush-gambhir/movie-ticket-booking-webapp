@@ -4,13 +4,18 @@ import { env } from "@/env";
 
 import { handleGetUserByEmail } from "@/actions/user";
 
-import { insertUserSchema } from "@/lib/db/schemas/users.schema";
+import { signIn } from "@/auth";
 
-import { hashPassword } from "@/lib/utils/saltAndHashPassword";
+import {
+  signInWithPasswordSchema,
+  signUpWithPasswordSchema,
+} from "@/lib/zod/auth";
+
+import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
 export async function signUpWithPassword({ formData }) {
   try {
-    const validatedInput = insertUserSchema.safeParse(formData);
+    const validatedInput = signUpWithPasswordSchema.safeParse(formData);
     if (!validatedInput.success) return "invalid-input";
 
     const existingUser = await handleGetUserByEmail({
@@ -18,16 +23,13 @@ export async function signUpWithPassword({ formData }) {
     });
 
     if (existingUser) return "exists";
-    const hashedPassword = await hashPassword({
-      password: validatedInput.data.password,
-    });
 
     const newUser = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/v1/user`, {
       method: "POST",
       body: JSON.stringify({
         name: validatedInput.data.name,
         email: validatedInput.data.email,
-        password: hashedPassword,
+        password: validatedInput.data.password,
       }),
     }).then((res) => res.json());
 
@@ -42,6 +44,13 @@ export async function signUpWithPassword({ formData }) {
     // });
 
     // return newUser && emailSent ? "success" : "error";
+
+    // await signIn("credentials", {
+    //   email: validatedInput.data.email,
+    //   password: validatedInput.data.password,
+    //   redirect: false,
+    // });
+
     return newUser ? "success" : "error";
   } catch (error) {
     console.error(error);

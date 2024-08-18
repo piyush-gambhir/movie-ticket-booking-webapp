@@ -16,11 +16,10 @@ import {
 
 import { signUpWithPassword } from "@/actions/auth";
 
-import { insertUserSchema } from "@/lib/db/schemas/users.schema";
-
+import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 export default function SignUpWithPasswordForm() {
   const form = useForm({
-    resolver: zodResolver(insertUserSchema),
+    resolver: zodResolver(signUpWithPasswordSchema),
     defaultValues: {
       name: "",
       email: "",

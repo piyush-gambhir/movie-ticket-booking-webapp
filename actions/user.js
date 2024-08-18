@@ -1,5 +1,7 @@
 "use server";
 
+import { env } from "@/env";
+
 import {
   getUserByEmailSchema,
   getUserByIdSchema,
@@ -13,14 +15,9 @@ export const handleGetUserById = async (id) => {
     if (!validatedInput.success) {
       return;
     }
-
-    const user = await prisma.user.findUnique({
-      where: { id: validatedInput.data.id },
-    });
-
-    setUser(user);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
@@ -31,11 +28,11 @@ export const handleGetUserByEmail = async (email) => {
       return;
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: validatedInput.data.email },
-    });
+    const user = await fetch(`
+      ${env.NEXT_PUBLIC_API_URL}/api/v1/user/${validatedInput.data.email}
+    `);
 
-    setUser(user);
+    return user;
   } catch (error) {
     console.error(error);
   }

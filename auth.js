@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 
-import { z } from "zod";
+import { env } from "@/env";
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schemas/users.schema";
@@ -12,7 +12,7 @@ import { accounts } from "@/lib/db/schemas/accounts.schema";
 import { sessions } from "@/lib/db/schemas/session.schema";
 import { verificationTokens } from "@/lib/db/schemas/verificationTokens.schema";
 
-import { signInSchema } from "@/lib/zod/auth";
+import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
@@ -32,14 +32,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         try {
-          let user = null;
           const { email, password } =
-            await signInSchema.parseAsync(credentials);
-          // logic to salt and hash password
-          const pwHash = saltAndHashPassword(credentials.password);
+            signUpWithPasswordSchema.parse(credentials);
 
-          // logic to verify if the user exists
-          user = await db("users").select("*").where({ email }).first();
+          const user = await fetch(
+            `${env.NEXT_PUBLIC_APP_URL}/api/v1/user/${email}`,
+          ).then((res) => res.json());
 
           if (!user) {
             // No user found, so this is their first attempt to login
@@ -63,4 +61,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     Facebook,
   ],
+  secret: env.AUTH_SECRET,
 });

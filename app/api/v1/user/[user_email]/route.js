@@ -1,10 +1,25 @@
+import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm/expressions";
+
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schemas/users.schema";
 
 export async function GET(request, { params }) {
   try {
-    const { id } = params;
-    const user = await users.select().from(users).where(users.id.eq(id));
+    const { user_email } = params;
+    const user = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        image: users.image,
+        phone: users.phone,
+        dateOfBirth: users.dateOfBirth,
+        role: users.role,
+      })
+      .from(users)
+      .where(eq(users.email, user_email))
+      .execute();
     if (user.length > 0) {
       return NextResponse.json(user[0]);
     } else {
@@ -17,14 +32,15 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const { id } = params;
+    const { user_email } = params;
     const userData = await request.json();
-    const parsedData = userUpdateSchema.parse(userData);
+    const parsedData = userData.parse(userData);
     const updatedUser = await db
       .update(users)
       .set(parsedData)
-      .where(users.id.eq(id))
-      .returning("*");
+      .where(eq(users.email, user_email))
+      .execute();
+
     if (updatedUser.length > 0) {
       return NextResponse.json(updatedUser[0]);
     } else {
@@ -40,11 +56,13 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = params;
-    const deletedUser = await db
-      .deleteFrom(users)
-      .where(users.id.eq(id))
-      .returning("*");
+    const { user_email } = params;
+    const updatedUser = await db
+      .update(users)
+      .set({ isActive: true })
+      .where(eq(users.email, user_email))
+      .execute();
+
     if (deletedUser.length > 0) {
       return NextResponse.json(null, { status: 204 });
     } else {

@@ -12,7 +12,7 @@ import { accounts } from "@/lib/db/schemas/accounts.schema";
 import { sessions } from "@/lib/db/schemas/session.schema";
 import { verificationTokens } from "@/lib/db/schemas/verificationTokens.schema";
 
-import { signInSchema } from "@/lib/zod";
+import { signInSchema } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 

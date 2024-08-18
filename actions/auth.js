@@ -1,44 +1,55 @@
 "use server";
 
-export async function signUpWithPassword(rawInput) {
+import { env } from "@/env";
+
+import { handleGetUserByEmail } from "@/actions/user";
+
+import { insertUserSchema } from "@/lib/db/schemas/users.schema";
+
+import { hashPassword } from "@/lib/utils/saltAndHashPassword";
+
+export async function signUpWithPassword({ formData }) {
   try {
-    const validatedInput = signUpWithPasswordSchema.safeParse(rawInput);
+    const validatedInput = insertUserSchema.safeParse(formData);
     if (!validatedInput.success) return "invalid-input";
 
-    const existingUser = await getUserByEmail({
+    const existingUser = await handleGetUserByEmail({
       email: validatedInput.data.email,
     });
+
     if (existingUser) return "exists";
-
-    const passwordHash = await bcryptjs.hash(validatedInput.data.password, 10);
-    const emailVerificationToken = crypto.randomBytes(32).toString("base64url");
-
-    const newUser = await prisma.user.create({
-      data: {
-        email: validatedInput.data.email,
-        passwordHash,
-        emailVerificationToken,
-      },
+    const hashedPassword = await hashPassword({
+      password: validatedInput.data.password,
     });
 
-    const emailSent = await resend.emails.send({
-      from: env.RESEND_EMAIL_FROM,
-      to: [validatedInput.data.email],
-      subject: "Verify your email address",
-      react: EmailVerificationEmail({
+    const newUser = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/v1/user`, {
+      method: "POST",
+      body: JSON.stringify({
+        name: validatedInput.data.name,
         email: validatedInput.data.email,
-        emailVerificationToken,
+        password: hashedPassword,
       }),
-    });
+    }).then((res) => res.json());
 
-    return newUser && emailSent ? "success" : "error";
+    // const emailSent = await resend.emails.send({
+    //   from: env.RESEND_EMAIL_FROM,
+    //   to: [validatedInput.data.email],
+    //   subject: "Verify your email address",
+    //   react: EmailVerificationEmail({
+    //     email: validatedInput.data.email,
+    //     emailVerificationToken,
+    //   }),
+    // });
+
+    // return newUser && emailSent ? "success" : "error";
+    return newUser ? "success" : "error";
   } catch (error) {
     console.error(error);
     throw new Error("Error signing up with password");
   }
 }
 
-async function signInWithPassword(rawInput) {
+export async function signInWithPassword(rawInput) {
   try {
     const validatedInput = signInWithPasswordSchema.safeParse(rawInput);
     if (!validatedInput.success) return "invalid-input";
@@ -75,7 +86,7 @@ async function signInWithPassword(rawInput) {
   }
 }
 
-async function resetPassword(rawInput) {
+export async function resetPassword(rawInput) {
   try {
     const validatedInput = passwordResetSchema.safeParse(rawInput);
     if (!validatedInput.success) return "invalid-input";
@@ -111,7 +122,7 @@ async function resetPassword(rawInput) {
   }
 }
 
-async function updatePassword(rawInput) {
+export async function updatePassword(rawInput) {
   try {
     const validatedInput = passwordUpdateSchemaExtended.safeParse(rawInput);
     if (
@@ -149,7 +160,7 @@ async function updatePassword(rawInput) {
   }
 }
 
-async function linkOAuthAccount(rawInput) {
+export async function linkOAuthAccount(rawInput) {
   try {
     const validatedInput = linkOAuthAccountSchema.safeParse(rawInput);
     if (!validatedInput.success) return;

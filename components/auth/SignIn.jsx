@@ -1,16 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { signIn } from "@/auth";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import GoogleSignInButton from "@/components/common/auth/GoogleSignInButton";
 
 import BookMyShowLogo from "@/icons/BookMyShowLogo";
+import SignInWithPasswordForm from "./SignInWithPasswordForm";
 
 export default function SignIn() {
   return (
@@ -27,35 +24,7 @@ export default function SignIn() {
               </Link>
             </p>
           </div>
-          <form
-            action={async (formData) => {
-              "use server";
-              await signIn("credentials", formData);
-            }}
-          >
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@email.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input id="password" type="password" required />
-              </div>
-
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-            </div>
-          </form>
-
+          <SignInWithPasswordForm />
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center space-x-2">

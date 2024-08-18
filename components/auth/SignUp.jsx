@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import SignUpForm from "@/components/SignUpForm";
 import GoogleSignInButton from "@/components/common/auth/GoogleSignInButton";
 
 import BookMyShowLogo from "@/icons/BookMyShowLogo";
+import SignUpWithPasswordForm from "./SignUpWithPasswordForm";
 
 export default function SignUp() {
   return (
@@ -21,7 +21,7 @@ export default function SignUp() {
               </Link>
             </p>
           </div>
-          <SignUpForm />
+          <SignUpWithPasswordForm />
           <GoogleSignInButton />
         </div>
       </div>

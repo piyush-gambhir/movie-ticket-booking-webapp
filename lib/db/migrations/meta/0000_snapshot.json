@@ -1,5 +1,5 @@
 {
-  "id": "abfba2fe-e8fa-4f46-b6ee-66d78eedf7bd",
+  "id": "b671f0ae-6d4e-4e1d-b1ea-344ca0aee92b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -99,7 +99,7 @@
         },
         "imdb_id": {
           "name": "imdb_id",
-          "type": "integer",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -136,12 +136,6 @@
         "release_date": {
           "name": "release_date",
           "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "genre_ids": {
-          "name": "genre_ids",
-          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },

@@ -19,14 +19,13 @@ CREATE TABLE IF NOT EXISTS "accounts" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "movies" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"imdb_id" integer,
+	"imdb_id" varchar,
 	"title" varchar(255) NOT NULL,
 	"original_title" varchar(255) NOT NULL,
 	"backdrop_path" varchar(255),
 	"poster_path" varchar(255),
 	"overview" text,
 	"release_date" date,
-	"genre_ids" jsonb,
 	"popularity" double precision,
 	"adult" boolean,
 	"media_type" varchar(50),

@@ -1,4 +1,5 @@
 import React from "react";
+import { redirect } from "next/navigation";
 
 import SignIn from "@/components/auth/SignIn";
 

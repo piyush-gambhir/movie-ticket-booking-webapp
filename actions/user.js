@@ -29,7 +29,7 @@ export const handleGetUserByEmail = async (email) => {
     }
 
     const user = await fetch(`
-      ${env.NEXT_PUBLIC_API_URL}/api/v1/user/${validatedInput.data.email}
+      ${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${validatedInput.data.email}
     `);
 
     return user;

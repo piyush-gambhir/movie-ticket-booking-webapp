@@ -1,10 +1,12 @@
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
-  schema: "./lib/db/schemas/*",
-  out: "./lib/db/migrations",
   dialect: "postgresql",
+  schema: "./lib/db/schema.js",
+  out: "./lib/db/migrations",
   dbCredentials: {
-    url: "postgresql://movie-booking-web-app_owner:JsiWlTj5PG9M@ep-snowy-field-a5twi3ca.us-east-2.aws.neon.tech/movie-booking-web-app?sslmode=require",
+    url: process.env.DATABASE_URL,
   },
+  // verbose: true,
+  // strict: true,
 });

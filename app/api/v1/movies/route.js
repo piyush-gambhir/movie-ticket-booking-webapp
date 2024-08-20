@@ -4,7 +4,7 @@ import {
   movies,
   movieSchema,
   movieUpdateSchema,
-} from "@/lib/db/schemas/movies.schema";
+} from "@/lib/db/schema/movies.schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 

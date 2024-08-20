@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm/expressions";
 
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schemas/users.schema";
+import { users } from "@/lib/db/schema/users.schema";
 
 export async function GET(request, { params }) {
   try {
@@ -16,6 +16,7 @@ export async function GET(request, { params }) {
         phone: users.phone,
         dateOfBirth: users.dateOfBirth,
         role: users.role,
+        password: users.password,
       })
       .from(users)
       .where(eq(users.email, user_email))

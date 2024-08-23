@@ -1,28 +1,29 @@
+import { z } from "zod";
 import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
-
-import { env } from "@/env";
+import ResendProvider from "next-auth/providers/resend";
 
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schemas/users.schema";
-import { accounts } from "@/lib/db/schemas/accounts.schema";
-import { sessions } from "@/lib/db/schemas/session.schema";
-import { verificationTokens } from "@/lib/db/schemas/verificationTokens.schema";
 
 import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
-  }),
+  adapter: DrizzleAdapter(db),
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 daysd
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  events: {
+    // async linkAccount({ user }) {
+    //   if (user.id) await linkOAuthAccount({ userId: user.id });
+    // },
+  },
   providers: [
     Credentials({
       name: "Credentials",
@@ -36,7 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             signUpWithPasswordSchema.parse(credentials);
 
           const user = await fetch(
-            `${env.NEXT_PUBLIC_APP_URL}/api/v1/user/${email}`,
+            `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${email}`,
           ).then((res) => res.json());
 
           if (!user) {
@@ -60,6 +61,48 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Google,
     Facebook,
+    // ResendProvider({
+    //   server: {
+    //     host: process.env.RESEND_HOST,
+    //     port: Number(process.env.RESEND_PORT),
+    //     auth: {
+    //       user: process.env.RESEND_USERNAME,
+    //       pass: process.env.RESEND_API_KEY,
+    //     },
+    //   },
+    //   async sendVerificationRequest({ identifier, url }) {
+    //     try {
+    //       await resend.emails.send({
+    //         from: process.env.RESEND_EMAIL_FROM,
+    //         to: [identifier],
+    //         subject: `${siteConfig.name} magic link sign in`,
+    //         react: MagicLinkEmail({ identifier, url }),
+    //       });
+
+    //       console.log("Verification email sent");
+    //     } catch (error) {
+    //       throw new Error("Failed to send verification email");
+    //     }
+    //   },
+    // }),
   ],
-  secret: env.AUTH_SECRET,
+  // callbacks: {
+  //   jwt({ token, user }) {
+  //     if (user) token.role = user.role;
+  //     return token;
+  //   },
+  //   session({ session, token }) {
+  //     session.user.role = token.role;
+  //     return session;
+  //   },
+  //   async signIn({ user, account }) {
+  //     if (!user.id) return false;
+  //     if (account?.provider !== "credentials") return true;
+
+  //     const existingUser = await getUserById({ id: user.id });
+
+  //     return !existingUser?.emailVerified ? false : true;
+  //   },
+  // },
+  secret: process.env.AUTH_SECRET,
 });

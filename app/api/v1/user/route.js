@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm/expressions";
 
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schemas/users.schema";
+import { users } from "@/lib/db/schema/users.schema";
 
 import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 
@@ -31,19 +32,31 @@ import { hashPassword } from "@/lib/utils/saltAndHashPassword";
 export async function POST(request) {
   try {
     const userData = await request.json();
-    const validatedInput = signUpWithPasswordSchema.safeParse(userData);
-    console.log(validatedInput);
-    const hashedPassword = await hashPassword(validatedInput.data.password);
+    const validatedInput = signUpWithPasswordSchema.parse(userData);
+    const hashedPassword = await hashPassword({
+      password: validatedInput.password,
+    });
 
-    const user = await db
-      .insert(users)
-      .values({
-        name: validatedInput.data.name,
-        email: validatedInput.data.email,
-        password: validatedInput.data.password,
+    const userExists = await db
+      .select({
+        email: users.email,
       })
-      .returning("*");
-    console.log(user);
+      .from(users)
+      .where(eq(users.email, validatedInput.email))
+      .execute();
+
+    if (userExists.length > 0) {
+      return NextResponse.json(
+        { message: "User with that email already exists." },
+        { status: 400 },
+      );
+    }
+    await db.insert(users).values({
+      name: validatedInput.name,
+      email: validatedInput.email,
+      password: hashedPassword,
+    });
+
     return NextResponse.json({ message: "User successfully created." });
   } catch (error) {
     if (error.name === "ZodError") {

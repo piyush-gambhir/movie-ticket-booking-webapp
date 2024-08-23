@@ -11,6 +11,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import BookMyShowLogo from "@/icons/BookMyShowLogo";
 
 export default function Header() {
@@ -30,12 +31,10 @@ export default function Header() {
         </NavigationMenuList>
       </NavigationMenu> */}
 
-      <div className="">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </div>
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
     </div>
   );
 }

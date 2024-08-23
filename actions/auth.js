@@ -1,7 +1,5 @@
 "use server";
 
-import { env } from "@/env";
-
 import { handleGetUserByEmail } from "@/actions/user";
 
 import { signIn } from "@/auth";

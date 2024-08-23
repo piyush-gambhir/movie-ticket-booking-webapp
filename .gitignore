@@ -39,3 +39,6 @@ next-env.d.ts
 
 # vim
 *.swp
+
+# db migrations 
+/lib/db/migrations

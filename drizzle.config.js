@@ -5,7 +5,7 @@ export default defineConfig({
   schema: "./lib/db/schema.js",
   out: "./lib/db/migrations",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DRIZZLE_DATABASE_URL,
   },
   // verbose: true,
   // strict: true,

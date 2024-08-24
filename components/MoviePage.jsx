@@ -22,9 +22,8 @@ export default function MoviePage({ movieData, theaters }) {
             <Image
               src={`https://image.tmdb.org/t/p/w500${movieData.posterPath}`}
               alt={`${movieData.title} poster`}
-              layout="fill"
-              objectFit="cover"
-              className="transition-all duration-300 hover:scale-105"
+              fill
+              className="object-cover transition-all duration-300 hover:scale-105"
             />
           </div>
         </div>

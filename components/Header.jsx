@@ -1,5 +1,17 @@
+"use client";
 import React from "react";
+import Link from "next/link";
 
+import { signOut } from "@/auth";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,9 +29,9 @@ import BookMyShowLogo from "@/icons/BookMyShowLogo";
 export default function Header() {
   return (
     <div className="bordder-b-black sticky top-0 flex w-full items-center justify-between gap-x-4 border-b bg-white px-8 py-4">
-      <div className="">
+      <Link href="/" className="">
         <BookMyShowLogo />
-      </div>
+      </Link>
       {/* <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -30,11 +42,32 @@ export default function Header() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu> */}
-
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              console.log("Profile");
+            }}
+          >
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              signOut();
+            }}
+          >
+            Sign Out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

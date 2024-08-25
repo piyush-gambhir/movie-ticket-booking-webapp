@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -23,12 +24,17 @@ import { useRef } from "react";
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
   const carouselRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies`)
       .then((res) => res.json())
       .then((data) => setMovies(data));
   }, []);
+
+  const handleBookClick = (id) => {
+    router.push(`${process.env.NEXT_PUBLIC_APP_URL}/movies/${id}`);
+  };
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -59,7 +65,10 @@ export default function HomePage() {
                     <h2 className="mb-2 text-xl font-bold text-white md:text-3xl">
                       {movie.title}
                     </h2>
-                    <Button className="bg-red-600 text-white hover:bg-red-700">
+                    <Button
+                      className="bg-red-600 text-white hover:bg-red-700"
+                      onClick={() => handleBookClick(movie.id)}
+                    >
                       Book &gt;
                     </Button>
                   </div>
@@ -109,7 +118,11 @@ export default function HomePage() {
                     <span className="text-xs text-muted-foreground">
                       {movie.voteCount} votes
                     </span>
-                    <Button size="sm" variant="outline">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleBookClick(movie.id)}
+                    >
                       Book
                     </Button>
                   </div>

@@ -1,9 +1,7 @@
 import "./globals.css";
-
+import { ThemeProvider } from "@/components/theme-provider";
 import { Inter } from "@/fonts/fonts";
-
 import Providers from "@/providers/providers";
-
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
@@ -15,8 +13,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={Inter.className}>
-        <Providers>{children}</Providers>
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>{children}</Providers>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { signOut } from "@/auth";
+import { logout } from "@/actions/auth/logout";
 
 import {
   DropdownMenu,
@@ -50,8 +50,6 @@ export default function Header() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
               console.log("Profile");
@@ -61,7 +59,8 @@ export default function Header() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              signOut();
+              logout();
+              console.log("Sign Out");
             }}
           >
             Sign Out

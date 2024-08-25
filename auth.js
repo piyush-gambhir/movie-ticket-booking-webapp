@@ -2,28 +2,36 @@ import { z } from "zod";
 import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
-import Facebook from "next-auth/providers/facebook";
-import ResendProvider from "next-auth/providers/resend";
+// import Google from "next-auth/providers/google";
+// import Facebook from "next-auth/providers/facebook";
+// import ResendProvider from "next-auth/providers/resend";
 
-import { db } from "@/lib/db";
-
-import { signUpWithPasswordSchema } from "@/lib/zod/auth";
+import { getUserByEmail } from "@/actions/user";
+import { signInWithPasswordSchema } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
+import { db } from "@/lib/db";
+
+// import {
+//   users,
+//   accounts,
+//   sessions,
+//   verificationTokens,
+//   authenticators,
+// } from "@/lib/db/schema/users.schema";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: DrizzleAdapter(db),
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 daysd
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
-  events: {
-    // async linkAccount({ user }) {
-    //   if (user.id) await linkOAuthAccount({ userId: user.id });
-    // },
-  },
+  adapter: DrizzleAdapter(
+    db,
+    // , {
+    // User: users,
+    // Account: accounts,
+    // Session: sessions,
+    // VerificationToken: verificationTokens,
+    // Authenticator: authenticators,
+    // }
+  ),
   providers: [
     Credentials({
       name: "Credentials",
@@ -34,11 +42,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         try {
           const { email, password } =
-            signUpWithPasswordSchema.parse(credentials);
+            signInWithPasswordSchema.parse(credentials);
 
-          const user = await fetch(
-            `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${email}`,
-          ).then((res) => res.json());
+          const user = await getUserByEmail(email);
 
           if (!user) {
             // No user found, so this is their first attempt to login
@@ -46,9 +52,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("User not found.");
           }
 
-          const isValid = await verifyPassword(password, user.password);
-          if (!isValid) throw new Error("Invalid credentials.");
-
+          if (verifyPassword(password, user.password)) {
+            throw new Error("Invalid credentials");
+          }
           // return user object with their profile data
           return user;
         } catch (error) {
@@ -59,8 +65,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       },
     }),
-    Google,
-    Facebook,
+    // Google,
+    // Facebook,
     // ResendProvider({
     //   server: {
     //     host: process.env.RESEND_HOST,
@@ -87,22 +93,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // }),
   ],
   // callbacks: {
-  //   jwt({ token, user }) {
+  //   async jwt({ token, user }) {
   //     if (user) token.role = user.role;
   //     return token;
   //   },
-  //   session({ session, token }) {
+  //   async session({ session, token }) {
   //     session.user.role = token.role;
   //     return session;
   //   },
-  //   async signIn({ user, account }) {
-  //     if (!user.id) return false;
-  //     if (account?.provider !== "credentials") return true;
-
-  //     const existingUser = await getUserById({ id: user.id });
-
-  //     return !existingUser?.emailVerified ? false : true;
-  //   },
   // },
+
   secret: process.env.AUTH_SECRET,
 });

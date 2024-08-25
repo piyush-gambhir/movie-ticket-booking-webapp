@@ -1,7 +1,5 @@
 "use server";
 
-import { env } from "@/env";
-
 import {
   getUserByEmailSchema,
   getUserByIdSchema,
@@ -9,7 +7,7 @@ import {
   getUserByResetPasswordTokenSchema,
 } from "@/lib/zod/user";
 
-export const handleGetUserById = async (id) => {
+export const getUserById = async (id) => {
   try {
     const validatedInput = getUserByIdSchema.safeParse({ id });
     if (!validatedInput.success) {
@@ -21,24 +19,23 @@ export const handleGetUserById = async (id) => {
   }
 };
 
-export const handleGetUserByEmail = async (email) => {
+export const getUserByEmail = async ({ email }) => {
   try {
     const validatedInput = getUserByEmailSchema.safeParse({ email });
     if (!validatedInput.success) {
-      return;
+      return { error: "Invalid fields!" };
     }
-
-    const user = await fetch(`
-      ${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${validatedInput.data.email}
-    `);
-
+    const user = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${validatedInput.data.email}`,
+    );
+    console.log(user);
     return user;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const handleGetUserByResetPasswordToken = async (token) => {
+export const getUserByResetPasswordToken = async (token) => {
   try {
     const validatedInput = getUserByResetPasswordTokenSchema.safeParse({
       token,
@@ -57,7 +54,7 @@ export const handleGetUserByResetPasswordToken = async (token) => {
   }
 };
 
-export const handleGetUserByEmailVerificationToken = async (token) => {
+export const getUserByEmailVerificationToken = async (token) => {
   try {
     const validatedInput = getUserByEmailVerificationTokenSchema.safeParse({
       token,

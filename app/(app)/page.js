@@ -37,7 +37,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="container mx-auto min-h-screen px-4 py-8">
       {/* Banner Carousel */}
       <Carousel
         ref={carouselRef}

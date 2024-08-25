@@ -1,8 +1,9 @@
 "use server";
+import { AuthError } from "next-auth";
 
 import { getUserByEmail } from "@/actions/user";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 
 import {
   signInWithPasswordSchema,
@@ -10,6 +11,12 @@ import {
 } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
+
+export const logout = async () => {
+  await signOut({
+    callbackUrl: "/signin",
+  });
+};
 
 export async function signUpWithPassword({ email, password, name }) {
   try {
@@ -81,8 +88,6 @@ export async function signInWithPassword({ email, password }) {
       email: validatedInput.data.email,
     });
 
-    console.log(existingUser);
-
     if (!existingUser) {
       return { error: "User not found!" };
     }
@@ -94,11 +99,14 @@ export async function signInWithPassword({ email, password }) {
     // if (!existingUser.emailVerified) {
     //   return { error: "Email not verified!" };
     // }
+    const isPasswordValid = await verifyPassword(
+      validatedInput.data.password,
+      existingUser.password,
+    );
 
-    if (!verifyPassword(validatedInput.data.password, existingUser.password)) {
+    if (!isPasswordValid) {
       return { error: "Invalid credentials!" };
     }
-
     await signIn("credentials", {
       email: validatedInput.data.email,
       password: validatedInput.data.password,

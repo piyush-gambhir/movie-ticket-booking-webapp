@@ -25,10 +25,10 @@ export const getUserByEmail = async ({ email }) => {
     if (!validatedInput.success) {
       return { error: "Invalid fields!" };
     }
-    const user = await fetch(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${validatedInput.data.email}`,
     );
-    console.log(user);
+    const user = await response.json();
     return user;
   } catch (error) {
     console.error(error);

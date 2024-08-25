@@ -13,49 +13,51 @@ import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
 import { db } from "@/lib/db";
 
-// import {
-//   users,
-//   accounts,
-//   sessions,
-//   verificationTokens,
-//   authenticators,
-// } from "@/lib/db/schema/users.schema";
+import {
+  users,
+  //   accounts,
+  //   sessions,
+  //   verificationTokens,
+  //   authenticators,
+} from "@/lib/db/schema/users.schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: DrizzleAdapter(
-    db,
-    // , {
-    // User: users,
-    // Account: accounts,
-    // Session: sessions,
-    // VerificationToken: verificationTokens,
-    // Authenticator: authenticators,
-    // }
-  ),
+  // adapter: DrizzleAdapter(db, {
+  //   User: users,
+  //   // Account: accounts,
+  //   // Session: sessions,
+  //   // VerificationToken: verificationTokens,
+  //   // Authenticator: authenticators,
+  // }),
   providers: [
     Credentials({
-      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: {},
+        password: {},
       },
-      async authorize(credentials) {
+      authorize: async (credentials) => {
         try {
-          const { email, password } =
-            signInWithPasswordSchema.parse(credentials);
+          let user = null;
+          const { email, password } = signInWithPasswordSchema.parse({
+            email: credentials.email,
+            password: credentials.password,
+          });
 
-          const user = await getUserByEmail(email);
-
+          user = await getUserByEmail({ email });
           if (!user) {
-            // No user found, so this is their first attempt to login
-            // meaning this is also the place you could do registration
-            throw new Error("User not found.");
+            throw new Error("No user found");
           }
 
-          if (verifyPassword(password, user.password)) {
+          if (!user.password) {
             throw new Error("Invalid credentials");
           }
-          // return user object with their profile data
+
+          const isPasswordValid = await verifyPassword(password, user.password);
+
+          if (!isPasswordValid) {
+            throw new Error("Invalid credentials");
+          }
+          console.log("User", user);
           return user;
         } catch (error) {
           if (error instanceof z.ZodError) {
@@ -92,16 +94,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     //   },
     // }),
   ],
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     if (user) token.role = user.role;
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     session.user.role = token.role;
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role;
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      return session;
+    },
+  },
 
   secret: process.env.AUTH_SECRET,
 });

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { ModeToggle } from "@/components/ModeToggle"; // Import the ModeToggle component
+import { ModeToggle } from "@/components/ModeToggle";
 
 import BookMyShowLogo from "@/icons/BookMyShowLogo";
 import { Button } from "./ui/button";
@@ -46,9 +46,11 @@ export default function Header() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem className="cursor-pointer">
-                <Link href="/profile">Profile</Link>
-              </DropdownMenuItem>
+              <Link href="/profile">
+                <DropdownMenuItem className="cursor-pointer">
+                  Profile
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => {

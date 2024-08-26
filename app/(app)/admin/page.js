@@ -1,5 +1,19 @@
 import React from "react";
+import { notFound } from "next/navigation";
 
-export default function page() {
-  return <div>page</div>;
+import { getServerSession, getCurrentUser } from "@/lib/auth";
+import Admin from "@/components/Admin";
+
+export default async function page() {
+  const session = await getServerSession();
+  if (!session) {
+    return notFound();
+  }
+
+  const user = await getCurrentUser();
+  if (user.role === "user") {
+    return notFound();
+  }
+
+  return <Admin />;
 }

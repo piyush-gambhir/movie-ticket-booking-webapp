@@ -28,12 +28,11 @@ export default function SignUpWithPasswordForm() {
   });
 
   const onSubmit = async (formData) => {
-    const result = await signUpWithPassword({
+    await signUpWithPassword({
       name: formData.name,
       email: formData.email,
       password: formData.password,
     });
-    console.log(result);
   };
 
   return (

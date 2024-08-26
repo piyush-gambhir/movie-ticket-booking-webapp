@@ -2,54 +2,62 @@ import { z } from "zod";
 import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
-import Facebook from "next-auth/providers/facebook";
-import ResendProvider from "next-auth/providers/resend";
+// import Google from "next-auth/providers/google";
+// import Facebook from "next-auth/providers/facebook";
+// import ResendProvider from "next-auth/providers/resend";
 
-import { db } from "@/lib/db";
-
-import { signUpWithPasswordSchema } from "@/lib/zod/auth";
+import { getUserByEmail } from "@/actions/user";
+import { signInWithPasswordSchema } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
+import { db } from "@/lib/db";
+
+import {
+  users,
+  //   accounts,
+  //   sessions,
+  //   verificationTokens,
+  //   authenticators,
+} from "@/lib/db/schema/users.schema";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: DrizzleAdapter(db),
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 daysd
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
-  events: {
-    // async linkAccount({ user }) {
-    //   if (user.id) await linkOAuthAccount({ userId: user.id });
-    // },
-  },
+  // adapter: DrizzleAdapter(db, {
+  //   User: users,
+  //   // Account: accounts,
+  //   // Session: sessions,
+  //   // VerificationToken: verificationTokens,
+  //   // Authenticator: authenticators,
+  // }),
   providers: [
     Credentials({
-      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: {},
+        password: {},
       },
-      async authorize(credentials) {
+      authorize: async (credentials) => {
         try {
-          const { email, password } =
-            signUpWithPasswordSchema.parse(credentials);
+          let user = null;
+          const { email, password } = signInWithPasswordSchema.parse({
+            email: credentials.email,
+            password: credentials.password,
+          });
 
-          const user = await fetch(
-            `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${email}`,
-          ).then((res) => res.json());
-
+          user = await getUserByEmail({ email });
           if (!user) {
-            // No user found, so this is their first attempt to login
-            // meaning this is also the place you could do registration
-            throw new Error("User not found.");
+            throw new Error("No user found");
           }
 
-          const isValid = await verifyPassword(password, user.password);
-          if (!isValid) throw new Error("Invalid credentials.");
+          if (!user.password) {
+            throw new Error("Invalid credentials");
+          }
 
-          // return user object with their profile data
+          const isPasswordValid = await verifyPassword(password, user.password);
+
+          if (!isPasswordValid) {
+            throw new Error("Invalid credentials");
+          }
+          console.log("User", user);
           return user;
         } catch (error) {
           if (error instanceof z.ZodError) {
@@ -59,8 +67,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       },
     }),
-    Google,
-    Facebook,
+    // Google,
+    // Facebook,
     // ResendProvider({
     //   server: {
     //     host: process.env.RESEND_HOST,
@@ -86,23 +94,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     //   },
     // }),
   ],
-  // callbacks: {
-  //   jwt({ token, user }) {
-  //     if (user) token.role = user.role;
-  //     return token;
-  //   },
-  //   session({ session, token }) {
-  //     session.user.role = token.role;
-  //     return session;
-  //   },
-  //   async signIn({ user, account }) {
-  //     if (!user.id) return false;
-  //     if (account?.provider !== "credentials") return true;
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role;
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      return session;
+    },
+  },
+  pages: {
+    signIn: "/signin",
+    // signOut: "/auth/signout",
+    // error: "/auth/error",
+    // verifyRequest: "/auth/verify-request",
+  },
 
-  //     const existingUser = await getUserById({ id: user.id });
-
-  //     return !existingUser?.emailVerified ? false : true;
-  //   },
-  // },
   secret: process.env.AUTH_SECRET,
 });

@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { signUpWithPassword } from "@/actions/auth";
+import { signUpWithPassword } from "@/actions/auth/auth";
 
 import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 export default function SignUpWithPasswordForm() {
@@ -28,7 +28,11 @@ export default function SignUpWithPasswordForm() {
   });
 
   const onSubmit = async (formData) => {
-    const result = await signUpWithPassword({ formData });
+    const result = await signUpWithPassword({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    });
     console.log(result);
   };
 

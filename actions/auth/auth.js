@@ -1,28 +1,41 @@
 "use server";
+import { AuthError } from "next-auth";
 
-import { handleGetUserByEmail } from "@/actions/user";
+import { getUserByEmail } from "@/actions/user";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 
 import {
   signInWithPasswordSchema,
   signUpWithPasswordSchema,
-  linkOAuthAccountSchema,
 } from "@/lib/zod/auth";
 
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
-export async function signUpWithPassword({ formData }) {
-  try {
-    const validatedInput = signUpWithPasswordSchema.safeParse(formData);
-    if (!validatedInput.success) return "invalid-input";
+export const logout = async () => {
+  await signOut({
+    callbackUrl: "/signin",
+  });
+};
 
-    const existingUser = await handleGetUserByEmail({
+export async function signUpWithPassword({ email, password, name }) {
+  try {
+    const validatedInput = signUpWithPasswordSchema.safeParse({
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    if (!validatedInput.success) {
+      return { error: "Invalid fields!" };
+    }
+    const existingUser = await getUserByEmail({
       email: validatedInput.data.email,
     });
 
-    if (existingUser) return "exists";
-
+    if (existingUser) {
+      return { error: "Email already in use!" };
+    }
     const newUser = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user`,
       {
@@ -53,48 +66,60 @@ export async function signUpWithPassword({ formData }) {
     //   redirect: false,
     // });
 
-    return newUser ? "success" : "error";
+    return newUser ? { success: true } : { error: "Error signing up!" };
   } catch (error) {
     console.error(error);
     throw new Error("Error signing up with password");
   }
 }
 
-export async function signInWithPassword(rawInput) {
+export async function signInWithPassword({ email, password }) {
   try {
-    const validatedInput = signInWithPasswordSchema.safeParse(rawInput);
-    if (!validatedInput.success) return "invalid-input";
+    const validatedInput = signInWithPasswordSchema.safeParse({
+      email: email,
+      password: password,
+    });
 
-    const existingUser = await handleGetUserByEmail({
+    if (!validatedInput.success) {
+      return { error: "Invalid fields!" };
+    }
+
+    const existingUser = await getUserByEmail({
       email: validatedInput.data.email,
     });
-    if (!existingUser) return "not-registered";
 
-    if (!existingUser.email || !existingUser.password)
-      return "incorrect-provider";
+    if (!existingUser) {
+      return { error: "User not found!" };
+    }
 
-    if (!existingUser.emailVerified) return "unverified-email";
+    if (!existingUser.password) {
+      return { error: "Incorrect provider!" };
+    }
 
-    const passwordMatch = await verifyPassword({
-      password: validatedInput.data.password,
-      passwordHash: existingUser.password,
-    });
+    // if (!existingUser.emailVerified) {
+    //   return { error: "Email not verified!" };
+    // }
+    const isPasswordValid = await verifyPassword(
+      validatedInput.data.password,
+      existingUser.password,
+    );
 
-    if (!passwordMatch) return "invalid-credentials";
-
+    if (!isPasswordValid) {
+      return { error: "Invalid credentials!" };
+    }
     await signIn("credentials", {
       email: validatedInput.data.email,
       password: validatedInput.data.password,
-      redirect: false,
     });
-
-    return "success";
+    return {
+      success: true,
+    };
   } catch (error) {
     console.error(error);
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "invalid-credentials";
+          return { error: "Invalid credentials!" };
         default:
           throw error;
       }

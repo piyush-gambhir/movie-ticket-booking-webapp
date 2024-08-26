@@ -46,11 +46,11 @@ export default function Header() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Link href="/profile">Profile</Link>
               </DropdownMenuItem>
-
               <DropdownMenuItem
+                className="cursor-pointer"
                 onClick={() => {
                   logout();
                   router.push("/signin");

@@ -58,6 +58,9 @@ importers:
       "@radix-ui/react-slot":
         specifier: ^1.1.0
         version: 1.1.0(react@18.3.1)
+      "@radix-ui/react-tabs":
+        specifier: ^1.1.0
+        version: 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@radix-ui/react-toast":
         specifier: ^1.2.1
         version: 1.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -109,6 +112,9 @@ importers:
       react-hook-form:
         specifier: ^7.52.2
         version: 7.53.0(react@18.3.1)
+      recoil:
+        specifier: ^0.7.7
+        version: 0.7.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.5.2
@@ -1289,6 +1295,22 @@ packages:
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
     peerDependenciesMeta:
       "@types/react":
+        optional: true
+
+  "@radix-ui/react-tabs@1.1.0":
+    resolution:
+      {
+        integrity: sha512-bZgOKB/LtZIij75FSuPzyEti/XBhJH52ExgtdVqjCIh+Nx/FW+LhnbXtbCzIi34ccyMsyOja8T0thCzoHFXNKA==,
+      }
+    peerDependencies:
+      "@types/react": "*"
+      "@types/react-dom": "*"
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      "@types/react":
+        optional: true
+      "@types/react-dom":
         optional: true
 
   "@radix-ui/react-toast@1.2.1":
@@ -2678,6 +2700,12 @@ packages:
         integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==,
       }
 
+  hamt_plus@1.0.2:
+    resolution:
+      {
+        integrity: sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==,
+      }
+
   has-bigints@1.0.2:
     resolution:
       {
@@ -3924,6 +3952,21 @@ packages:
       }
     engines: { node: ">=8.10.0" }
 
+  recoil@0.7.7:
+    resolution:
+      {
+        integrity: sha512-8Og5KPQW9LwC577Vc7Ug2P0vQshkv1y3zG3tSSkWMqkWSwHmE+by06L8JtnGocjW6gcCvfwB3YtrJG6/tWivNQ==,
+      }
+    peerDependencies:
+      react: ">=16.13.1"
+      react-dom: "*"
+      react-native: "*"
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
   reflect.getprototypeof@1.0.6:
     resolution:
       {
@@ -5142,6 +5185,19 @@ snapshots:
       "@radix-ui/react-compose-refs": 1.1.0(react@18.3.1)
       react: 18.3.1
 
+  "@radix-ui/react-tabs@1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+    dependencies:
+      "@radix-ui/primitive": 1.1.0
+      "@radix-ui/react-context": 1.1.0(react@18.3.1)
+      "@radix-ui/react-direction": 1.1.0(react@18.3.1)
+      "@radix-ui/react-id": 1.1.0(react@18.3.1)
+      "@radix-ui/react-presence": 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      "@radix-ui/react-primitive": 2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      "@radix-ui/react-roving-focus": 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      "@radix-ui/react-use-controllable-state": 1.1.0(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   "@radix-ui/react-toast@1.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
       "@radix-ui/primitive": 1.1.0
@@ -6150,6 +6206,8 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  hamt_plus@1.0.2: {}
+
   has-bigints@1.0.2: {}
 
   has-flag@4.0.0: {}
@@ -6776,6 +6834,13 @@ snapshots:
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
+
+  recoil@0.7.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 18.3.1
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.3.1)
 
   reflect.getprototypeof@1.0.6:
     dependencies:

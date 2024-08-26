@@ -104,6 +104,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
+  pages: {
+    signIn: "/signin",
+    // signOut: "/auth/signout",
+    // error: "/auth/error",
+    // verifyRequest: "/auth/verify-request",
+  },
 
   secret: process.env.AUTH_SECRET,
 });

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-import { DatePicker } from "./DatePicker"; // Import DatePickerDemo
+import { DatePicker } from "@/common/DatePicker";
 
 export default function Profile({ userDetails }) {
   const [user, setUser] = useState(userDetails);

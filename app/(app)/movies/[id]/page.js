@@ -1,4 +1,4 @@
-import MoviePage from "@/components/MoviePage";
+import MoviePage from "@/components/app/MoviePage";
 
 async function getMovieData(id) {
   const res = await fetch(

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Pencil, Trash2, Loader2, Plus } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -30,8 +29,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
-import { getMovies } from "@/actions/movies";
+import AddMovieForm from "@/components/admin/AddMovieForm";
+import {
+  getMovies,
+  deleteMovie,
+  getMovie,
+  updateMovieAction,
+} from "@/actions/movies";
 
 export default function Movies() {
   const [page, setPage] = useState(1);
@@ -45,8 +57,8 @@ export default function Movies() {
     totalPages: 1,
   });
 
-  const [editingMovie, setEditingMovie] = useState(null); // Placeholder for edit functionality
-  const [isMovieDialogOpen, setIsMovieDialogOpen] = useState(false); // Placeholder for dialog state
+  const [editingMovie, setEditingMovie] = useState(null);
+  const [isMovieDialogOpen, setIsMovieDialogOpen] = useState(false);
 
   const handleGetMovies = async () => {
     setIsLoading(true);
@@ -71,18 +83,29 @@ export default function Movies() {
     handleGetMovies();
   }, [page, query, sorting]);
 
-  const handleDeleteMovie = (id) => {
-    console.log(`Deleting movie with id: ${id}`);
-    handleGetMovies();
+  const handleDeleteMovie = async (id) => {
+    const { success, error } = await deleteMovie({ movieId: id });
+    if (success) {
+      handleGetMovies();
+    } else {
+      console.error("Failed to delete movie:", error);
+    }
   };
 
-  const handleSortingChange = (newSort) => {
-    setSorting(newSort);
+  const handleEditMovie = async (movie) => {
+    setEditingMovie(movie);
+    setIsMovieDialogOpen(true);
+  };
+
+  const handleAddOrEditSuccess = () => {
+    handleGetMovies();
+    setIsMovieDialogOpen(false);
+    setEditingMovie(null);
   };
 
   return (
     <>
-      <div className="mb-4 flex justify-between gap-x-16">
+      <div className="mb-4 flex flex-col justify-between gap-y-4 lg:flex-row lg:gap-x-16">
         <div className="flex-1">
           <Input
             type="text"
@@ -130,10 +153,34 @@ export default function Movies() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" onClick={() => setIsMovieDialogOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Movie
-          </Button>
+          {/* Button to open the dialog for adding a new movie */}
+          <Dialog open={isMovieDialogOpen} onOpenChange={setIsMovieDialogOpen}>
+            <Button
+              variant="outline"
+              onClick={() => setIsMovieDialogOpen(true)}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Add Movie
+            </Button>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editingMovie ? "Edit Movie" : "Add New Movie"}
+                </DialogTitle>
+                <DialogDescription>
+                  {editingMovie
+                    ? "Edit the details of the movie."
+                    : "Enter the details of the new movie."}
+                </DialogDescription>
+              </DialogHeader>
+              {/* Include the AddMovieForm here */}
+              <AddMovieForm
+                movie={editingMovie}
+                onClose={() => setIsMovieDialogOpen(false)}
+                onSuccess={handleAddOrEditSuccess}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       {isLoading ? (
@@ -186,10 +233,7 @@ export default function Movies() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => {
-                        setEditingMovie(movie);
-                        setIsMovieDialogOpen(true);
-                      }}
+                      onClick={() => handleEditMovie(movie)}
                     >
                       <Pencil className="h-4 w-4" />
                       <span className="sr-only">Edit</span>

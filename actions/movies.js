@@ -17,14 +17,6 @@ export async function getMovies({
   order = "asc",
 }) {
   try {
-    const searchParams = movieSearchSchema.parse({
-      query,
-      page,
-      limit,
-      sort,
-      order,
-    });
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies?${new URLSearchParams({
         query,
@@ -58,14 +50,33 @@ export async function getMovies({
   }
 }
 
-export async function addMovieAction(movieData) {
+export async function getMovie({ movieId }) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies/${movieId}`,
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return {
+        success: false,
+        error: errorData.error || "Failed to retrieve movie.",
+      };
+    }
+
+    const movie = await response.json();
+    return { success: true, data: movie };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function addMovie({ movieData }) {
   try {
     const validatedData = addMovieSchema.parse(movieData);
 
     const response = await fetch(
-      `
-      ${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies
-      `,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies`,
       {
         method: "POST",
         headers: {
@@ -93,8 +104,9 @@ export async function addMovieAction(movieData) {
   }
 }
 
-export async function updateMovieAction({ movieData }) {
+export async function updateMovie({ movieData }) {
   try {
+    console.log("movieData", movieData);
     const validatedData = updateMovieSchema.parse(movieData);
 
     if (!validatedData.id) {
@@ -102,7 +114,7 @@ export async function updateMovieAction({ movieData }) {
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${validatedData.id}`,
       {
         method: "PUT",
         headers: {
@@ -135,7 +147,7 @@ export async function deleteMovie({ movieId }) {
     const validatedData = deleteMovieSchema.parse({ id: movieId });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${movieId}`,
       {
         method: "DELETE",
         headers: {
@@ -153,8 +165,8 @@ export async function deleteMovie({ movieId }) {
       };
     }
 
-    const result = await response.json();
-    return { success: true, data: result };
+    const message = await response.json().then((data) => data.message);
+    return { success: true, message: message };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors };

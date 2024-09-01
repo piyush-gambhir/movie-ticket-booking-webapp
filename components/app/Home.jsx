@@ -14,7 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import MovieCard from "@/components/MovieCard";
+import MovieCard from "@/components/common/MovieCard";
 
 export default function Home({ moviesData }) {
   const [movies, setMovies] = useState(moviesData);

@@ -24,7 +24,7 @@ export default function Header() {
   const user = useCurrentUser();
   const router = useRouter();
   return (
-    <div className="sticky top-0 flex w-full items-center justify-between gap-x-4 border-b border-b-black bg-background px-8 py-4 text-foreground dark:border-b-white">
+    <div className="sticky top-0 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
         <Link href="/" className="">
           <BookMyShowLogo />

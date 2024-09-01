@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import Image from "next/image";
 
 import {
   DropdownMenu,
@@ -16,22 +15,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/common/ModeToggle";
 
-import BookMyShowLogo from "@/icons/BookMyShowLogo";
-
-export default function Header() {
-  const user = useCurrentUser();
+export default function Header({ user }) {
   const router = useRouter();
-
   const handleLogout = async () => {
     router.push("/signout");
   };
-  useEffect(() => {}, [user]);
 
   return (
     <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
-        <Link href="/" className="">
-          <BookMyShowLogo />
+        <Link href="/" className="object-contain">
+          <Image src={"/logo.png"} alt="Logo" width={80} height={50} />
         </Link>
       </div>
       <div className="max-w-md flex-1">
@@ -61,6 +55,13 @@ export default function Header() {
               >
                 Sign Out
               </DropdownMenuItem>
+              {user?.role === "admin" && (
+                <Link href="/admin">
+                  <DropdownMenuItem className="cursor-pointer">
+                    Admin
+                  </DropdownMenuItem>
+                </Link>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

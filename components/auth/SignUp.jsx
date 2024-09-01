@@ -3,14 +3,13 @@ import Link from "next/link";
 
 import GoogleSignInButton from "@/components/common/auth/GoogleSignInButton";
 
-import BookMyShowLogo from "@/icons/BookMyShowLogo";
 import SignUpWithPasswordForm from "./SignUpWithPasswordForm";
 
 export default function SignUp() {
   return (
     <div className="h-screen w-screen md:grid md:grid-cols-5">
       <div className="flex h-full w-full flex-col justify-center px-8 md:col-span-2 md:px-24 md:py-12">
-        <BookMyShowLogo className="h-24 w-24" />
+        <Image src={"/logo.png"} alt="Logo" width={80} height={50} />
         <div className="grid gap-6">
           <div className="grid gap-2">
             <h1 className="text-3xl font-bold">Sign Up</h1>

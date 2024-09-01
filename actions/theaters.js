@@ -3,51 +3,52 @@
 import { z } from "zod";
 
 import {
-  addMovieSchema,
-  movieSearchSchema,
-  deleteMovieSchema,
-  updateMovieSchema,
-} from "@/lib/zod/movie";
+  addTheaterSchema,
+  theaterSearchSchema,
+  deleteTheaterSchema,
+  updateTheaterSchema,
+} from "@/lib/zod/theaters";
 
-export async function getMovies({
+export async function getTheaters({
   query = "",
   page = 1,
   limit = 10,
-  sort = "dateAdded",
+  sort = "name",
   order = "asc",
 }) {
   try {
-    const movieSearchParams = movieSearchSchema.parse({
-      query: query,
-      page: page,
-      limit: limit,
-      sort: sort,
-      order: order,
+    const theatreSearchParams = theaterSearchSchema.parse({
+      query,
+      page,
+      limit,
+      sort,
+      order,
     });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies?${new URLSearchParams({
-        query: movieSearchParams.query,
-        page: movieSearchParams.page,
-        limit: movieSearchParams.limit,
-        sort: movieSearchParams.sort,
-        order: movieSearchParams.order,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater?${new URLSearchParams({
+        query: theatreSearchParams.query,
+        page: theatreSearchParams.page.toString(),
+        limit: theatreSearchParams.limit.toString(),
+        sort: theatreSearchParams.sort,
+        order: theatreSearchParams.order,
       })}`,
     );
+
     if (!response.ok) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.error || "Failed to retrieve movies.",
+        error: errorData.error || "Failed to retrieve theaters.",
       };
     }
 
-    const movies = await response.json();
+    const theaters = await response.json();
     return {
       success: true,
       data: {
-        movies: movies.data,
-        pagination: movies.pagination,
+        theaters: theaters.data,
+        pagination: theaters.pagination,
       },
     };
   } catch (error) {
@@ -58,33 +59,33 @@ export async function getMovies({
   }
 }
 
-export async function getMovie({ movieId }) {
+export async function getTheater({ theaterId }) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies/${movieId}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater/${theaterId}`,
     );
 
     if (!response.ok) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.error || "Failed to retrieve movie.",
+        error: errorData.error || "Failed to retrieve theater.",
       };
     }
 
-    const movie = await response.json();
-    return { success: true, data: movie };
+    const theater = await response.json();
+    return { success: true, data: theater };
   } catch (error) {
     return { success: false, error: error.message };
   }
 }
 
-export async function addMovie({ movieData }) {
+export async function addTheater({ theaterData }) {
   try {
-    const validatedData = addMovieSchema.parse(movieData);
+    const validatedData = addTheaterSchema.parse(theaterData);
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater`,
       {
         method: "POST",
         headers: {
@@ -98,12 +99,12 @@ export async function addMovie({ movieData }) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.error || "Failed to add movie.",
+        error: errorData.error || "Failed to add theater.",
       };
     }
 
-    const newMovie = await response.json();
-    return { success: true, data: newMovie };
+    const newTheater = await response.json();
+    return { success: true, data: newTheater };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors };
@@ -112,17 +113,16 @@ export async function addMovie({ movieData }) {
   }
 }
 
-export async function updateMovie({ movieData }) {
+export async function updateTheater({ theaterData }) {
   try {
-    console.log("movieData", movieData);
-    const validatedData = updateMovieSchema.parse(movieData);
+    const validatedData = updateTheaterSchema.parse(theaterData);
 
     if (!validatedData.id) {
-      throw new Error("Movie ID is required for updates.");
+      throw new Error("Theater ID is required for updates.");
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${validatedData.id}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater/${validatedData.id}`,
       {
         method: "PUT",
         headers: {
@@ -136,12 +136,12 @@ export async function updateMovie({ movieData }) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.error || "Failed to update movie.",
+        error: errorData.error || "Failed to update theater.",
       };
     }
 
-    const updatedMovie = await response.json();
-    return { success: true, data: updatedMovie };
+    const updatedTheater = await response.json();
+    return { success: true, data: updatedTheater };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors };
@@ -150,12 +150,12 @@ export async function updateMovie({ movieData }) {
   }
 }
 
-export async function deleteMovie({ movieId }) {
+export async function deleteTheater({ theaterId }) {
   try {
-    const validatedData = deleteMovieSchema.parse({ id: movieId });
+    const validatedData = deleteTheaterSchema.parse({ id: theaterId });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${movieId}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theatres/${theaterId}`,
       {
         method: "DELETE",
         headers: {
@@ -169,7 +169,7 @@ export async function deleteMovie({ movieId }) {
       const errorData = await response.json();
       return {
         success: false,
-        error: errorData.error || "Failed to delete movie.",
+        error: errorData.error || "Failed to delete theater.",
       };
     }
 

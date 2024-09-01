@@ -6,14 +6,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import GoogleSignInButton from "@/components/common/auth/GoogleSignInButton";
 
-import BookMyShowLogo from "@/icons/BookMyShowLogo";
 import SignInWithPasswordForm from "./SignInWithPasswordForm";
 
 export default function SignIn() {
   return (
     <div className="h-screen w-screen md:grid md:grid-cols-5">
       <div className="flex h-full w-full flex-col justify-center px-24 py-12 md:col-span-2">
-        <BookMyShowLogo className={"h-24 w-24"} />
+        <Image src={"/logo.png"} alt="Logo" width={80} height={50} />{" "}
         <div className="grid gap-6">
           <div className="grid gap-2">
             <h1 className="text-3xl font-bold">Sign In</h1>

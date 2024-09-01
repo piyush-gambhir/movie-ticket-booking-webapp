@@ -54,9 +54,10 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const parsedParams = deleteMovieSchema.parse(params);
     const deletedMovie = await db
       .delete(movies)
-      .where(eq(movies.id, params.id))
+      .where(eq(movies.id, parsedParams.id))
       .returning();
     if (deletedMovie.length === 0) {
       return NextResponse.json({ error: "Movie not found" }, { status: 404 });

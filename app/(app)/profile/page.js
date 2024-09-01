@@ -5,7 +5,7 @@ import { getServerSession, getCurrentUser } from "@/lib/auth";
 
 import { getUserByEmail } from "@/actions/user";
 
-import Profile from "@/components/Profile";
+import Profile from "@/components/app/Profile";
 
 import { DEFAULT_UNAUTHENTICATED_REDIRECT } from "@/routes";
 

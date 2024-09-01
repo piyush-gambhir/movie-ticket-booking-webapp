@@ -7,7 +7,7 @@ import {
   theaterSearchSchema,
   deleteTheaterSchema,
   updateTheaterSchema,
-} from "@/lib/zod/theaters";
+} from "@/lib/zod/theater";
 
 export async function getTheaters({
   query = "",
@@ -17,7 +17,7 @@ export async function getTheaters({
   order = "asc",
 }) {
   try {
-    const theatreSearchParams = theaterSearchSchema.parse({
+    const theaterSearchParams = theaterSearchSchema.parse({
       query,
       page,
       limit,
@@ -27,11 +27,11 @@ export async function getTheaters({
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater?${new URLSearchParams({
-        query: theatreSearchParams.query,
-        page: theatreSearchParams.page.toString(),
-        limit: theatreSearchParams.limit.toString(),
-        sort: theatreSearchParams.sort,
-        order: theatreSearchParams.order,
+        query: theaterSearchParams.query,
+        page: theaterSearchParams.page.toString(),
+        limit: theaterSearchParams.limit.toString(),
+        sort: theaterSearchParams.sort,
+        order: theaterSearchParams.order,
       })}`,
     );
 
@@ -154,7 +154,7 @@ export async function deleteTheater({ theaterId }) {
     const validatedData = deleteTheaterSchema.parse({ id: theaterId });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theatres/${theaterId}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theaters/${theaterId}`,
       {
         method: "DELETE",
         headers: {

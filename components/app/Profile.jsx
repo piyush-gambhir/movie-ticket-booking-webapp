@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-import { DatePicker } from "@/common/DatePicker";
+import { DatePicker } from "@/components/common/DatePicker";
 
 export default function Profile({ userDetails }) {
   const [user, setUser] = useState(userDetails);

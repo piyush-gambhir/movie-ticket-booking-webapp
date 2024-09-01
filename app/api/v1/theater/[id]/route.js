@@ -1,38 +1,38 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { theatres } from "@/lib/db/schema/theatres.schema";
+import { theaters } from "@/lib/db/schema/theaters.schema";
 import { eq } from "drizzle-orm";
 
 import {
-  theatreSchema,
-  theatreUpdateSchema,
-  deleteTheatreSchema,
-} from "@/lib/zod/theaters";
+  theaterSchema,
+  updateTheaterSchema,
+  deleteTheaterSchema,
+} from "@/lib/zod/theater";
 
 export async function GET(request, { params }) {
   try {
-    const parsedParams = theatreSchema.parse(params); // Validate params using Zod
-    const theatre = await db
+    const parsedParams = theaterSchema.parse(params); // Validate params using Zod
+    const theater = await db
       .select()
-      .from(theatres)
-      .where(eq(theatres.id, parsedParams.id))
+      .from(theaters)
+      .where(eq(theaters.id, parsedParams.id))
       .limit(1)
       .execute();
 
-    if (theatre.length === 0) {
-      return NextResponse.json({ error: "Theatre not found" }, { status: 404 });
+    if (theater.length === 0) {
+      return NextResponse.json({ error: "theater not found" }, { status: 404 });
     }
 
-    return NextResponse.json(theatre[0]);
+    return NextResponse.json(theater[0]);
   } catch (error) {
-    console.error("Failed to fetch theatre:", error);
+    console.error("Failed to fetch theater:", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
 
     return NextResponse.json(
-      { error: "Failed to fetch theatre" },
+      { error: "Failed to fetch theater" },
       { status: 500 },
     );
   }
@@ -40,30 +40,30 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     const body = await request.json();
-    const validatedData = theatreUpdateSchema.parse(body); // Validate body using Zod
-    const parsedParams = theatreSchema.parse(params); // Validate params using Zod
+    const validatedData = updateTheaterSchema.parse(body); // Validate body using Zod
+    const parsedParams = theaterSchema.parse(params); // Validate params using Zod
 
-    const updatedTheatre = await db
-      .update(theatres)
+    const updatedtheater = await db
+      .update(theaters)
       .set(validatedData)
-      .where(eq(theatres.id, parsedParams.id))
+      .where(eq(theaters.id, parsedParams.id))
       .returning()
       .execute();
 
-    if (updatedTheatre.length === 0) {
-      return NextResponse.json({ error: "Theatre not found" }, { status: 404 });
+    if (updatedtheater.length === 0) {
+      return NextResponse.json({ error: "theater not found" }, { status: 404 });
     }
 
-    return NextResponse.json(updatedTheatre[0]);
+    return NextResponse.json(updatedtheater[0]);
   } catch (error) {
-    console.error("Failed to update theatre:", error);
+    console.error("Failed to update theater:", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
 
     return NextResponse.json(
-      { error: "Failed to update theatre" },
+      { error: "Failed to update theater" },
       { status: 500 },
     );
   }
@@ -71,28 +71,28 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const parsedParams = deleteTheatreSchema.parse(params); // Validate params using Zod
+    const parsedParams = deleteTheaterSchema.parse(params); // Validate params using Zod
 
-    const deletedTheatre = await db
-      .delete(theatres)
-      .where(eq(theatres.id, parsedParams.id))
+    const deletedtheater = await db
+      .delete(theaters)
+      .where(eq(theaters.id, parsedParams.id))
       .returning()
       .execute();
 
-    if (deletedTheatre.length === 0) {
-      return NextResponse.json({ error: "Theatre not found" }, { status: 404 });
+    if (deletedtheater.length === 0) {
+      return NextResponse.json({ error: "theater not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ message: "Theatre deleted successfully" });
+    return NextResponse.json({ message: "theater deleted successfully" });
   } catch (error) {
-    console.error("Failed to delete theatre:", error);
+    console.error("Failed to delete theater:", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
 
     return NextResponse.json(
-      { error: "Failed to delete theatre" },
+      { error: "Failed to delete theater" },
       { status: 500 },
     );
   }

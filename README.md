@@ -93,14 +93,14 @@ QuickNix is a movie booking web app built for the StarHack hackathon. It leverag
 | ----------- | -------------- | ------------------------------------------ |
 | id          | UUID           | Primary Key, Default: `uuid_generate_v4()` |
 | movieId     | UUID           | Not Null, References: `movies.id`          |
-| theatreId   | UUID           | Not Null, References: `theatres.id`        |
+| theaterId   | UUID           | Not Null, References: `theaters.id`        |
 | ticketPrice | DECIMAL(10, 2) | Not Null                                   |
 | startTime   | TIMESTAMP      | Not Null                                   |
 | endTime     | TIMESTAMP      | Not Null                                   |
 | createdAt   | TIMESTAMP      | Default: `now()`                           |
 | updatedAt   | TIMESTAMP      |                                            |
 
-### Theatres Table
+### theaters Table
 
 | Column        | Type         | Constraints                                |
 | ------------- | ------------ | ------------------------------------------ |

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { addTheater, updateTheater } from "@/actions/theaters";
-import { theaterSchema } from "@/lib/zod/theaters";
+import { theaterSchema } from "@/lib/zod/theater";
 
 export default function AddTheaterForm({ theater = null, onClose, onSuccess }) {
   const [theaterData, setTheaterData] = useState({

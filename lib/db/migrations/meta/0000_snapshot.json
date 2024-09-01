@@ -1,5 +1,5 @@
 {
-  "id": "483ca1a9-a3c7-42e3-96b4-535c2845b0d0",
+  "id": "20eb3ad8-e2fb-49c4-af78-b4540f44d6ce",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -252,8 +252,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "theatre_id": {
-          "name": "theatre_id",
+        "theater_id": {
+          "name": "theater_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -305,12 +305,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "showtimes_theatre_id_theatres_id_fk": {
-          "name": "showtimes_theatre_id_theatres_id_fk",
+        "showtimes_theater_id_theaters_id_fk": {
+          "name": "showtimes_theater_id_theaters_id_fk",
           "tableFrom": "showtimes",
-          "tableTo": "theatres",
+          "tableTo": "theaters",
           "columnsFrom": [
-            "theatre_id"
+            "theater_id"
           ],
           "columnsTo": [
             "id"
@@ -322,8 +322,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.theatres": {
-      "name": "theatres",
+    "public.theaters": {
+      "name": "theaters",
       "schema": "",
       "columns": {
         "id": {

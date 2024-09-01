@@ -3,9 +3,9 @@ import { ilike, asc, desc, count } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { theatres } from "@/lib/db/schema/theaters.schema";
+import { theaters } from "@/lib/db/schema/theaters.schema";
 
-import { theaterSearchSchema, addTheaterSchema } from "@/lib/zod/theaters";
+import { theaterSearchSchema, addTheaterSchema } from "@/lib/zod/theater";
 
 export async function GET(request) {
   try {
@@ -25,27 +25,27 @@ export async function GET(request) {
     const sortOrder = queryParams.order === "asc" ? asc : desc;
     const sortField =
       queryParams.sort === "name"
-        ? theatres.name
+        ? theaters.name
         : queryParams.sort === "location"
-          ? theatres.location
-          : theatres.createdAt;
+          ? theaters.location
+          : theaters.createdAt;
 
     let whereCondition = undefined;
     if (queryParams.query) {
-      whereCondition = ilike(theatres.name, `%${queryParams.query}%`);
+      whereCondition = ilike(theaters.name, `%${queryParams.query}%`);
     }
 
-    const totalTheatresResult = await db
+    const totaltheatersResult = await db
       .select({ count: count() })
-      .from(theatres)
+      .from(theaters)
       .where(whereCondition)
       .execute();
-    const totalCount = parseInt(totalTheatresResult[0].count, 10);
+    const totalCount = parseInt(totaltheatersResult[0].count, 10);
     const totalPages = Math.ceil(totalCount / queryParams.limit);
 
-    const allTheatres = await db
+    const alltheaters = await db
       .select()
-      .from(theatres)
+      .from(theaters)
       .where(whereCondition)
       .orderBy(sortOrder(sortField))
       .limit(queryParams.limit)
@@ -53,7 +53,7 @@ export async function GET(request) {
       .execute();
 
     return NextResponse.json({
-      data: allTheatres,
+      data: alltheaters,
       pagination: {
         currentPage: queryParams.page,
         limit: queryParams.limit,
@@ -77,7 +77,7 @@ export async function POST(request) {
     const theaterData = addTheaterSchema.parse(body); // Validate request body using zod schema
 
     const [newTheater] = await db
-      .insert(theatres) // Insert the validated data into the database
+      .insert(theaters) // Insert the validated data into the database
       .values(theaterData)
       .returning() // Return the inserted data
       .execute();

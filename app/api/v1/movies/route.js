@@ -16,7 +16,7 @@ export async function GET(request) {
       limit: searchParams.get("limit")
         ? parseInt(searchParams.get("limit"))
         : 10,
-      sort: searchParams.get("sort") || "dateAdded",
+      sort: searchParams.get("sort") || "releaseDate",
       order: searchParams.get("order") || "desc",
     });
 
@@ -25,13 +25,18 @@ export async function GET(request) {
     // Determine sort order and field
     const sortOrder = queryParams.order === "asc" ? asc : desc;
     const sortField =
-      queryParams.sort === "title" ? movies.title : movies.createdAt;
+      queryParams.sort === "title"
+        ? movies.title
+        : queryParams.sort === "releaseDate"
+          ? movies.releaseDate // Add this line for release date sorting
+          : movies.createdAt;
 
     // Build query condition
     let whereCondition = undefined;
     if (queryParams.query) {
       whereCondition = ilike(movies.title, `%${queryParams.query}%`);
     }
+
     const totalMoviesResult = await db
       .select({ count: count() })
       .from(movies)

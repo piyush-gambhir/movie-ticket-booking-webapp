@@ -13,7 +13,7 @@ export async function getMovies({
   query = "",
   page = 1,
   limit = 10,
-  sort = "dateAdded",
+  sort = "releaseDate",
   order = "asc",
 }) {
   try {
@@ -61,7 +61,7 @@ export async function getMovies({
 export async function getMovie({ movieId }) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies/${movieId}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${movieId}`,
     );
 
     if (!response.ok) {

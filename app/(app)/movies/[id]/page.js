@@ -1,25 +1,15 @@
+import React from "react";
+
 import MoviePage from "@/components/app/MoviePage";
 
-async function getMovieData(id) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${id}`,
-    {
-      cache: "no-store", // Fetches fresh data on each request
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch movie data");
-  }
-
-  return res.json();
-}
+import { getMovie } from "@/actions/movies";
 
 export default async function MoviePageRoute({ params }) {
-  const movieData = await getMovieData(params.id);
+  const movieData = await getMovie({
+    movieId: params.id,
+  }).then((response) => response.data);
 
-  // Assuming you have a list of theaters to pass
-  const theaters = []; // Replace with actual theater data if needed
+  const theaters = [];
 
   return <MoviePage movieData={movieData} theaters={theaters} />;
 }

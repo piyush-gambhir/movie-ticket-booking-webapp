@@ -12,6 +12,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { DatePicker } from "@/components/common/DatePicker";
 
 import { addMovie, updateMovie } from "@/actions/movies";
+import { fetchMovieData } from "@/actions/tmdb";
 
 import { addMovieSchema } from "@/lib/zod/movie";
 
@@ -35,6 +36,8 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // State for loading status
+  const [apiError, setApiError] = useState(null); // State for API errors
 
   useEffect(() => {
     if (movie) {
@@ -58,12 +61,31 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value, type } = e.target;
     const parsedValue = type === "number" ? parseFloat(value) || "" : value;
 
     setMovieData((prev) => ({ ...prev, [name]: parsedValue }));
     validateField(name, parsedValue);
+
+    // If the imdbId field changes, fetch movie data
+    if (name === "imdbId" && value) {
+      setIsLoading(true);
+      setApiError(null);
+      try {
+        const fetchedMovieData = await fetchMovieData({
+          imdbId: value,
+        });
+        setMovieData((prev) => ({
+          ...prev,
+          ...fetchedMovieData,
+        }));
+      } catch (error) {
+        setApiError("Failed to fetch movie details. Please check the IMDb ID.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   const handleCheckboxChange = (checked) => {
@@ -212,6 +234,7 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
               name="overview"
               value={movieData.overview}
               onChange={handleChange}
+              className="h-24 resize-none"
             />
             {errors.overview && (
               <p className="text-red-500">{errors.overview}</p>
@@ -225,6 +248,7 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
             />
             <Label htmlFor="adult">Adult Content</Label>
           </div>
+          {/* {apiError && <div className="text-red-500">{apiError}</div>} */}
           {formError && (
             <div className="text-red-500">
               {Array.isArray(formError)
@@ -234,8 +258,12 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
           )}
         </form>
       </CardContent>
-      <CardFooter className="flex flex-row gap-x-2">
-        <Button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
+      <CardFooter className="flex flex-row gap-x-2 px-0">
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isSubmitting || isLoading}
+        >
           {isSubmitting
             ? movie
               ? "Updating..."

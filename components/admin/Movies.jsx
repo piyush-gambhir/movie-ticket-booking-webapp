@@ -49,11 +49,14 @@ export default function Movies() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [sorting, setSorting] = useState({ sort: "dateAdded", order: "desc" });
+  const [sorting, setSorting] = useState({
+    sort: "releaseDate",
+    order: "desc",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    limit: 10,
+    limit: 20,
     totalPages: 1,
   });
 
@@ -65,7 +68,7 @@ export default function Movies() {
     const { success, data, error } = await getMovies({
       query,
       page,
-      limit: 10,
+      limit: 20,
       sort: sorting.sort,
       order: sorting.order,
     });
@@ -101,6 +104,10 @@ export default function Movies() {
     handleGetMovies();
     setIsMovieDialogOpen(false);
     setEditingMovie(null);
+  };
+
+  const handleSortingChange = (newSorting) => {
+    setSorting(newSorting);
   };
 
   return (
@@ -150,6 +157,20 @@ export default function Movies() {
                 }
               >
                 Date Added Descending
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  handleSortingChange({ sort: "releaseDate", order: "asc" })
+                }
+              >
+                Release Date Ascending
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  handleSortingChange({ sort: "releaseDate", order: "desc" })
+                }
+              >
+                Release Date Descending
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

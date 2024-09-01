@@ -9,7 +9,7 @@ export default async function page() {
     query: "",
     page: 1,
     limit: 10,
-    sort: "dateAdded",
+    sort: "releaseDate",
     order: "desc",
   }).then((data) => data?.data?.movies);
   return <Home moviesData={moviesData} />;

@@ -1,35 +1,47 @@
-This documentation provides a comprehensive guide for the development, deployment, and usage of the Movie Booking Website System. The system is designed to facilitate online movie ticket bookings for cinema theatres in a city, featuring both an admin dashboard and a customer interface.
+# QuickNix 🎬
 
-## Project Overview
+QuickNix is a movie booking web app built for the StarHack hackathon. It leverages modern technologies like Next.js, shadcn, PostgreSQL, and Recoil to provide a seamless and responsive user experience. While we were able to implement most of the required features, the payment and reservation functionalities were not completed due to time constraints.
 
-The Movie Booking Website System is designed to manage movie bookings for multiple theatres in a city. It includes the following functionalities:
+## Features
 
-- Online booking system for customers.
-- Admin dashboard for managing movies, theatres, showtimes, reservations, and users.
-- User authentication and profile management.
-- Integration with a dummy payment gateway for handling payments.
+- **Movie Listings**: Browse through a wide selection of movies using data from the TMDB API.
+- **Search Functionality**: Quickly find your favorite movies.
+- **User Authentication**: Secure login and sign-up features.
+- **Movie Details**: Detailed information about each movie, including trailers, ratings, and more.
+- **Booking Interface**: Intuitive UI for selecting seats (reservation feature not fully implemented).
+- **Admin Panel Authentication**: Secure access to the admin panel for managing movies and bookings.
 
-## Technology Stack
+## Tech Stack
 
-- **Language:** JavaScript
+- **Frontend**: [Next.js](https://nextjs.org/), [shadcn](https://shadcn.dev/), [Recoil](https://recoiljs.org/)
+- **Backend**: [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
 - **Validations:** Zod
-- **FrontEnd/BackEnd Framework:** Next.js
-- **Authentication:** Auth.js
-- **Database:** PostgreSQL
-- **ORM:** Drizzle
-- **UI Libraries:** ShadCN
-- **State Management:** Recoil
-- **Object Storage:** AWS / Cloudflare R2
-- **Containerization:** Docker
-- **Hosting:** AWS / Cloudflare Pages
-- **Payments:** RazorPay
-- **Email Services:** Resend / MailGun
-  Optional
-- **Caching:** Redis
-- **OTP:** (Optional)
-- **Multilingual Support:** (Optional)
-- **CI/CD:** GitHub Actions / SST (Optional)
-- **Maps:** OLA (Optional)
+- **Database**: [PostgreSQL](https://www.postgresql.org/) via [Neon](https://neon.tech/)
+- **Hosting**: [Amazon EC2](https://aws.amazon.com/ec2/)
+- **APIs**: [TMDB API](https://www.themoviedb.org/documentation/api)
+- **Containerization**: [Docker](https://www.docker.com/)
+
+## Setup Instructions
+
+1. **Clone the repository**:
+   git clone https://github.com/your-repo/quicknix.git
+   cd quicknix
+
+2. **Install dependencies**:
+   pnpm install
+
+3. **Run the development server**:
+   pnpm run dev
+
+4. **Environment Variables**:
+   - The `.env` file is included in the source code package. There should be no issues setting up the environment.
+
+## Known Issues
+
+- **Payment Integration**: Not implemented.
+- **Reservation System**: Not implemented.
+
+---
 
 ## Database Schema
 

@@ -13,14 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast"; // Import the useToast hook
+import { useToast } from "@/components/ui/use-toast";
 
-import { signInWithPassword } from "@/actions/auth/auth";
+import { signInWithPassword } from "@/actions/auth";
 
 import { signInWithPasswordSchema } from "@/lib/zod/auth";
 
 export default function SignInWithPasswordForm() {
-  const { toast } = useToast(); // Destructure the toast function from useToast
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(signInWithPasswordSchema),
@@ -31,11 +31,10 @@ export default function SignInWithPasswordForm() {
   });
 
   const onSubmit = async (formData) => {
-    await signInWithPassword({
+    const result = await signInWithPassword({
       email: formData.email,
       password: formData.password,
     });
-    console.log(result);
 
     if (result.error === "Invalid credentials!") {
       toast({

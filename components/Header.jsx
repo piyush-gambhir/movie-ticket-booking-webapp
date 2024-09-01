@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-import { logout } from "@/actions/auth/auth";
+import { logout } from "@/actions/auth";
 
 import {
   DropdownMenu,
@@ -26,7 +26,7 @@ export default function Header() {
 
   useEffect(() => {}, [user]);
   return (
-    <div className="sticky top-0 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
+    <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
         <Link href="/" className="">
           <BookMyShowLogo />
@@ -57,7 +57,7 @@ export default function Header() {
                 className="cursor-pointer"
                 onClick={() => {
                   logout();
-                  router.push("/signin");
+                  router.push("/signout");
                 }}
               >
                 Sign Out

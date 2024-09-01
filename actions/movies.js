@@ -1,5 +1,7 @@
 "use server";
 
+import { z } from "zod";
+
 import {
   addMovieSchema,
   movieSearchSchema,
@@ -7,45 +9,15 @@ import {
   updateMovieSchema,
 } from "@/lib/zod/movie";
 
-export async function deleteMovieAction(movieData) {
+export async function getMovies({ query = "", page = 1, limit = 10 }) {
   try {
-    const validatedData = deletreMovieSchema.parse(movieData);
-
-    const response = await fetch("/api/movies", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(validatedData),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      return {
-        success: false,
-        error: errorData.error || "Failed to delete movie.",
-      };
-    }
-
-    const result = await response.json();
-    return { success: true, data: result };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
-    }
-    return { success: false, error: error.message };
-  }
-}
-
-export async function getMoviesAction(queryParams) {
-  try {
-    const validatedParams = movieSearchSchema.parse(queryParams);
-
-    const queryString = new URLSearchParams(validatedParams).toString();
-
-    const response = await fetch(`/api/movies?${queryString}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies?${new URLSearchParams({
+        query,
+        page,
+        limit,
+      })}`,
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -54,7 +26,6 @@ export async function getMoviesAction(queryParams) {
         error: errorData.error || "Failed to retrieve movies.",
       };
     }
-
     const movies = await response.json();
     return { success: true, data: movies };
   } catch (error) {
@@ -121,6 +92,36 @@ export async function updateMovieAction(movieData) {
 
     const updatedMovie = await response.json();
     return { success: true, data: updatedMovie };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { success: false, error: error.errors };
+    }
+    return { success: false, error: error.message };
+  }
+}
+
+export async function deleteMovie(movieData) {
+  try {
+    const validatedData = deletreMovieSchema.parse(movieData);
+
+    const response = await fetch("/api/movies", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(validatedData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return {
+        success: false,
+        error: errorData.error || "Failed to delete movie.",
+      };
+    }
+
+    const result = await response.json();
+    return { success: true, data: result };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors };

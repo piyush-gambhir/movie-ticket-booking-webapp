@@ -11,6 +11,7 @@ export default async function page() {
   }
 
   const user = await getCurrentUser();
+  console.log(user);
   if (user.role === "user") {
     return notFound();
   }

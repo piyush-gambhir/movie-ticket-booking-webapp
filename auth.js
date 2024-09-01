@@ -57,7 +57,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!isPasswordValid) {
             throw new Error("Invalid credentials");
           }
-          console.log("User", user);
           return user;
         } catch (error) {
           if (error instanceof z.ZodError) {
@@ -97,7 +96,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.role = user.role;
-      console.log("Token", token);
       return token;
     },
     async session({ session, token }) {
@@ -108,9 +106,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: "/signin",
-    // signOut: "/auth/signout",
-    // error: "/auth/error",
-    // verifyRequest: "/auth/verify-request",
+    signOut: "/signout",
   },
 
   secret: process.env.AUTH_SECRET,

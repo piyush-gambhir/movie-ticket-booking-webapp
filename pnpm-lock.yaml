@@ -22,6 +22,9 @@ importers:
       "@neondatabase/serverless":
         specifier: ^0.9.4
         version: 0.9.4
+      "@next/env":
+        specifier: ^14.2.7
+        version: 14.2.7
       "@radix-ui/react-avatar":
         specifier: ^1.1.0
         version: 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -768,6 +771,12 @@ packages:
     resolution:
       {
         integrity: sha512-/zZGkrTOsraVfYjGP8uM0p6r0BDT6xWpkjdVbcz66PJVSpwXX3yNiRycxAuDfBKGWBrZBXRuK/YVlkNgxHGwmA==,
+      }
+
+  "@next/env@14.2.7":
+    resolution:
+      {
+        integrity: sha512-OTx9y6I3xE/eih+qtthppwLytmpJVPM5PPoJxChFsbjIEFXIayG0h/xLzefHGJviAa3Q5+Fd+9uYojKkHDKxoQ==,
       }
 
   "@next/eslint-plugin-next@14.2.5":
@@ -4885,6 +4894,8 @@ snapshots:
       "@types/pg": 8.11.6
 
   "@next/env@14.2.5": {}
+
+  "@next/env@14.2.7": {}
 
   "@next/eslint-plugin-next@14.2.5":
     dependencies:

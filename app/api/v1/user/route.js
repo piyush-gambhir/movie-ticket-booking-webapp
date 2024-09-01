@@ -8,7 +8,7 @@ import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 
 import { hashPassword } from "@/lib/utils/saltAndHashPassword";
 
-import { getServerSession } from "@/lib/getServerSession";
+import { getServerSession } from "@/lib/auth";
 
 export async function POST(request) {
   try {
@@ -36,6 +36,7 @@ export async function POST(request) {
       name: validatedInput.name,
       email: validatedInput.email,
       password: hashedPassword,
+      role: "user",
     });
 
     return NextResponse.json({ message: "User successfully created." });

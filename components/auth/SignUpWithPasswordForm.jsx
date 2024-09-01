@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { signUpWithPassword } from "@/actions/auth/auth";
+import { signUpWithPassword } from "@/actions/auth";
 
 import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 export default function SignUpWithPasswordForm() {

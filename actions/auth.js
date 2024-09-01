@@ -1,5 +1,6 @@
 "use server";
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 import { getUserByEmail } from "@/actions/user";
 
@@ -13,9 +14,8 @@ import {
 import { verifyPassword } from "@/lib/utils/saltAndHashPassword";
 
 export const logout = async () => {
-  await signOut({
-    callbackUrl: "/signin",
-  });
+  await signOut();
+  redirect("/signout");
 };
 
 export async function signUpWithPassword({ email, password, name }) {

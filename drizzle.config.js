@@ -5,7 +5,7 @@ export default defineConfig({
   schema: "./lib/db/schema/*.schema.js",
   out: "./lib/db/migrations",
   dbCredentials: {
-    url: "postgresql://movie-ticket-booking_owner:diyhj8J5BwIL@ep-gentle-night-a5adzspm.us-east-2.aws.neon.tech/movie-ticket-booking?sslmode=require",
+    url: process.env.DRIZZLE_DATABASE_URL,
   },
   verbose: true,
   strict: true,

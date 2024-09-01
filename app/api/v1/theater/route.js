@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { theatres } from "@/lib/db/schema/theaters.schema";
 
-import { theaterSearchSchema } from "@/lib/zod/theaters";
+import { theaterSearchSchema, addTheaterSchema } from "@/lib/zod/theaters";
 
 export async function GET(request) {
   try {
@@ -62,6 +62,29 @@ export async function GET(request) {
     });
   } catch (error) {
     console.error("Error in GET handler:", error);
+
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    const theaterData = addTheaterSchema.parse(body); // Validate request body using zod schema
+
+    const [newTheater] = await db
+      .insert(theatres) // Insert the validated data into the database
+      .values(theaterData)
+      .returning() // Return the inserted data
+      .execute();
+
+    return NextResponse.json(newTheater);
+  } catch (error) {
+    console.error("Error in POST handler:", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });

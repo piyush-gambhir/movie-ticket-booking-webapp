@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
-import { DatePicker } from "@/components/common/datepicker";
+import { DatePicker } from "@/components/common/DatePicker";
 
 import { addMovie, updateMovie } from "@/actions/movies";
 

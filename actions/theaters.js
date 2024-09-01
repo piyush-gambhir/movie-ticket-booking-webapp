@@ -94,7 +94,6 @@ export async function addTheater({ theaterData }) {
         body: JSON.stringify(validatedData),
       },
     );
-
     if (!response.ok) {
       const errorData = await response.json();
       return {

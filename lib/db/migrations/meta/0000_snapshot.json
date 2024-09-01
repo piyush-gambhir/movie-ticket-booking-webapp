@@ -1,5 +1,5 @@
 {
-  "id": "e90afe3d-a8fb-44eb-8f38-3b50c1a6696f",
+  "id": "483ca1a9-a3c7-42e3-96b4-535c2845b0d0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -355,7 +355,8 @@
           "name": "seats",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'[]'::jsonb"
         },
         "image_url": {
           "name": "image_url",
@@ -452,8 +453,7 @@
           "name": "role",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'user'"
+          "notNull": true
         },
         "status": {
           "name": "status",

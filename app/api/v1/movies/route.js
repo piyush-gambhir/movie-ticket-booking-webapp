@@ -72,6 +72,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
+
     const movieData = addMovieSchema.parse(body);
 
     const [newMovie] = await db

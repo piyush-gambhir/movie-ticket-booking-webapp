@@ -243,8 +243,12 @@ export default function Theaters() {
             {theaters.map((theater) => (
               <TableRow key={theater.id}>
                 <TableCell>{theater.name}</TableCell>
-                <TableCell>{theater.location}</TableCell>
-                <TableCell>{theater.capacity}</TableCell>
+                <TableCell>
+                  {theater.address.street}, {theater.address.city}, ,{" "}
+                  {theater.address.state}, {theater.address.zipCode},{" "}
+                  {theater.address.country}
+                </TableCell>
+                <TableCell>{theater.totalSeats}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
                     <Button

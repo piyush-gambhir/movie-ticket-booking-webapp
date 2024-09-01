@@ -15,10 +15,10 @@ import { db } from "@/lib/db";
 
 import {
   users,
-  //   accounts,
-  //   sessions,
-  //   verificationTokens,
-  //   authenticators,
+  // accounts,
+  // sessions,
+  // verificationTokens,
+  // authenticators,
 } from "@/lib/db/schema/users.schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -37,13 +37,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         try {
-          let user = null;
           const { email, password } = signInWithPasswordSchema.parse({
             email: credentials.email,
             password: credentials.password,
           });
 
-          user = await getUserByEmail({ email });
+          const user = await getUserByEmail({ email });
           if (!user) {
             throw new Error("No user found");
           }
@@ -95,12 +94,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        token.role = user.role;
+        token.id = user.id; // Ensure to add the user ID to the token if needed
+      }
       return token;
     },
     async session({ session, token }) {
       session.user.role = token.role;
-      session.user.id = token.id;
+      session.user.id = token.id; // Make sure the session contains user ID
       return session;
     },
   },
@@ -108,6 +110,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/signin",
     signOut: "/signout",
   },
-
   secret: process.env.AUTH_SECRET,
 });

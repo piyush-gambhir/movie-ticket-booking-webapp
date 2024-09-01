@@ -5,20 +5,35 @@ import { z } from "zod";
 import {
   addMovieSchema,
   movieSearchSchema,
-  deletreMovieSchema,
+  deleteMovieSchema,
   updateMovieSchema,
 } from "@/lib/zod/movie";
 
-export async function getMovies({ query = "", page = 1, limit = 10 }) {
+export async function getMovies({
+  query = "",
+  page = 1,
+  limit = 10,
+  sort = "dateAdded",
+  order = "asc",
+}) {
   try {
+    const searchParams = movieSearchSchema.parse({
+      query,
+      page,
+      limit,
+      sort,
+      order,
+    });
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies?${new URLSearchParams({
         query,
         page,
         limit,
+        sort,
+        order,
       })}`,
     );
-
     if (!response.ok) {
       const errorData = await response.json();
       return {
@@ -26,8 +41,15 @@ export async function getMovies({ query = "", page = 1, limit = 10 }) {
         error: errorData.error || "Failed to retrieve movies.",
       };
     }
+
     const movies = await response.json();
-    return { success: true, data: movies };
+    return {
+      success: true,
+      data: {
+        movies: movies.data,
+        pagination: movies.pagination,
+      },
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors };
@@ -40,13 +62,18 @@ export async function addMovieAction(movieData) {
   try {
     const validatedData = addMovieSchema.parse(movieData);
 
-    const response = await fetch("/api/movies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `
+      ${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies
+      `,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validatedData),
       },
-      body: JSON.stringify(validatedData),
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -66,7 +93,7 @@ export async function addMovieAction(movieData) {
   }
 }
 
-export async function updateMovieAction(movieData) {
+export async function updateMovieAction({ movieData }) {
   try {
     const validatedData = updateMovieSchema.parse(movieData);
 
@@ -74,13 +101,16 @@ export async function updateMovieAction(movieData) {
       throw new Error("Movie ID is required for updates.");
     }
 
-    const response = await fetch("/api/movies", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validatedData),
       },
-      body: JSON.stringify(validatedData),
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -100,17 +130,20 @@ export async function updateMovieAction(movieData) {
   }
 }
 
-export async function deleteMovie(movieData) {
+export async function deleteMovie({ movieId }) {
   try {
-    const validatedData = deletreMovieSchema.parse(movieData);
+    const validatedData = deleteMovieSchema.parse({ id: movieId });
 
-    const response = await fetch("/api/movies", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/api/movies`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validatedData),
       },
-      body: JSON.stringify(validatedData),
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.json();

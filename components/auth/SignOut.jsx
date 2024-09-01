@@ -1,26 +1,30 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
+import { logout } from "@/actions/auth";
+
 export default function Component() {
   const router = useRouter();
-
   const [countdown, setCountdown] = useState(5);
+  const logoutButtonRef = useRef(null);
+
+  const handleLogout = async () => {
+    await logout(); // Wait for the logout to complete
+    router.push("/signin"); // Redirect after logout is complete
+  };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prevCount) => {
-        if (prevCount <= 1) {
-          clearInterval(timer);
-          router.push("/signin");
-        }
-        return prevCount - 1;
-      });
-    }, 1000);
+    const timer = setTimeout(() => {
+      if (logoutButtonRef.current) {
+        logoutButtonRef.current.click(); // Trigger the logout button click after 2 seconds
+      }
+    }, 2000); // 2000 milliseconds = 2 seconds
 
-    return () => clearInterval(timer);
-  }, []);
+    // Cleanup the timeout if the component is unmounted or if the effect is re-run
+    return () => clearTimeout(timer);
+  }, [router]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-white">
@@ -34,7 +38,7 @@ export default function Component() {
           Please wait while we securely log you out of your account.
         </p>
         <p className="text-lg text-gray-400">
-          You will be redirected in {countdown} seconds...
+          You will be redirected in a few seconds...
         </p>
       </div>
       <div className="mt-12 max-w-md text-center text-sm text-gray-500">
@@ -43,6 +47,9 @@ export default function Component() {
           experience!
         </p>
       </div>
+      <button ref={logoutButtonRef} className="hidden" onClick={handleLogout}>
+        Sign Out Now
+      </button>
     </div>
   );
 }

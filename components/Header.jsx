@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-import { logout } from "@/actions/auth";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,7 +22,11 @@ export default function Header() {
   const user = useCurrentUser();
   const router = useRouter();
 
+  const handleLogout = async () => {
+    router.push("/signout");
+  };
   useEffect(() => {}, [user]);
+
   return (
     <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
@@ -55,10 +57,7 @@ export default function Header() {
               </Link>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => {
-                  logout();
-                  router.push("/signout");
-                }}
+                onClick={handleLogout}
               >
                 Sign Out
               </DropdownMenuItem>

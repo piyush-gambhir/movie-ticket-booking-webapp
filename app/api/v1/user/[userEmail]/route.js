@@ -28,7 +28,11 @@ export async function GET(request, { params }) {
       .where(eq(users.email, userEmail))
       .execute();
     if (user.length > 0) {
-      return NextResponse.json(user[0]);
+      return NextResponse.json(user[0], {
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+        },
+      });
     } else {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }

@@ -1,14 +1,21 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { movies, movieUpdateSchema } from "@/lib/db/schema/movies.schema";
+import { movies } from "@/lib/db/schema/movies.schema";
 import { eq } from "drizzle-orm";
+
+import {
+  getMovieSchema,
+  updateMovieSchema,
+  deleteMovieSchema,
+} from "@/lib/zod/movie";
 
 export async function GET(request, { params }) {
   try {
+    const parsedParams = getMovieSchema.parse(params);
     const movie = await db
       .select()
       .from(movies)
-      .where(eq(movies.id, params.id))
+      .where(eq(movies?.id, parsedParams?.id))
       .limit(1);
     if (movie.length === 0) {
       return NextResponse.json({ error: "Movie not found" }, { status: 404 });
@@ -26,7 +33,7 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     const body = await request.json();
-    const validatedData = movieUpdateSchema.parse(body);
+    const validatedData = updateMovieSchema.parse(body);
     const updatedMovie = await db
       .update(movies)
       .set(validatedData)

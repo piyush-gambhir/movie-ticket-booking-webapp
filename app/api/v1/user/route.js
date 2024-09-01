@@ -8,6 +8,8 @@ import { signUpWithPasswordSchema } from "@/lib/zod/auth";
 
 import { hashPassword } from "@/lib/utils/saltAndHashPassword";
 
+import { getServerSession } from "@/lib/getServerSession";
+
 export async function POST(request) {
   try {
     const userData = await request.json();
@@ -46,8 +48,11 @@ export async function POST(request) {
 }
 
 export async function PUT(request, { params }) {
+  if (!getServerSession()) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    const { user_email } = params;
     const userData = await request.json();
     const parsedData = userData.parse(userData);
     const updatedUser = await db
@@ -70,6 +75,9 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  if (!getServerSession()) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const { user_email } = params;
     const updatedUser = await db

@@ -31,7 +31,7 @@ export default function SignInWithPasswordForm() {
   });
 
   const onSubmit = async (formData) => {
-    const result = await signInWithPassword({
+    await signInWithPassword({
       email: formData.email,
       password: formData.password,
     });

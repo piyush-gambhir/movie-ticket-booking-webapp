@@ -45,91 +45,86 @@ QuickNix is a movie booking web app built for the StarHack hackathon. It leverag
 
 ## Database Schema
 
-### Table: users
+### Movies Table
 
-| Column     | Type                                | Constraints      |
-| ---------- | ----------------------------------- | ---------------- |
-| id         | UUID                                | Primary Key      |
-| name       | VARCHAR(255)                        | Not Null         |
-| email      | VARCHAR(255)                        | Unique, Not Null |
-| password   | VARCHAR(255)                        | Not Null         |
-| phone      | JSONB                               |                  |
-| role       | ENUM('admin', 'user', 'superadmin') | Not Null         |
-| created_at | TIMESTAMP                           | Default: `now()` |
-| updated_at | TIMESTAMP                           |                  |
+| Column           | Type             | Constraints                                |
+| ---------------- | ---------------- | ------------------------------------------ |
+| id               | UUID             | Primary Key, Default: `uuid_generate_v4()` |
+| imdbId           | VARCHAR(255)     | Unique                                     |
+| title            | VARCHAR(255)     | Not Null                                   |
+| originalTitle    | VARCHAR(255)     | Not Null                                   |
+| backdropPath     | VARCHAR(255)     |                                            |
+| posterPath       | VARCHAR(255)     |                                            |
+| overview         | TEXT             |                                            |
+| releaseDate      | DATE             |                                            |
+| popularity       | DOUBLE PRECISION |                                            |
+| adult            | BOOLEAN          |                                            |
+| mediaType        | VARCHAR(50)      |                                            |
+| originalLanguage | VARCHAR(50)      |                                            |
+| voteAverage      | DOUBLE PRECISION |                                            |
+| voteCount        | INTEGER          |                                            |
+| createdAt        | TIMESTAMP        | Default: `now()`                           |
+| updatedAt        | TIMESTAMP        | Default: `CURRENT_TIMESTAMP`               |
 
-### Table: movies
+### Reservations Table
 
-| Column       | Type         | Constraints      |
-| ------------ | ------------ | ---------------- |
-| id           | UUID         | Primary Key      |
-| title        | VARCHAR(255) | Not Null         |
-| image_url    | VARCHAR(255) |                  |
-| language     | VARCHAR(50)  |                  |
-| genre        | VARCHAR(100) |                  |
-| director     | VARCHAR(100) |                  |
-| trailer_url  | VARCHAR(255) |                  |
-| description  | TEXT         |                  |
-| duration     | INTEGER      |                  |
-| release_date | DATE         | Not Null         |
-| end_date     | DATE         |                  |
-| created_at   | TIMESTAMP    | Default: `now()` |
-| updated_at   | TIMESTAMP    |                  |
+| Column        | Type                                      | Constraints                                |
+| ------------- | ----------------------------------------- | ------------------------------------------ |
+| id            | UUID                                      | Primary Key, Default: `uuid_generate_v4()` |
+| showtimeId    | UUID                                      | Not Null, References: `showtimes.id`       |
+| userId        | UUID                                      | Not Null, References: `users.id`           |
+| seats         | JSONB                                     | Not Null                                   |
+| orderId       | VARCHAR(100)                              | Unique                                     |
+| totalPrice    | DECIMAL(10, 2)                            | Not Null                                   |
+| customerName  | VARCHAR(100)                              | Not Null                                   |
+| customerPhone | VARCHAR(20)                               | Not Null                                   |
+| status        | ENUM('pending', 'confirmed', 'cancelled') | Not Null                                   |
+| createdAt     | TIMESTAMP                                 | Default: `now()`                           |
+| updatedAt     | TIMESTAMP                                 |                                            |
 
-### Table: theatres
+### Showtimes Table
 
-| Column         | Type         | Constraints      |
-| -------------- | ------------ | ---------------- |
-| id             | UUID         | Primary Key      |
-| name           | VARCHAR(255) | Not Null         |
-| address        | JSONB        | Not Null         |
-| total_seats    | INTEGER      | Not Null         |
-| seats          | JSONB        | Not Null         |
-| image_url      | VARCHAR(255) |                  |
-| contact_number | VARCHAR(20)  |                  |
-| email          | VARCHAR(100) |                  |
-| created_at     | TIMESTAMP    | Default: `now()` |
-| updated_at     | TIMESTAMP    |                  |
+| Column      | Type           | Constraints                                |
+| ----------- | -------------- | ------------------------------------------ |
+| id          | UUID           | Primary Key, Default: `uuid_generate_v4()` |
+| movieId     | UUID           | Not Null, References: `movies.id`          |
+| theatreId   | UUID           | Not Null, References: `theatres.id`        |
+| ticketPrice | DECIMAL(10, 2) | Not Null                                   |
+| startTime   | TIMESTAMP      | Not Null                                   |
+| endTime     | TIMESTAMP      | Not Null                                   |
+| createdAt   | TIMESTAMP      | Default: `now()`                           |
+| updatedAt   | TIMESTAMP      |                                            |
 
-### Table: showtimes
+### Theatres Table
 
-| Column       | Type          | Constraints                        |
-| ------------ | ------------- | ---------------------------------- |
-| id           | UUID          | Primary Key                        |
-| movie_id     | UUID          | Foreign Key: movies.id, Not Null   |
-| theatre_id   | UUID          | Foreign Key: theatres.id, Not Null |
-| ticket_price | DECIMAL(10,2) | Not Null                           |
-| start_time   | TIMESTAMP     | Not Null                           |
-| end_time     | TIMESTAMP     | Not Null                           |
-| created_at   | TIMESTAMP     | Default: `now()`                   |
-| updated_at   | TIMESTAMP     |                                    |
+| Column        | Type         | Constraints                                |
+| ------------- | ------------ | ------------------------------------------ |
+| id            | UUID         | Primary Key, Default: `uuid_generate_v4()` |
+| name          | VARCHAR(255) | Not Null                                   |
+| address       | JSONB        | Not Null                                   |
+| totalSeats    | INTEGER      | Not Null                                   |
+| seats         | JSONB        | Not Null, Default: `[]`                    |
+| imageUrl      | VARCHAR(255) |                                            |
+| contactNumber | VARCHAR(20)  |                                            |
+| email         | VARCHAR(100) |                                            |
+| createdAt     | TIMESTAMP    | Default: `now()`                           |
+| updatedAt     | TIMESTAMP    | Default: `CURRENT_TIMESTAMP`               |
 
-### Table: reservations
+### Users Table
 
-| Column         | Type                                      | Constraints                         |
-| -------------- | ----------------------------------------- | ----------------------------------- |
-| id             | UUID                                      | Primary Key                         |
-| showtime_id    | UUID                                      | Foreign Key: showtimes.id, Not Null |
-| user_id        | UUID                                      | Foreign Key: users.id, Not Null     |
-| seats          | JSONB                                     | Not Null                            |
-| order_id       | VARCHAR(100)                              | Unique                              |
-| total_price    | DECIMAL(10,2)                             | Not Null                            |
-| customer_name  | VARCHAR(100)                              | Not Null                            |
-| customer_phone | VARCHAR(20)                               | Not Null                            |
-| status         | ENUM('pending', 'confirmed', 'cancelled') | Not Null                            |
-| created_at     | TIMESTAMP                                 | Default: `now()`                    |
-| updated_at     | TIMESTAMP                                 |                                     |
-
-### Table: transactions
-
-| Column         | Type                                                            | Constraints                            |
-| -------------- | --------------------------------------------------------------- | -------------------------------------- |
-| id             | UUID                                                            | Primary Key                            |
-| reservation_id | UUID                                                            | Foreign Key: reservations.id, Not Null |
-| payment_id     | VARCHAR(100)                                                    | Unique                                 |
-| gateway        | VARCHAR(100)                                                    |                                        |
-| amount         | DECIMAL(10,2)                                                   | Not Null                               |
-| currency       | CHAR(3)                                                         | Not Null                               |
-| status         | ENUM('created', 'authorized', 'captured', 'refunded', 'failed') | Not Null                               |
-| created_at     | TIMESTAMP                                                       | Default: `now()`                       |
-| updated_at     | TIMESTAMP                                                       |                                        |
+| Column         | Type                                | Constraints                                |
+| -------------- | ----------------------------------- | ------------------------------------------ |
+| id             | UUID                                | Primary Key, Default: `uuid_generate_v4()` |
+| name           | TEXT                                | Not Null                                   |
+| email          | TEXT                                | Unique, Not Null                           |
+| emailVerified  | TIMESTAMP                           |                                            |
+| image          | TEXT                                |                                            |
+| password       | VARCHAR(255)                        |                                            |
+| phone          | JSONB                               |                                            |
+| dateOfBirth    | TIMESTAMP                           |                                            |
+| role           | ENUM('admin', 'user', 'superadmin') | Not Null                                   |
+| status         | ENUM('active', 'inactive')          | Not Null, Default: 'active'                |
+| gender         | ENUM('male', 'female', 'other')     |                                            |
+| marritalStatus | ENUM('single', 'married')           |                                            |
+| createdAt      | TIMESTAMP                           | Default: `now()`                           |
+| updatedAt      | TIMESTAMP                           |                                            |

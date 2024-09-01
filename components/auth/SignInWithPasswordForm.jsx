@@ -13,12 +13,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast"; // Import the useToast hook
 
 import { signInWithPassword } from "@/actions/auth/auth";
 
 import { signInWithPasswordSchema } from "@/lib/zod/auth";
 
 export default function SignInWithPasswordForm() {
+  const { toast } = useToast(); // Destructure the toast function from useToast
+
   const form = useForm({
     resolver: zodResolver(signInWithPasswordSchema),
     defaultValues: {
@@ -33,6 +36,28 @@ export default function SignInWithPasswordForm() {
       password: formData.password,
     });
     console.log(result);
+
+    if (result.error === "Invalid credentials!") {
+      toast({
+        title: "Error",
+        description: "Incorrect password",
+        variant: "destructive", // You can customize this according to your toast system
+      });
+    } else if (result.error === "Incorrect provider!") {
+      // Show toast for 404 response
+      toast({
+        title: "Error",
+        description: "User does not exist",
+        variant: "destructive", // You can customize this according to your toast system
+      });
+    } else if (result.error) {
+      // Show toast for any other non-200 response
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

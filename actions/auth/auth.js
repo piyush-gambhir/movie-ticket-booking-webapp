@@ -110,6 +110,7 @@ export async function signInWithPassword({ email, password }) {
     await signIn("credentials", {
       email: validatedInput.data.email,
       password: validatedInput.data.password,
+      redirect: false,
     });
     return {
       success: true,

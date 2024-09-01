@@ -1,0 +1,30 @@
+meta {
+  name: 3 Create A Movie
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base}}/v1/movies
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "imdbId": "tt1184243",
+    "title": "Jatt & Juliet 3",
+    "originalTitle": "ਜੱਟ ਐਂਡ ਜੂਲੀਅਟ 3",
+    "backdropPath": "/euWymDOgudS7BzwjMY0rLVa08v9.jpg",
+    "posterPath": "/sZl16hpuT09oVWPhL3JeRRUfTOf.jpg",
+    "overview": "A police officer aspires to marry his well-off boss and joins her on a trip to the UK to track down a woman.",
+    "releaseDate": "2024-06-27",
+    "popularity": 9.649,
+    "adult": false,
+    "mediaType": "movie",
+    "originalLanguage": "pa",
+    "voteAverage": 8,
+    "voteCount": 3
+  }
+  
+}

@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuickNix 🎬
 
-## Getting Started
+QuickNix is a movie booking web app built for the StarHack hackathon. It leverages modern technologies like Next.js, shadcn, PostgreSQL, and Recoil to provide a seamless and responsive user experience. While we were able to implement most of the required features, the payment and reservation functionalities were not completed due to time constraints.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Movie Listings**: Browse through a wide selection of movies using data from the TMDB API.
+- **Search Functionality**: Quickly find your favorite movies.
+- **User Authentication**: Secure login and sign-up features.
+- **Movie Details**: Detailed information about each movie, including trailers, ratings, and more.
+- **Booking Interface**: Intuitive UI for selecting seats (reservation feature not fully implemented).
+- **Admin Panel Authentication**: Secure access to the admin panel for managing movies and bookings.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Frontend**: [Next.js](https://nextjs.org/), [shadcn](https://shadcn.dev/), [Recoil](https://recoiljs.org/)
+- **Backend**: [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
+- **Validations:** Zod
+- **Database**: [PostgreSQL](https://www.postgresql.org/) via [Neon](https://neon.tech/)
+- **Hosting**: [Amazon EC2](https://aws.amazon.com/ec2/)
+- **APIs**: [TMDB API](https://www.themoviedb.org/documentation/api)
+- **Containerization**: [Docker](https://www.docker.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Setup Instructions
 
-## Learn More
+1. **Clone the repository**:
+   git clone https://github.com/your-repo/quicknix.git
+   cd quicknix
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**:
+   pnpm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run the development server**:
+   pnpm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. **Environment Variables**:
+   - The `.env` file is included in the source code package. There should be no issues setting up the environment.
 
-## Deploy on Vercel
+## Known Issues
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Payment Integration**: Not implemented.
+- **Reservation System**: Not implemented.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## Database Schema
+
+### Movies Table
+
+| Column           | Type             | Constraints                                |
+| ---------------- | ---------------- | ------------------------------------------ |
+| id               | UUID             | Primary Key, Default: `uuid_generate_v4()` |
+| imdbId           | VARCHAR(255)     | Unique                                     |
+| title            | VARCHAR(255)     | Not Null                                   |
+| originalTitle    | VARCHAR(255)     | Not Null                                   |
+| backdropPath     | VARCHAR(255)     |                                            |
+| posterPath       | VARCHAR(255)     |                                            |
+| overview         | TEXT             |                                            |
+| releaseDate      | DATE             |                                            |
+| popularity       | DOUBLE PRECISION |                                            |
+| adult            | BOOLEAN          |                                            |
+| mediaType        | VARCHAR(50)      |                                            |
+| originalLanguage | VARCHAR(50)      |                                            |
+| voteAverage      | DOUBLE PRECISION |                                            |
+| voteCount        | INTEGER          |                                            |
+| createdAt        | TIMESTAMP        | Default: `now()`                           |
+| updatedAt        | TIMESTAMP        | Default: `CURRENT_TIMESTAMP`               |
+
+### Reservations Table
+
+| Column        | Type                                      | Constraints                                |
+| ------------- | ----------------------------------------- | ------------------------------------------ |
+| id            | UUID                                      | Primary Key, Default: `uuid_generate_v4()` |
+| showtimeId    | UUID                                      | Not Null, References: `showtimes.id`       |
+| userId        | UUID                                      | Not Null, References: `users.id`           |
+| seats         | JSONB                                     | Not Null                                   |
+| orderId       | VARCHAR(100)                              | Unique                                     |
+| totalPrice    | DECIMAL(10, 2)                            | Not Null                                   |
+| customerName  | VARCHAR(100)                              | Not Null                                   |
+| customerPhone | VARCHAR(20)                               | Not Null                                   |
+| status        | ENUM('pending', 'confirmed', 'cancelled') | Not Null                                   |
+| createdAt     | TIMESTAMP                                 | Default: `now()`                           |
+| updatedAt     | TIMESTAMP                                 |                                            |
+
+### Showtimes Table
+
+| Column      | Type           | Constraints                                |
+| ----------- | -------------- | ------------------------------------------ |
+| id          | UUID           | Primary Key, Default: `uuid_generate_v4()` |
+| movieId     | UUID           | Not Null, References: `movies.id`          |
+| theatreId   | UUID           | Not Null, References: `theatres.id`        |
+| ticketPrice | DECIMAL(10, 2) | Not Null                                   |
+| startTime   | TIMESTAMP      | Not Null                                   |
+| endTime     | TIMESTAMP      | Not Null                                   |
+| createdAt   | TIMESTAMP      | Default: `now()`                           |
+| updatedAt   | TIMESTAMP      |                                            |
+
+### Theatres Table
+
+| Column        | Type         | Constraints                                |
+| ------------- | ------------ | ------------------------------------------ |
+| id            | UUID         | Primary Key, Default: `uuid_generate_v4()` |
+| name          | VARCHAR(255) | Not Null                                   |
+| address       | JSONB        | Not Null                                   |
+| totalSeats    | INTEGER      | Not Null                                   |
+| seats         | JSONB        | Not Null, Default: `[]`                    |
+| imageUrl      | VARCHAR(255) |                                            |
+| contactNumber | VARCHAR(20)  |                                            |
+| email         | VARCHAR(100) |                                            |
+| createdAt     | TIMESTAMP    | Default: `now()`                           |
+| updatedAt     | TIMESTAMP    | Default: `CURRENT_TIMESTAMP`               |
+
+### Users Table
+
+| Column         | Type                                | Constraints                                |
+| -------------- | ----------------------------------- | ------------------------------------------ |
+| id             | UUID                                | Primary Key, Default: `uuid_generate_v4()` |
+| name           | TEXT                                | Not Null                                   |
+| email          | TEXT                                | Unique, Not Null                           |
+| emailVerified  | TIMESTAMP                           |                                            |
+| image          | TEXT                                |                                            |
+| password       | VARCHAR(255)                        |                                            |
+| phone          | JSONB                               |                                            |
+| dateOfBirth    | TIMESTAMP                           |                                            |
+| role           | ENUM('admin', 'user', 'superadmin') | Not Null                                   |
+| status         | ENUM('active', 'inactive')          | Not Null, Default: 'active'                |
+| gender         | ENUM('male', 'female', 'other')     |                                            |
+| marritalStatus | ENUM('single', 'married')           |                                            |
+| createdAt      | TIMESTAMP                           | Default: `now()`                           |
+| updatedAt      | TIMESTAMP                           |                                            |

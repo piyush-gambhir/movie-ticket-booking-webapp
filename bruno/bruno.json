@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "movie-ticket-booking-webapp",
+  "type": "collection",
+  "ignore": ["node_modules", ".git"]
+}

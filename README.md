@@ -2,6 +2,11 @@
 
 QuickNix is a movie booking web app built for the StarHack hackathon. It leverages modern technologies like Next.js, shadcn, PostgreSQL, and Recoil to provide a seamless and responsive user experience. While we were able to implement most of the required features, the payment and reservation functionalities were not completed due to time constraints.
 
+## Important Links
+
+- **Live Demo**: [https://movie-webapp.vasujain.me](https://movie-webapp.vasujain.me/)
+- **GitHub Repository**: [https://github.com/piyush-gambhir/movie-ticket-booking-webapp](https://github.com/piyush-gambhir/movie-ticket-booking-webapp)
+
 ## Features
 
 - **Movie Listings**: Browse through a wide selection of movies using data from the TMDB API.

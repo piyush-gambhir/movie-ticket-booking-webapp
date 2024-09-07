@@ -14,7 +14,7 @@ function MovieCard({ movie, onBookClick }) {
       <CardContent className="p-0">
         <div className="relative aspect-[2/3]">
           <Image
-            src={`https://image.tmdb.org/t/p/w500${movie.posterPath}`}
+            src={movie.posterPath}
             alt={movie.title}
             fill
             className="object-cover"

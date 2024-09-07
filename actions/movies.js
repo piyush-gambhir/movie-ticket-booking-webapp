@@ -114,7 +114,6 @@ export async function addMovie({ movieData }) {
 
 export async function updateMovie({ movieData }) {
   try {
-    console.log("movieData", movieData);
     const validatedData = updateMovieSchema.parse(movieData);
 
     if (!validatedData.id) {

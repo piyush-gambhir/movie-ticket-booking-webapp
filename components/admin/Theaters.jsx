@@ -64,7 +64,7 @@ export default function Theaters() {
 
   useEffect(() => {
     fetchTheaters();
-  }, [query, sorting, page]);
+  }, [query, sorting, page, fetchTheaters]);
 
   const fetchTheaters = async () => {
     setIsLoading(true);

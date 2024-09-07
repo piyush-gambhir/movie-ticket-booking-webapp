@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { eq, ilike, asc, desc, count } from "drizzle-orm";
+import { eq, ilike, asc, desc, count, and, ne } from "drizzle-orm"; // import 'and' and 'ne' for new conditions
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -28,13 +28,26 @@ export async function GET(request) {
       queryParams.sort === "title"
         ? movies.title
         : queryParams.sort === "releaseDate"
-          ? movies.releaseDate // Add this line for release date sorting
+          ? movies.releaseDate
           : movies.createdAt;
 
     // Build query condition
     let whereCondition = undefined;
     if (queryParams.query) {
       whereCondition = ilike(movies.title, `%${queryParams.query}%`);
+    }
+
+    // Add additional conditions for backdropPath and posterPath
+    const pathCondition = and(
+      ne(movies.backdropPath, "https://image.tmdb.org/t/p/w500/None"),
+      ne(movies.posterPath, "https://image.tmdb.org/t/p/w500/None"),
+    );
+
+    // Combine conditions if query is present
+    if (whereCondition) {
+      whereCondition = and(whereCondition, pathCondition);
+    } else {
+      whereCondition = pathCondition;
     }
 
     const totalMoviesResult = await db
@@ -50,22 +63,28 @@ export async function GET(request) {
       .select()
       .from(movies)
       .where(whereCondition)
-      .orderBy(sortOrder(sortField)) // Correct usage of sorting function
+      .orderBy(sortOrder(sortField))
       .limit(queryParams.limit)
       .offset(offset)
       .execute();
 
-    return NextResponse.json({
-      data: allMovies,
-      pagination: {
-        currentPage: queryParams.page,
-        limit: queryParams.limit,
-        totalPages: totalPages,
+    return NextResponse.json(
+      {
+        data: allMovies,
+        pagination: {
+          currentPage: queryParams.page,
+          limit: queryParams.limit,
+          totalPages: totalPages,
+        },
       },
-    });
+      {
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+        },
+      },
+    );
   } catch (error) {
     console.error("Error in GET handler:", error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }

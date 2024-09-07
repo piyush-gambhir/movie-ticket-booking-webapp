@@ -3,8 +3,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
-import MovieCard from "@/components/common/MovieCard";
-
 import { getMovies } from "@/actions/movies";
 
 import {
@@ -16,6 +14,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+
+import MovieCard from "@/components/common/MovieCard";
+import MovieCardSkeleton from "@/components/common/MovieCardSkeleton";
 
 const FilterBar = ({ genres, onFilterChange }) => {
   return (
@@ -82,35 +83,24 @@ export default function Movies() {
   });
   const [page, setPage] = useState(1);
   const [moviesPerPage] = useState(20);
-  const [sorting, setSorting] = useState({
-    sort: "releaseDate",
-    order: "asc",
-  });
+
   const router = useRouter();
 
-  // Hardcoded genres data
   const genresData = [
     { id: 28, name: "Action" },
     { id: 35, name: "Comedy" },
     { id: 18, name: "Drama" },
     { id: 10749, name: "Romance" },
     { id: 27, name: "Horror" },
-    // Add more genres as needed
   ];
 
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
-      const result = await getMovies({
-        page,
-        limit: moviesPerPage,
-        sort: sorting.sort,
-        order: sorting.order,
-      });
+      const result = await getMovies({});
       if (result.success) {
         setMovies(result.data.movies);
         setPagination(result.data.pagination);
-        console.log(result.data.pagination);
       } else {
         setError(result.error);
       }
@@ -118,15 +108,7 @@ export default function Movies() {
     };
 
     fetchMovies();
-  }, [
-    page,
-    moviesPerPage,
-    sorting.sort,
-    sorting.order,
-    filters.genres,
-    filters.releaseYear,
-    filters.popularity,
-  ]);
+  }, [page]);
 
   const handleFilterChange = (type, value, checked) => {
     setFilters((prevFilters) => {
@@ -142,8 +124,24 @@ export default function Movies() {
 
       return newFilters;
     });
-    setPage(1); // Reset to first page when filters change
+    setPage(1);
   };
+
+  const filteredMovies = useMemo(() => {
+    return movies.filter((movie) => {
+      const matchGenre =
+        filters.genres.length === 0 ||
+        movie.genre_ids.some((genre) => filters.genres.includes(genre));
+      const matchYear =
+        !filters.releaseYear ||
+        movie.releaseDate.split("-")[0] === filters.releaseYear;
+      const matchPopularity =
+        !filters.popularity ||
+        movie.popularity >= parseFloat(filters.popularity);
+
+      return matchGenre && matchYear && matchPopularity;
+    });
+  }, [movies, filters]);
 
   const handleBookClick = (id) => {
     router.push(`${process.env.NEXT_PUBLIC_APP_URL}/movies/${id}`);
@@ -154,15 +152,17 @@ export default function Movies() {
       <FilterBar genres={genresData} onFilterChange={handleFilterChange} />
 
       <section className="ml-4 flex-1">
-        <h2 className="mb-4 text-2xl font-bold">Movies</h2>
-
         {loading ? (
-          <p>Loading...</p>
+          <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: moviesPerPage }).map((_, i) => (
+              <MovieCardSkeleton key={i} />
+            ))}
+          </div>
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
           <>
-            <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
               {movies.map((movie) => (
                 <MovieCard
                   key={movie.id}
@@ -174,7 +174,7 @@ export default function Movies() {
 
             {/* Pagination */}
             <Pagination className="mt-4">
-              <PaginationContent>
+              <PaginationContent className="">
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"

@@ -65,9 +65,11 @@ export default function Header({ user }) {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button type="submit" className="w-full">
-            <Link href="/signin">Login</Link>
-          </Button>
+          <Link href="/signin">
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+          </Link>
         )}
       </div>
     </div>

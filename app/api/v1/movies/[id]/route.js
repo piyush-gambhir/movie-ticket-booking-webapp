@@ -20,7 +20,11 @@ export async function GET(request, { params }) {
     if (movie.length === 0) {
       return NextResponse.json({ error: "Movie not found" }, { status: 404 });
     }
-    return NextResponse.json(movie[0]);
+    return NextResponse.json(movie[0], {
+      headers: {
+        "Cache-Control": "no-store, max-age=0",
+      },
+    });
   } catch (error) {
     console.error("Failed to fetch movie:", error);
     return NextResponse.json(

@@ -12,7 +12,7 @@ import {
 export async function getMovies({
   query = "",
   page = 1,
-  limit = 10,
+  limit = 20,
   sort = "releaseDate",
   order = "asc",
 }) {
@@ -33,6 +33,7 @@ export async function getMovies({
         sort: movieSearchParams.sort,
         order: movieSearchParams.order,
       })}`,
+      { cache: "no-store" },
     );
     if (!response.ok) {
       const errorData = await response.json();
@@ -62,6 +63,7 @@ export async function getMovie({ movieId }) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/movies/${movieId}`,
+      { cache: "no-store" },
     );
 
     if (!response.ok) {

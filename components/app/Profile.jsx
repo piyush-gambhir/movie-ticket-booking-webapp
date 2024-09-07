@@ -21,7 +21,7 @@ export default function Profile({ userDetails }) {
   const [user, setUser] = useState(userDetails);
   const [reservations, setReservations] = useState([]);
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto min-h-[80vh] py-10">
       <div className="grid gap-6">
         <Tabs defaultValue="profile" className="">
           <TabsList>

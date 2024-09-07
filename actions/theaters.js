@@ -33,6 +33,7 @@ export async function getTheaters({
         sort: theaterSearchParams.sort,
         order: theaterSearchParams.order,
       })}`,
+      { cache: "no-store" },
     );
 
     if (!response.ok) {
@@ -63,6 +64,7 @@ export async function getTheater({ theaterId }) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/theater/${theaterId}`,
+      { cache: "no-store" },
     );
 
     if (!response.ok) {

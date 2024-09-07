@@ -97,7 +97,13 @@ export default function Movies() {
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
-      const result = await getMovies({});
+      const result = await getMovies({
+        page: page,
+        query: "",
+        limit: moviesPerPage,
+        sort: "releaseDate",
+        order: "asc",
+      });
       if (result.success) {
         setMovies(result.data.movies);
         setPagination(result.data.pagination);
@@ -147,6 +153,38 @@ export default function Movies() {
     router.push(`${process.env.NEXT_PUBLIC_APP_URL}/movies/${id}`);
   };
 
+  // Pagination logic with ellipsis
+  const paginationRange = useMemo(() => {
+    const totalPagesToShow = 5; // Number of pagination items to show
+    const totalPages = pagination.totalPages || 1;
+    const currentPage = page;
+
+    if (totalPages <= totalPagesToShow) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const startPages = [1, 2]; // First pages to always show
+    const endPages = [totalPages - 1, totalPages]; // Last pages to always show
+    const middleRange = [];
+
+    if (currentPage > 2 && currentPage < totalPages - 1) {
+      middleRange.push(currentPage - 1, currentPage, currentPage + 1);
+    } else if (currentPage === 2) {
+      middleRange.push(currentPage, currentPage + 1);
+    } else if (currentPage === totalPages - 1) {
+      middleRange.push(currentPage - 1, currentPage);
+    }
+
+    // Merge everything together with ellipsis
+    return [
+      ...startPages,
+      currentPage > 3 ? "..." : null,
+      ...middleRange,
+      currentPage < totalPages - 2 ? "..." : null,
+      ...endPages,
+    ].filter(Boolean); // Remove null values
+  }, [pagination.totalPages, page]);
+
   return (
     <main className="container mx-auto flex min-h-screen px-4 py-8">
       <FilterBar genres={genresData} onFilterChange={handleFilterChange} />
@@ -163,7 +201,7 @@ export default function Movies() {
         ) : (
           <>
             <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {movies.map((movie) => (
+              {filteredMovies.map((movie) => (
                 <MovieCard
                   key={movie.id}
                   movie={movie}
@@ -182,18 +220,21 @@ export default function Movies() {
                     disabled={page === 1}
                   />
                 </PaginationItem>
-                {Array.from({ length: pagination.totalPages }, (_, i) => (
-                  <PaginationItem key={i}>
-                    <PaginationLink
-                      href="#"
-                      onClick={() => setPage(i + 1)}
-                      isActive={page === i + 1}
-                    >
-                      {i + 1}
-                    </PaginationLink>
+                {paginationRange.map((item, index) => (
+                  <PaginationItem key={index}>
+                    {typeof item === "number" ? (
+                      <PaginationLink
+                        href="#"
+                        onClick={() => setPage(item)}
+                        isActive={page === item}
+                      >
+                        {item}
+                      </PaginationLink>
+                    ) : (
+                      <PaginationEllipsis />
+                    )}
                   </PaginationItem>
                 ))}
-                {pagination.totalPages > 5 && <PaginationEllipsis />}
                 <PaginationItem>
                   <PaginationNext
                     href="#"

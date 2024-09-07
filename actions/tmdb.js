@@ -5,6 +5,7 @@ export async function fetchMovieData({ imdbId }) {
   const apiKey = process.env.TMDB_API_KEY;
   try {
     const response = await fetch(url, {
+      cache: "no-store",
       method: "GET",
       headers: {
         Authorization: `Bearer ${apiKey}`,

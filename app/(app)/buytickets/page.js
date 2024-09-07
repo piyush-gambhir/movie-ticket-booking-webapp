@@ -5,7 +5,7 @@ import auth from "@/lib/auth";
 
 import { DEFAULT_UNAUTHENTICATED_REDIRECT } from "@/routes";
 
-import BuyTickets from "@/components/buyTickets/BuyTickets";
+import BuyTickets from "@/components/app/buyTickets/BuyTickets";
 
 export default async function page() {
   const session = await auth();

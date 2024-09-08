@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { Menu, X, Search, User, LogOut, Settings, Ticket } from "lucide-react";
+import { User, LogOut, Settings, Ticket } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { ModeToggle } from "@/components/common/ModeToggle";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 export default function Header({ user }) {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function Header({ user }) {
     <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
         <Link href="/" className="object-contain">
-          <Image src={"/logo.png"} alt="Logo" width={80} height={50} />
+          <Image src={"/logo.png"} alt="Logo" width={40} height={50} />
         </Link>
       </div>
       <nav className="hidden space-x-4 md:flex">
@@ -57,7 +57,7 @@ export default function Header({ user }) {
         <Input type="text" placeholder="Search for movies" className="w-full" />
       </div>
       <div className="flex items-center gap-x-4">
-        <ModeToggle />
+        <ThemeToggle />
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger>

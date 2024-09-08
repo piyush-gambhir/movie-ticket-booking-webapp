@@ -1,5 +1,5 @@
 {
-  "id": "20eb3ad8-e2fb-49c4-af78-b4540f44d6ce",
+  "id": "df10b303-c471-4b0e-b33e-6991d467a3d7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -72,6 +72,12 @@
         "media_type": {
           "name": "media_type",
           "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "genres": {
+          "name": "genres",
+          "type": "varchar(255)[]",
           "primaryKey": false,
           "notNull": false
         },

@@ -15,61 +15,18 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 import MovieCard from "@/components/common/MovieCard";
 import MovieCardSkeleton from "@/components/common/MovieCardSkeleton";
-
-const FilterBar = ({ genres, onFilterChange }) => {
-  return (
-    <div className="h-full max-h-[60vh] w-full rounded-lg p-4 md:w-1/4">
-      <h3 className="mb-4 text-lg font-semibold">Filter By</h3>
-
-      {/* Genre Filter */}
-      <div className="mb-4">
-        <h4 className="text-md mb-2 font-semibold">Genre</h4>
-        <div className="flex flex-col">
-          {genres.map((genre) => (
-            <label key={genre.id} className="flex items-center">
-              <input
-                type="checkbox"
-                className="mr-2"
-                onChange={(e) =>
-                  onFilterChange("genre", genre.id, e.target.checked)
-                }
-              />
-              {genre.name}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Release Year Filter */}
-      <div className="mb-4">
-        <h4 className="text-md mb-2 font-semibold">Release Year</h4>
-        <input
-          type="number"
-          min="1900"
-          max={new Date().getFullYear()}
-          className="w-full rounded border p-2"
-          onChange={(e) => onFilterChange("releaseYear", e.target.value)}
-          placeholder="e.g. 2020"
-        />
-      </div>
-
-      {/* Popularity Filter */}
-      <div className="mb-4">
-        <h4 className="text-md mb-2 font-semibold">Popularity</h4>
-        <input
-          type="number"
-          min="0"
-          max="100"
-          className="w-full rounded border p-2"
-          onChange={(e) => onFilterChange("popularity", e.target.value)}
-          placeholder="e.g. 50"
-        />
-      </div>
-    </div>
-  );
-};
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -77,29 +34,26 @@ export default function Movies() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
-    genres: [],
-    releaseYear: "",
-    popularity: "",
+    search: "",
+    genre: "all",
+    rating: "all",
+    language: "all",
+    showTime: "all",
   });
   const [page, setPage] = useState(1);
   const [moviesPerPage] = useState(20);
 
   const router = useRouter();
 
-  const genresData = [
-    { id: 28, name: "Action" },
-    { id: 35, name: "Comedy" },
-    { id: 18, name: "Drama" },
-    { id: 10749, name: "Romance" },
-    { id: 27, name: "Horror" },
-  ];
-
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
       const result = await getMovies({
         page: page,
-        query: "",
+        query: filters.search,
+        genre: filters.genre !== "all" ? filters.genre : undefined,
+        rating: filters.rating !== "all" ? filters.rating : undefined,
+        language: filters.language !== "all" ? filters.language : undefined,
         limit: moviesPerPage,
         sort: "releaseDate",
         order: "asc",
@@ -114,48 +68,14 @@ export default function Movies() {
     };
 
     fetchMovies();
-  }, [page]);
-
-  const handleFilterChange = (type, value, checked) => {
-    setFilters((prevFilters) => {
-      const newFilters = { ...prevFilters };
-
-      if (type === "genre") {
-        newFilters.genres = checked
-          ? [...newFilters.genres, value]
-          : newFilters.genres.filter((id) => id !== value);
-      } else {
-        newFilters[type] = value;
-      }
-
-      return newFilters;
-    });
-    setPage(1);
-  };
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) => {
-      const matchGenre =
-        filters.genres.length === 0 ||
-        movie.genre_ids.some((genre) => filters.genres.includes(genre));
-      const matchYear =
-        !filters.releaseYear ||
-        movie.releaseDate.split("-")[0] === filters.releaseYear;
-      const matchPopularity =
-        !filters.popularity ||
-        movie.popularity >= parseFloat(filters.popularity);
-
-      return matchGenre && matchYear && matchPopularity;
-    });
-  }, [movies, filters]);
+  }, [page, filters]);
 
   const handleBookClick = (id) => {
     router.push(`${process.env.NEXT_PUBLIC_APP_URL}/movies/${id}`);
   };
 
-  // Pagination logic with ellipsis
   const paginationRange = useMemo(() => {
-    const totalPagesToShow = 5; // Number of pagination items to show
+    const totalPagesToShow = 5;
     const totalPages = pagination.totalPages || 1;
     const currentPage = page;
 
@@ -187,11 +107,78 @@ export default function Movies() {
 
   return (
     <main className="container mx-auto flex min-h-screen px-4 py-8">
-      <FilterBar genres={genresData} onFilterChange={handleFilterChange} />
+      <section className="flex-1">
+        {/* Filter Bar */}
+        <div className="mb-8 flex flex-col gap-4 md:flex-row">
+          <div className="flex-grow">
+            <Input
+              type="text"
+              placeholder="Search movies..."
+              value={filters.search}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, search: e.target.value }))
+              }
+              className="w-full"
+            />
+          </div>
+          <Select
+            value={filters.genre}
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, genre: value }))
+            }
+          >
+            <SelectTrigger className="w-full md:w-[180px]">
+              <SelectValue placeholder="Genre" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Genres</SelectItem>
+              <SelectItem value="Action">Action</SelectItem>
+              <SelectItem value="Comedy">Comedy</SelectItem>
+              <SelectItem value="Drama">Drama</SelectItem>
+              <SelectItem value="Sci-Fi">Sci-Fi</SelectItem>
+              <SelectItem value="Thriller">Thriller</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
+            value={filters.rating}
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, rating: value }))
+            }
+          >
+            <SelectTrigger className="w-full md:w-[180px]">
+              <SelectValue placeholder="Rating" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Ratings</SelectItem>
+              <SelectItem value="G">G</SelectItem>
+              <SelectItem value="PG">PG</SelectItem>
+              <SelectItem value="PG-13">PG-13</SelectItem>
+              <SelectItem value="R">R</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
+            value={filters.language}
+            onValueChange={(value) =>
+              setFilters((prev) => ({ ...prev, language: value }))
+            }
+          >
+            <SelectTrigger className="w-full md:w-[180px]">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Languages</SelectItem>
+              <SelectItem value="English">English</SelectItem>
+              <SelectItem value="Spanish">Spanish</SelectItem>
+              <SelectItem value="French">French</SelectItem>
+              <SelectItem value="Japanese">Japanese</SelectItem>
+              <SelectItem value="Korean">Korean</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-      <section className="ml-4 flex-1">
+        {/* Movies List */}
         {loading ? (
-          <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {Array.from({ length: moviesPerPage }).map((_, i) => (
               <MovieCardSkeleton key={i} />
             ))}
@@ -200,8 +187,8 @@ export default function Movies() {
           <p className="text-red-500">{error}</p>
         ) : (
           <>
-            <div className="3xl:grid-cols-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {filteredMovies.map((movie) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+              {movies.map((movie) => (
                 <MovieCard
                   key={movie.id}
                   movie={movie}

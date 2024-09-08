@@ -36,14 +36,10 @@ function MovieCard({ movie, onBookClick }) {
             <span className="text-xs text-muted-foreground">
               {movie.voteCount} votes
             </span>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => onBookClick(movie.id)}
-            >
-              Book
-            </Button>
           </div>
+          <Button className="mt-2 w-full" onClick={() => onBookClick(movie.id)}>
+            Book
+          </Button>
         </div>
       </CardContent>
     </Card>

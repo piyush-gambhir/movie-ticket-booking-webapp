@@ -20,7 +20,7 @@ export default function MoviePage({ movieData, theaters }) {
         <div className="md:col-span-1">
           <div className="relative h-[600px] w-[400px] overflow-hidden rounded-lg shadow-lg">
             <Image
-              src={`https://image.tmdb.org/t/p/w500${movieData.posterPath}`}
+              src={movieData.posterPath}
               alt={`${movieData.title} poster`}
               fill
               className="object-cover transition-all duration-300 hover:scale-105"
@@ -76,7 +76,7 @@ export default function MoviePage({ movieData, theaters }) {
             <h2 className="text-primary-900 text-2xl font-semibold">
               Select Theater and Showtime
             </h2>
-            <ScrollArea className="border-primary-200 h-[300px] rounded-md border p-4">
+            <ScrollArea className="border-primary-200 h-[300px] w-4 rounded-md border p-4">
               {theaters.map((theater) => (
                 <Card key={theater.id} className="bg-primary-100 mb-4">
                   <CardContent className="p-4">

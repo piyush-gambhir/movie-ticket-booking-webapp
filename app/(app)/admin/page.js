@@ -10,7 +10,6 @@ export default async function page() {
     return notFound();
   }
   const currentRole = await getCurrentRole();
-
   if (currentRole === "user") {
     return notFound();
   }

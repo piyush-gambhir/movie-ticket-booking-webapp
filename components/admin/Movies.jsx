@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Pencil, Trash2, Loader2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,11 +49,14 @@ export default function Movies() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [sorting, setSorting] = useState({ sort: "dateAdded", order: "desc" });
+  const [sorting, setSorting] = useState({
+    sort: "releaseDate",
+    order: "desc",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    limit: 10,
+    limit: 20,
     totalPages: 1,
   });
 
@@ -65,7 +68,7 @@ export default function Movies() {
     const { success, data, error } = await getMovies({
       query,
       page,
-      limit: 10,
+      limit: 20,
       sort: sorting.sort,
       order: sorting.order,
     });
@@ -102,6 +105,42 @@ export default function Movies() {
     setIsMovieDialogOpen(false);
     setEditingMovie(null);
   };
+
+  const handleSortingChange = (newSorting) => {
+    setSorting(newSorting);
+  };
+
+  // Pagination logic with ellipsis
+  const paginationRange = useMemo(() => {
+    const totalPagesToShow = 5; // Number of pagination items to show
+    const totalPages = pagination.totalPages;
+    const currentPage = page;
+
+    if (totalPages <= totalPagesToShow) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const startPages = [1, 2]; // First pages to always show
+    const endPages = [totalPages - 1, totalPages]; // Last pages to always show
+    const middleRange = [];
+
+    if (currentPage > 2 && currentPage < totalPages - 1) {
+      middleRange.push(currentPage - 1, currentPage, currentPage + 1);
+    } else if (currentPage === 2) {
+      middleRange.push(currentPage, currentPage + 1);
+    } else if (currentPage === totalPages - 1) {
+      middleRange.push(currentPage - 1, currentPage);
+    }
+
+    // Merge everything together with ellipsis
+    return [
+      ...startPages,
+      currentPage > 3 ? "..." : null,
+      ...middleRange,
+      currentPage < totalPages - 2 ? "..." : null,
+      ...endPages,
+    ].filter(Boolean); // Remove null values
+  }, [pagination.totalPages, page]);
 
   return (
     <>
@@ -150,6 +189,20 @@ export default function Movies() {
                 }
               >
                 Date Added Descending
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  handleSortingChange({ sort: "releaseDate", order: "asc" })
+                }
+              >
+                Release Date Ascending
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  handleSortingChange({ sort: "releaseDate", order: "desc" })
+                }
+              >
+                Release Date Descending
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -261,18 +314,21 @@ export default function Movies() {
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             />
           </PaginationItem>
-          {Array.from({ length: pagination.totalPages }, (_, i) => (
-            <PaginationItem key={i}>
-              <PaginationLink
-                href="#"
-                onClick={() => setPage(i + 1)}
-                isActive={page === i + 1}
-              >
-                {i + 1}
-              </PaginationLink>
+          {paginationRange.map((item, index) => (
+            <PaginationItem key={index}>
+              {typeof item === "number" ? (
+                <PaginationLink
+                  href="#"
+                  onClick={() => setPage(item)}
+                  isActive={page === item}
+                >
+                  {item}
+                </PaginationLink>
+              ) : (
+                <PaginationEllipsis />
+              )}
             </PaginationItem>
           ))}
-          {pagination.totalPages > 5 && <PaginationEllipsis />}
           <PaginationItem>
             <PaginationNext
               href="#"

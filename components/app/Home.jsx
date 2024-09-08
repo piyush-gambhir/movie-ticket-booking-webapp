@@ -44,7 +44,7 @@ export default function Home({ moviesData }) {
             >
               <div className="relative aspect-[21/9] overflow-hidden rounded-lg">
                 <Image
-                  src={`https://image.tmdb.org/t/p/original${movie?.backdropPath}`}
+                  src={movie?.backdropPath}
                   alt={movie?.title}
                   fill
                   className="object-cover"

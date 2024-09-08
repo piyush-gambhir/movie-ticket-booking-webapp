@@ -27,6 +27,7 @@ export const getUserByEmail = async ({ email }) => {
     }
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user/${validatedInput.data.email}`,
+      { cache: "no-store" },
     );
     const user = await response.json();
     return user;

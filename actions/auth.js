@@ -23,7 +23,6 @@ export async function signUpWithPassword({ email, password, name }) {
       email: email,
       password: password,
     });
-
     if (!validatedInput.success) {
       return { error: "Invalid fields!" };
     }
@@ -31,9 +30,10 @@ export async function signUpWithPassword({ email, password, name }) {
       email: validatedInput.data.email,
     });
 
-    if (existingUser) {
+    if (!existingUser?.error) {
       return { error: "Email already in use!" };
     }
+
     const newUser = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/user`,
       {
@@ -45,7 +45,6 @@ export async function signUpWithPassword({ email, password, name }) {
         }),
       },
     ).then((res) => res.json());
-
     // const emailSent = await resend.emails.send({
     //   from: env.RESEND_EMAIL_FROM,
     //   to: [validatedInput.data.email],
@@ -64,7 +63,15 @@ export async function signUpWithPassword({ email, password, name }) {
     //   redirect: false,
     // });
 
-    return newUser ? { success: true } : { error: "Error signing up!" };
+    if (newUser.error) {
+      return { error: newUser.error };
+    }
+
+    await signIn("credentials", {
+      email: validatedInput.data.email,
+      password: validatedInput.data.password,
+      redirect: false,
+    });
   } catch (error) {
     console.error(error);
     throw new Error("Error signing up with password");

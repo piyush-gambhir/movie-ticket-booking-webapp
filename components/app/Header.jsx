@@ -2,9 +2,20 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-import { User, LogOut, Settings, Ticket } from "lucide-react";
+import {
+  User,
+  LogOut,
+  Settings,
+  Ticket,
+  House,
+  Clapperboard,
+  HandCoins,
+  Film,
+} from "lucide-react";
+
+import { cn } from "@/lib/utils/cn";
 
 import {
   DropdownMenu,
@@ -15,13 +26,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 export default function Header({ user }) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const handleLogout = async () => {
     router.push("/signout");
   };
@@ -30,32 +42,52 @@ export default function Header({ user }) {
     <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
         <Link href="/" className="object-contain">
-          <Image src={"/logo.png"} alt="Logo" width={40} height={50} />
+          <Image src={"/logo.png"} alt="Logo" width={40} height={40} />
         </Link>
       </div>
       <nav className="hidden space-x-4 md:flex">
         <Link
-          href="/movies"
-          className="text-foreground transition-colors hover:text-primary"
+          href="/"
+          className={cn(
+            "flex items-center gap-x-2 rounded-full px-3 py-1 text-foreground transition-colors",
+            pathname === "/" && "bg-primary text-background",
+          )}
         >
+          <House className="h-4 w-4" />
+          Home
+        </Link>
+        <Link
+          href="/movies"
+          className={cn(
+            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
+            pathname === "/movies" && "bg-primary text-background",
+          )}
+        >
+          <Film className="h-4 w-4" />
           Movies
         </Link>
         <Link
-          href="/theaters"
-          className="text-foreground transition-colors hover:text-primary"
+          href="/cinemas"
+          className={cn(
+            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
+            pathname === "/cinemas" && "bg-primary text-background",
+          )}
         >
-          Theaters
+          <Clapperboard className="h-4 w-4" />
+          Cinemas
         </Link>
         <Link
           href="/offers"
-          className="text-foreground transition-colors hover:text-primary"
+          className={cn(
+            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
+            pathname === "/offers" && "bg-primary text-background",
+          )}
         >
+          <HandCoins className="h-4 w-4" />
           Offers
         </Link>
       </nav>
-      <div className="max-w-md flex-1">
-        <Input type="text" placeholder="Search for movies" className="w-full" />
-      </div>
+
       <div className="flex items-center gap-x-4">
         <ThemeToggle />
         {user ? (

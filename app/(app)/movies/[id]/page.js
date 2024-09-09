@@ -1,6 +1,6 @@
 import React from "react";
 
-import MoviePage from "@/components/app/MoviePage";
+import MoviePage from "@/components/app/movies/MoviePage";
 
 import { getMovie } from "@/actions/movies";
 

@@ -50,7 +50,7 @@ export default function Header({ user }) {
           href="/"
           className={cn(
             "flex items-center gap-x-2 rounded-full px-3 py-1 text-foreground transition-colors",
-            pathname === "/" && "bg-primary text-background",
+            pathname === "/" && "bg-primary",
           )}
         >
           <House className="h-4 w-4" />
@@ -60,7 +60,7 @@ export default function Header({ user }) {
           href="/movies"
           className={cn(
             "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/movies" && "bg-primary text-background",
+            pathname === "/movies" && "bg-primary",
           )}
         >
           <Film className="h-4 w-4" />
@@ -70,7 +70,7 @@ export default function Header({ user }) {
           href="/cinemas"
           className={cn(
             "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/cinemas" && "bg-primary text-background",
+            pathname === "/cinemas" && "bg-primary",
           )}
         >
           <Clapperboard className="h-4 w-4" />
@@ -80,7 +80,7 @@ export default function Header({ user }) {
           href="/offers"
           className={cn(
             "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/offers" && "bg-primary text-background",
+            pathname === "/offers" && "bg-primary",
           )}
         >
           <HandCoins className="h-4 w-4" />

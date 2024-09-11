@@ -140,12 +140,13 @@ export default function Movies() {
                   />
                 </PaginationItem>
                 {paginationRange.map((item, index) => (
-                  <PaginationItem key={index}>
+                  <PaginationItem className="" key={index}>
                     {typeof item === "number" ? (
                       <PaginationLink
                         href="#"
                         onClick={() => setPage(item)}
                         isActive={page === item}
+                        className="!px-8"
                       >
                         {item}
                       </PaginationLink>
@@ -154,7 +155,7 @@ export default function Movies() {
                     )}
                   </PaginationItem>
                 ))}
-                <PaginationItem>
+                <PaginationItem className="">
                   <PaginationNext
                     href="#"
                     onClick={() =>
@@ -162,6 +163,7 @@ export default function Movies() {
                         Math.min(prev + 1, pagination.totalPages),
                       )
                     }
+                    className="!px-8"
                     disabled={page === pagination.totalPages}
                   />
                 </PaginationItem>

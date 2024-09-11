@@ -41,16 +41,16 @@ export default function Header({ user }) {
   return (
     <div className="sticky top-0 z-10 flex w-full items-center justify-between gap-x-4 border-b border-b-black/10 bg-background px-8 py-4 text-foreground dark:border-b-white/10">
       <div className="flex items-center gap-x-4">
-        <Link href="/" className="object-contain">
-          <Image src={"/logo.png"} alt="Logo" width={40} height={40} />
+        <Link href="/" className="h-10 w-12 object-contain">
+          <Image src={"/logo.png"} alt="Logo" width={120} height={40} />
         </Link>
       </div>
       <nav className="hidden space-x-4 md:flex">
         <Link
           href="/"
           className={cn(
-            "flex items-center gap-x-2 rounded-full px-3 py-1 text-foreground transition-colors",
-            pathname === "/" && "bg-primary",
+            "flex items-center gap-x-2 rounded-full px-4 py-2 text-foreground transition-colors",
+            pathname === "/" && "bg-primary text-white",
           )}
         >
           <House className="h-4 w-4" />
@@ -59,8 +59,8 @@ export default function Header({ user }) {
         <Link
           href="/movies"
           className={cn(
-            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/movies" && "bg-primary",
+            "flex items-center gap-x-2 rounded-full px-4 py-2 text-foreground transition-colors",
+            pathname === "/movies" && "bg-primary text-white",
           )}
         >
           <Film className="h-4 w-4" />
@@ -69,8 +69,8 @@ export default function Header({ user }) {
         <Link
           href="/cinemas"
           className={cn(
-            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/cinemas" && "bg-primary",
+            "flex items-center gap-x-2 rounded-full px-4 py-2 text-foreground transition-colors",
+            pathname === "/cinemas" && "bg-primary text-white",
           )}
         >
           <Clapperboard className="h-4 w-4" />
@@ -79,8 +79,8 @@ export default function Header({ user }) {
         <Link
           href="/offers"
           className={cn(
-            "flex items-center gap-x-2 rounded-full px-2 py-1 text-foreground transition-colors",
-            pathname === "/offers" && "bg-primary",
+            "flex items-center gap-x-2 rounded-full px-4 py-2 text-foreground transition-colors",
+            pathname === "/offers" && "bg-primary text-white",
           )}
         >
           <HandCoins className="h-4 w-4" />

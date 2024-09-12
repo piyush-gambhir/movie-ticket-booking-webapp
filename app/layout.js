@@ -6,6 +6,8 @@ import Providers from "@/providers/providers";
 
 import { Toaster } from "@/components/ui/toaster";
 
+import { env } from "@/env";
+
 import "./globals.css";
 
 export const metadata = {
@@ -16,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <GoogleTagManager gtmId="GTM-M5TXSH7R" />
+      <GoogleTagManager gtmId={env.GoogleTagManager} />
       <body className={Inter.className}>
         <Providers>
           {children}

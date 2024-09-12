@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { sendGTMEvent } from "@next/third-parties/google";
+
 import { StarIcon } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +15,13 @@ export default function MoviePage({ movieData, theaters }) {
   const [selectedShowtime, setSelectedShowtime] = useState(null);
   const [selectedTheater, setSelectedTheater] = useState(null);
 
-  const genres = movieData.genres || ["Comedy", "Horror"]; // Use actual genres if available
+  const genres = movieData?.genres || [];
+
+  sendGTMEvent({
+    event: "movie_view",
+    movieId: movieData?.id,
+    movieName: movieData?.name,
+  });
 
   return (
     <div className="bg-primary-50 container mx-auto px-4 py-8">
@@ -20,8 +29,8 @@ export default function MoviePage({ movieData, theaters }) {
         <div className="md:col-span-1">
           <div className="relative h-[600px] w-[400px] overflow-hidden rounded-lg shadow-lg">
             <Image
-              src={movieData.posterPath}
-              alt={`${movieData.title} poster`}
+              src={movieData?.posterPath}
+              alt={`${movieData?.title} poster`}
               fill
               className="object-cover transition-all duration-300 hover:scale-105"
             />
@@ -30,14 +39,14 @@ export default function MoviePage({ movieData, theaters }) {
         <div className="space-y-8 md:col-span-2">
           <div className="space-y-2">
             <h1 className="text-primary-900 text-4xl font-bold">
-              {movieData.title}
+              {movieData?.title}
             </h1>
             <p className="text-primary-700 text-xl">
-              {movieData.originalTitle}
+              {movieData?.originalTitle}
             </p>
             <div className="flex items-center space-x-2">
               <p className="text-primary-600 text-sm">
-                {new Date(movieData.releaseDate).getFullYear()}
+                {new Date(movieData?.releaseDate).getFullYear()}
               </p>
               {genres.map((genre) => (
                 <Badge

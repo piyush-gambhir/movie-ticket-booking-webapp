@@ -38,7 +38,7 @@ function MovieCard({ movie, onBookClick }) {
             </span>
           </div>
           <Button className="mt-2 w-full" onClick={() => onBookClick(movie.id)}>
-            Book
+            Book Tickets
           </Button>
         </div>
       </CardContent>

@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 import { getMovies } from "@/actions/movies";
@@ -15,18 +14,9 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
 import MovieCard from "@/components/common/MovieCard";
 import MovieCardSkeleton from "@/components/common/MovieCardSkeleton";
+import SearchFilters from "@/components/app/movies/SearchFilters";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
@@ -41,7 +31,7 @@ export default function Movies() {
     showTime: "all",
   });
   const [page, setPage] = useState(1);
-  const [moviesPerPage] = useState(20);
+  const [moviesPerPage] = useState(30);
 
   const router = useRouter();
 
@@ -56,7 +46,7 @@ export default function Movies() {
         language: filters.language !== "all" ? filters.language : undefined,
         limit: moviesPerPage,
         sort: "releaseDate",
-        order: "asc",
+        order: "desc",
       });
       if (result.success) {
         setMovies(result.data.movies);
@@ -83,8 +73,8 @@ export default function Movies() {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    const startPages = [1, 2]; // First pages to always show
-    const endPages = [totalPages - 1, totalPages]; // Last pages to always show
+    const startPages = [1, 2];
+    const endPages = [totalPages - 1, totalPages];
     const middleRange = [];
 
     if (currentPage > 2 && currentPage < totalPages - 1) {
@@ -95,86 +85,28 @@ export default function Movies() {
       middleRange.push(currentPage - 1, currentPage);
     }
 
-    // Merge everything together with ellipsis
     return [
       ...startPages,
       currentPage > 3 ? "..." : null,
       ...middleRange,
       currentPage < totalPages - 2 ? "..." : null,
       ...endPages,
-    ].filter(Boolean); // Remove null values
+    ].filter(Boolean);
   }, [pagination.totalPages, page]);
+
+  const handleSearchChange = useCallback((value) => {
+    setFilters((prev) => ({ ...prev, search: value }));
+  }, []);
 
   return (
     <main className="container mx-auto flex min-h-screen px-4 py-8">
       <section className="flex-1">
-        {/* Filter Bar */}
-        <div className="mb-8 flex flex-col gap-4 md:flex-row">
-          <div className="flex-grow">
-            <Input
-              type="text"
-              placeholder="Search movies..."
-              value={filters.search}
-              onChange={(e) =>
-                setFilters((prev) => ({ ...prev, search: e.target.value }))
-              }
-              className="w-full"
-            />
-          </div>
-          <Select
-            value={filters.genre}
-            onValueChange={(value) =>
-              setFilters((prev) => ({ ...prev, genre: value }))
-            }
-          >
-            <SelectTrigger className="w-full md:w-[180px]">
-              <SelectValue placeholder="Genre" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Genres</SelectItem>
-              <SelectItem value="Action">Action</SelectItem>
-              <SelectItem value="Comedy">Comedy</SelectItem>
-              <SelectItem value="Drama">Drama</SelectItem>
-              <SelectItem value="Sci-Fi">Sci-Fi</SelectItem>
-              <SelectItem value="Thriller">Thriller</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            value={filters.rating}
-            onValueChange={(value) =>
-              setFilters((prev) => ({ ...prev, rating: value }))
-            }
-          >
-            <SelectTrigger className="w-full md:w-[180px]">
-              <SelectValue placeholder="Rating" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Ratings</SelectItem>
-              <SelectItem value="G">G</SelectItem>
-              <SelectItem value="PG">PG</SelectItem>
-              <SelectItem value="PG-13">PG-13</SelectItem>
-              <SelectItem value="R">R</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            value={filters.language}
-            onValueChange={(value) =>
-              setFilters((prev) => ({ ...prev, language: value }))
-            }
-          >
-            <SelectTrigger className="w-full md:w-[180px]">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Languages</SelectItem>
-              <SelectItem value="English">English</SelectItem>
-              <SelectItem value="Spanish">Spanish</SelectItem>
-              <SelectItem value="French">French</SelectItem>
-              <SelectItem value="Japanese">Japanese</SelectItem>
-              <SelectItem value="Korean">Korean</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Use the separated SearchFilters component */}
+        <SearchFilters
+          filters={filters}
+          setFilters={setFilters}
+          handleSearchChange={handleSearchChange}
+        />
 
         {/* Movies List */}
         {loading ? (
@@ -199,7 +131,7 @@ export default function Movies() {
 
             {/* Pagination */}
             <Pagination className="mt-4">
-              <PaginationContent className="">
+              <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"
@@ -208,12 +140,13 @@ export default function Movies() {
                   />
                 </PaginationItem>
                 {paginationRange.map((item, index) => (
-                  <PaginationItem key={index}>
+                  <PaginationItem className="" key={index}>
                     {typeof item === "number" ? (
                       <PaginationLink
                         href="#"
                         onClick={() => setPage(item)}
                         isActive={page === item}
+                        className="!px-8"
                       >
                         {item}
                       </PaginationLink>
@@ -222,7 +155,7 @@ export default function Movies() {
                     )}
                   </PaginationItem>
                 ))}
-                <PaginationItem>
+                <PaginationItem className="">
                   <PaginationNext
                     href="#"
                     onClick={() =>
@@ -230,6 +163,7 @@ export default function Movies() {
                         Math.min(prev + 1, pagination.totalPages),
                       )
                     }
+                    className="!px-8"
                     disabled={page === pagination.totalPages}
                   />
                 </PaginationItem>

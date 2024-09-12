@@ -12,9 +12,9 @@ import {
 export async function getMovies({
   query = "",
   page = 1,
-  limit = 20,
+  limit = 30,
   sort = "releaseDate",
-  order = "asc",
+  order = "desc",
 }) {
   try {
     const movieSearchParams = movieSearchSchema.parse({

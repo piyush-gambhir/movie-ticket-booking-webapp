@@ -58,7 +58,7 @@ export default function Home({ moviesData }) {
                       className="bg-red-600 text-white hover:bg-red-700"
                       onClick={() => handleBookClick(movie?.id)}
                     >
-                      Book &gt;
+                      Book Tickets
                     </Button>
                   </div>
                 </div>
@@ -66,10 +66,10 @@ export default function Home({ moviesData }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white">
+        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background">
           <ChevronLeft className="h-6 w-6 text-gray-800" />
         </CarouselPrevious>
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white">
+        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background">
           <ChevronRight className="h-6 w-6 text-gray-800" />
         </CarouselNext>
       </Carousel>

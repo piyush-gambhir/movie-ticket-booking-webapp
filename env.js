@@ -12,6 +12,8 @@ export const env = createEnv({
     AUTH_SECRET: z.string(),
     AUTH_GOOGLE_ID: z.string(),
     AUTH_GOOGLE_SECRET: z.string(),
+    RESEND_API_KEY: z.string(),
+    DRIZZLE_DATABASE_URL: z.string().url(),
   },
 
   /**

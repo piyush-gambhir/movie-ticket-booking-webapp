@@ -25,12 +25,12 @@ export default function NoCinemasAvailable() {
         <CardContent className="text-center">
           <p className="mb-4 text-muted-foreground">
             We couldn&apos;t find any cinemas matching your criteria. This could
-            be due to your current search filters or because we haven't added
-            any cinemas in your area yet.
+            be due to your current search filters or because we haven&apos;t
+            added any cinemas in your area yet.
           </p>
           <p className="text-muted-foreground">
-            Try adjusting your search or check back later as we're constantly
-            updating our cinema listings.
+            Try adjusting your search or check back later as we&apos;re
+            constantly updating our cinema listings.
           </p>
         </CardContent>
         <CardFooter className="flex flex-col justify-center gap-4 sm:flex-row">

@@ -22,9 +22,8 @@ export default function Error({ error, reset }) {
         {"500 - Technical Difficulties"}
       </h1>
       <p className="mb-8 max-w-md text-center text-xl md:text-2xl">
-        {
-          "We're experiencing some backstage trouble. Our crew is working to get the show back on track!"
-        }
+        We&apos;re experiencing some backstage trouble. Our crew is working to
+        get the show back on track!
       </p>
       <div className="flex flex-col gap-4 sm:flex-row">
         <Button

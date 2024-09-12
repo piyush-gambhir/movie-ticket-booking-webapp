@@ -11,7 +11,7 @@ export default function NotFound() {
         404 - Scene Not Found
       </h1>
       <p className="mb-8 max-w-md text-center text-xl md:text-2xl">
-        {"Oops! It looks like this ticket doesn't lead anywhere."}
+        Oops! It looks like this ticket doesn&apos;t lead anywhere.
       </p>
       <Link href="/" passHref>
         <Button className="transform rounded-full bg-red-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-red-600">

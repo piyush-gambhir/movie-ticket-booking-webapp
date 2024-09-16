@@ -14,6 +14,11 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     DRIZZLE_DATABASE_URL: z.string().url(),
+    TMDB_API_KEY: z.string(),
+    TYPESENSE_HOST: z.string(),
+    TYPESENSE_PORT: z.string(),
+    TYPESENSE_PROTOCOL: z.string(),
+    TYPESENSE_API_KEY: z.string(),
   },
 
   /**
@@ -23,7 +28,6 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
     NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: z.string(),
-    TMDB_API_KEY: z.string(),
   },
 
   /**
@@ -41,6 +45,10 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     TMDB_API_KEY: process.env.TMDB_API_KEY,
+    TYPESENSE_HOST: process.env.TYPESENSE_HOST,
+    TYPESENSE_PORT: process.env.TYPESENSE_PORT,
+    TYPESENSE_PROTOCOL: process.env.TYPESENSE_PROTOCOL,
+    TYPESENSE_API_KEY: process.env.TYPESENSE_API_KEY,
   },
   /**
    Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

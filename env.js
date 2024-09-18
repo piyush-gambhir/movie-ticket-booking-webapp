@@ -27,7 +27,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
-    NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: z.string(),
+    GOOGLE_TAG_MANAGER_ID: z.string(),
   },
 
   /**

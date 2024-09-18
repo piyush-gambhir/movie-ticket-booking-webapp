@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { sendGTMEvent } from "@next/third-parties/google";
 
@@ -17,11 +17,11 @@ export default function MoviePage({ movieData, theaters }) {
 
   const genres = movieData?.genres || [];
 
-  sendGTMEvent({
-    event: "movie_view",
-    movieId: movieData?.id,
-    movieName: movieData?.name,
-  });
+  useEffect(() => {
+    if (selectedShowtime) {
+      sendGTMEvent({ event: "movie_page_visited", value: "movieData?.id" });
+    }
+  }, []);
 
   return (
     <div className="bg-primary-50 container mx-auto px-4 py-8">

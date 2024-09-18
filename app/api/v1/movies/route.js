@@ -1,11 +1,12 @@
 import { z } from "zod";
-import { eq, ilike, asc, desc, count, and, ne } from "drizzle-orm"; // import 'and' and 'ne' for new conditions
+import { ilike, asc, desc, count, and, ne } from "drizzle-orm"; // import 'and' and 'ne' for new conditions
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { movies } from "@/lib/db/schema/movies.schema";
-
 import { addMovieSchema, movieSearchSchema } from "@/lib/zod/movie";
+import { addData } from "@/lib/typesense/actions/add-data";
+import { searchData } from "@/lib/typesense/actions/search-data";
 
 export async function GET(request) {
   try {
@@ -24,15 +25,17 @@ export async function GET(request) {
 
     // Determine sort order and field
     const sortOrder = queryParams.order === "asc" ? asc : desc;
-    const sortField =
-      queryParams.sort === "title"
-        ? movies.title
-        : queryParams.sort === "releaseDate"
-          ? movies.releaseDate
-          : movies.createdAt;
+    let sortField;
+    if (queryParams.sort === "title") {
+      sortField = movies.title;
+    } else if (queryParams.sort === "releaseDate") {
+      sortField = movies.releaseDate;
+    } else {
+      sortField = movies.createdAt;
+    }
 
     // Build query condition
-    let whereCondition = undefined;
+    let whereCondition;
     if (queryParams.query) {
       whereCondition = ilike(movies.title, `%${queryParams.query}%`);
     }
@@ -104,6 +107,7 @@ export async function POST(request) {
       .values(movieData)
       .returning()
       .execute();
+    await addData({ collectionName: "movies", documentData: newMovie });
     return NextResponse.json(newMovie);
   } catch (error) {
     if (error instanceof z.ZodError) {

@@ -49,7 +49,7 @@ const SeatSelection = () => {
         {Object.entries(rows).map(([row, seats]) => (
           <div
             key={row}
-            className="grid grid-cols-[20px_minmax(0,_1fr)] items-center"
+            className="grid grid-cols-[20px_minmax(0,1fr)] items-center"
           >
             <span className="font-bold">{row}</span>
             <div className="flex space-x-2">
@@ -59,7 +59,7 @@ const SeatSelection = () => {
                 return (
                   <div
                     key={seatId}
-                    className={`flex h-7 w-7 cursor-pointer items-center justify-center rounded border text-sm ${isSelected ? "bg-primary text-white" : "border-primary bg-white text-primary"}`}
+                    className={`flex h-7 w-7 cursor-pointer items-center justify-center rounded border text-sm ${isSelected ? "bg-primary text-white" : "border-primary text-primary bg-white"}`}
                     onClick={() => handleSeatClick(section, row, seatNumber)}
                   >
                     {seatNumber}

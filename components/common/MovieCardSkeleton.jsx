@@ -7,7 +7,7 @@ function MovieCardSkeleton() {
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative aspect-[2/3] bg-muted">
+        <div className="bg-muted relative aspect-2/3">
           <Skeleton className="absolute inset-0 h-full w-full" />
         </div>
         <div className="p-2">

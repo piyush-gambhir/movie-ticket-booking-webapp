@@ -146,7 +146,7 @@ export default function Movies() {
                         href="#"
                         onClick={() => setPage(item)}
                         isActive={page === item}
-                        className="!px-8"
+                        className="px-8!"
                       >
                         {item}
                       </PaginationLink>
@@ -163,7 +163,7 @@ export default function Movies() {
                         Math.min(prev + 1, pagination.totalPages),
                       )
                     }
-                    className="!px-8"
+                    className="px-8!"
                     disabled={page === pagination.totalPages}
                   />
                 </PaginationItem>

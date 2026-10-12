@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Payment() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background">
-      <div className="w-full max-w-4xl rounded-lg bg-card p-6 shadow-lg md:p-10">
+    <div className="bg-background flex min-h-screen flex-col items-center justify-center">
+      <div className="bg-card w-full max-w-4xl rounded-lg p-6 shadow-lg md:p-10">
         <div className="grid gap-8 md:grid-cols-2">
           <div>
             <div className="mb-4 flex items-center justify-between">
@@ -21,7 +21,7 @@ export default function Payment() {
                 Change Tickets
               </Link>
             </div>
-            <div className="rounded-lg bg-muted p-4">
+            <div className="bg-muted rounded-lg p-4">
               <div className="mb-2 flex items-center justify-between">
                 <div>
                   <h2 className="text-lg font-semibold">Avengers: Endgame</h2>
@@ -50,7 +50,7 @@ export default function Payment() {
                   />
                   <Label
                     htmlFor="payment-card"
-                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary has-data-[state=checked]:border-primary flex flex-col items-center justify-between rounded-md border-2 p-4"
                   >
                     <CreditCardIcon className="mb-3 h-6 w-6" />
                     Card
@@ -64,7 +64,7 @@ export default function Payment() {
                   />
                   <Label
                     htmlFor="payment-paypal"
-                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary has-data-[state=checked]:border-primary flex flex-col items-center justify-between rounded-md border-2 p-4"
                   >
                     <WalletCardsIcon className="mb-3 h-6 w-6" />
                     Wallet
@@ -78,7 +78,7 @@ export default function Payment() {
                   />
                   <Label
                     htmlFor="payment-apple"
-                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary has-data-[state=checked]:border-primary flex flex-col items-center justify-between rounded-md border-2 p-4"
                   >
                     <DollarSignIcon className="mb-3 h-6 w-6" />
                     Cash
@@ -117,7 +117,7 @@ export default function Payment() {
             </div>
           </div>
           <div>
-            <div className="rounded-lg bg-muted p-4">
+            <div className="bg-muted rounded-lg p-4">
               <h2 className="mb-2 text-lg font-semibold">Order Summary</h2>
               <div className="mb-2 flex items-center justify-between">
                 <p className="text-muted-foreground">Ticket Price</p>

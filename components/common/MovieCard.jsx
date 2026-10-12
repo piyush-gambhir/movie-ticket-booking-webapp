@@ -12,7 +12,7 @@ function MovieCard({ movie, onBookClick }) {
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative aspect-[2/3]">
+        <div className="relative aspect-2/3">
           <Image
             src={movie.posterPath}
             alt={movie.title}
@@ -33,7 +33,7 @@ function MovieCard({ movie, onBookClick }) {
             </Badge>
           </div>
           <div className="mt-2 flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               {movie.voteCount} votes
             </span>
           </div>

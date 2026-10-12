@@ -18,7 +18,7 @@ const SearchBar = ({ searchValue, onSearchChange, placeholder }) => {
   };
 
   return (
-    <div className="flex-grow">
+    <div className="grow">
       <Input
         type="text"
         placeholder={placeholder}

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm/expressions";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema/users.schema";
 
-export async function GET(request, { params }) {
+export async function GET(request, props) {
+  const params = await props.params;
   try {
     const { userEmail } = params;
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm/expressions";
+import { eq } from "drizzle-orm";
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema/users.schema";
@@ -42,7 +42,7 @@ export async function POST(request) {
     return NextResponse.json({ message: "User successfully created." });
   } catch (error) {
     if (error.name === "ZodError") {
-      return NextResponse.json({ errors: error.errors }, { status: 400 });
+      return NextResponse.json({ errors: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -69,13 +69,14 @@ export async function PUT(request, { params }) {
     }
   } catch (error) {
     if (error.name === "ZodError") {
-      return NextResponse.json({ errors: error.errors }, { status: 400 });
+      return NextResponse.json({ errors: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(request, props) {
+  const params = await props.params;
   if (!getServerSession()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

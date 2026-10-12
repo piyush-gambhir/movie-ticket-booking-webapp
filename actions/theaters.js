@@ -54,7 +54,7 @@ export async function getTheaters({
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -108,7 +108,7 @@ export async function addTheater({ theaterData }) {
     return { success: true, data: newTheater };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -145,7 +145,7 @@ export async function updateTheater({ theaterData }) {
     return { success: true, data: updatedTheater };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -178,7 +178,7 @@ export async function deleteTheater({ theaterId }) {
     return { success: true, message: message };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }

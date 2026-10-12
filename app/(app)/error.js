@@ -13,9 +13,9 @@ export default function Error({ error, reset }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b p-4 text-foreground">
+    <div className="text-foreground flex min-h-screen flex-col items-center justify-center bg-linear-to-b p-4">
       <Clapperboard
-        className="mb-8 h-24 w-24 animate-pulse text-primary"
+        className="text-primary mb-8 h-24 w-24 animate-pulse"
         aria-hidden="true"
       />
       <h1 className="mb-4 text-center text-4xl font-bold md:text-6xl">
@@ -34,7 +34,7 @@ export default function Error({ error, reset }) {
           Try Again
         </Button>
         <Link href="/" passHref>
-          <Button className="transform rounded-full bg-secondary px-4 py-2 font-bold text-foreground transition duration-300 ease-in-out hover:scale-105 hover:bg-secondary">
+          <Button className="bg-secondary text-foreground hover:bg-secondary transform rounded-full px-4 py-2 font-bold transition duration-300 ease-in-out hover:scale-105">
             <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
             Return to Box Office
           </Button>

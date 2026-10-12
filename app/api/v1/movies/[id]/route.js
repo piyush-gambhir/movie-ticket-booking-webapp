@@ -11,7 +11,8 @@ import {
   deleteMovieSchema,
 } from "@/lib/zod/movie";
 
-export async function GET(request, { params }) {
+export async function GET(request, props) {
+  const params = await props.params;
   try {
     const parsedParams = getMovieSchema.parse(params);
     const movie = await db
@@ -36,7 +37,8 @@ export async function GET(request, { params }) {
   }
 }
 
-export async function PUT(request, { params }) {
+export async function PUT(request, props) {
+  const params = await props.params;
   try {
     const body = await request.json();
     const validatedData = updateMovieSchema.parse(body);
@@ -63,7 +65,8 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(request, props) {
+  const params = await props.params;
   try {
     const parsedParams = deleteMovieSchema.parse(params);
     const deletedMovie = await db

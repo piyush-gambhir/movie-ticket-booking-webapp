@@ -42,15 +42,15 @@ export default function Home({ moviesData }) {
               key={movie?.id}
               className="basis-4/5 pl-2 md:basis-2/3 md:pl-4 lg:basis-1/2"
             >
-              <div className="relative aspect-[21/9] overflow-hidden rounded-lg">
+              <div className="relative aspect-21/9 overflow-hidden rounded-lg">
                 <Image
                   src={movie?.backdropPath}
                   alt={movie?.title}
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent">
+                  <div className="absolute right-0 bottom-0 left-0 p-4 md:p-6">
                     <h2 className="mb-2 text-xl font-bold text-white md:text-3xl">
                       {movie?.title}
                     </h2>
@@ -66,10 +66,10 @@ export default function Home({ moviesData }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background">
+        <CarouselPrevious className="bg-background/80 hover:bg-background absolute top-1/2 left-4 -translate-y-1/2">
           <ChevronLeft className="h-6 w-6 text-gray-800" />
         </CarouselPrevious>
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background">
+        <CarouselNext className="bg-background/80 hover:bg-background absolute top-1/2 right-4 -translate-y-1/2">
           <ChevronRight className="h-6 w-6 text-gray-800" />
         </CarouselNext>
       </Carousel>

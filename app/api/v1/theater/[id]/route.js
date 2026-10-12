@@ -9,7 +9,8 @@ import {
   deleteTheaterSchema,
 } from "@/lib/zod/theater";
 
-export async function GET(request, { params }) {
+export async function GET(request, props) {
+  const params = await props.params;
   try {
     const parsedParams = theaterSchema.parse(params); // Validate params using Zod
     const theater = await db
@@ -28,7 +29,7 @@ export async function GET(request, { params }) {
     console.error("Failed to fetch theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(
@@ -37,7 +38,8 @@ export async function GET(request, { params }) {
     );
   }
 }
-export async function PUT(request, { params }) {
+export async function PUT(request, props) {
+  const params = await props.params;
   try {
     const body = await request.json();
     const validatedData = updateTheaterSchema.parse(body); // Validate body using Zod
@@ -59,7 +61,7 @@ export async function PUT(request, { params }) {
     console.error("Failed to update theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(
@@ -69,7 +71,8 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(request, props) {
+  const params = await props.params;
   try {
     const parsedParams = deleteTheaterSchema.parse(params); // Validate params using Zod
 
@@ -88,7 +91,7 @@ export async function DELETE(request, { params }) {
     console.error("Failed to delete theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(

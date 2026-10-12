@@ -59,7 +59,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return user;
         } catch (error) {
           if (error instanceof z.ZodError) {
-            throw new Error(error.errors[0].message);
+            throw new Error(error.issues[0].message);
           }
           throw new Error("Invalid credentials");
         }

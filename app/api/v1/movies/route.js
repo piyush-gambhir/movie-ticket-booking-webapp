@@ -89,7 +89,7 @@ export async function GET(request) {
   } catch (error) {
     console.error("Error in GET handler:", error);
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -111,7 +111,7 @@ export async function POST(request) {
     return NextResponse.json(newMovie);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

@@ -75,7 +75,8 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(request, props) {
+  const params = await props.params;
   if (!getServerSession()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

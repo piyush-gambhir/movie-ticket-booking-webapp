@@ -1,11 +1,11 @@
-FROM node:20-slim AS base
+FROM node:24.21.0-slim AS base
 
 FROM base AS builder
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN corepack enable && corepack prepare pnpm@12.11.2 --activate
 RUN pnpm install
 COPY . .
 

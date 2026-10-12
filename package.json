@@ -19,7 +19,7 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",
     "@faker-js/faker": "^10.6.0",
-    "@hookform/resolvers": "^3.10.0",
+    "@hookform/resolvers": "^5.9.1",
     "@lottiefiles/react-lottie-player": "^3.6.0",
     "@neondatabase/serverless": "^1.2.0",
     "@next/env": "^14.2.35",

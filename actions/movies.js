@@ -53,7 +53,7 @@ export async function getMovies({
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -108,7 +108,7 @@ export async function addMovie({ movieData }) {
     return { success: true, data: newMovie };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -145,7 +145,7 @@ export async function updateMovie({ movieData }) {
     return { success: true, data: updatedMovie };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }
@@ -178,7 +178,7 @@ export async function deleteMovie({ movieId }) {
     return { success: true, message: message };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors };
+      return { success: false, error: error.issues };
     }
     return { success: false, error: error.message };
   }

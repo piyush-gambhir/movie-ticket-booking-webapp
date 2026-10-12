@@ -28,7 +28,7 @@ export async function GET(request, { params }) {
     console.error("Failed to fetch theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(
@@ -59,7 +59,7 @@ export async function PUT(request, { params }) {
     console.error("Failed to update theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(
@@ -88,7 +88,7 @@ export async function DELETE(request, { params }) {
     console.error("Failed to delete theater:", error);
 
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
 
     return NextResponse.json(

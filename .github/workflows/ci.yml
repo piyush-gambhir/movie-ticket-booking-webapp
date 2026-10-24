@@ -24,16 +24,11 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: "24.22.1"
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm test:drizzle-security
+      - run: pnpm audit --audit-level low
       - run: pnpm run lint
-      - run: pnpm run build
-        env:
-          DRIZZLE_DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
-          SKIP_ENV_VALIDATION: "1"
-          TYPESENSE_API_KEY: "dummy"
-          TYPESENSE_HOST: "localhost"
-          TYPESENSE_PORT: "8108"
-          TYPESENSE_PROTOCOL: "http"
+      - run: pnpm run build:ci

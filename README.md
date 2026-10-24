@@ -28,18 +28,23 @@ QuickNix is a movie booking web app built for the StarHack hackathon. It leverag
 
 ## Setup Instructions
 
+Use Node.js 24.22.1 and the repository's declared package manager, pnpm 12.11.2.
+`pnpm-lock.yaml` is the supported reproducible dependency graph used by CI. The
+obsolete Bun binary lockfile has been retired; Bun installation is not supported
+for this repository.
+
 1. **Clone the repository**:
    git clone https://github.com/your-repo/quicknix.git
    cd quicknix
 
 2. **Install dependencies**:
-   pnpm install
+   corepack pnpm install --frozen-lockfile
 
 3. **Run the development server**:
-   pnpm run dev
+   corepack pnpm run dev
 
 4. **Environment Variables**:
-   - The `.env` file is included in the source code package. There should be no issues setting up the environment.
+   - Configure local environment values using `.example.env` or `.env.deploy.example`. Actual environment files are not committed.
 
 ## Known Issues
 

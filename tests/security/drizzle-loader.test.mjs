@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import {
+  cpSync,
+  existsSync,
+  symlinkSync,
   mkdtempSync,
   readFileSync,
   readdirSync,
@@ -79,6 +82,49 @@ test("offline generation retains TypeScript enum and schema-loader behavior", ()
         .digest("hex"),
       "4cbff2d7322bd63485a72c36954030c4206b3a68c32d33fd8c5d13d94765fc45",
     );
+  } finally {
+    rmSync(temporary, { recursive: true, force: true });
+  }
+});
+
+// Exercise the repository's real default config without loader environment workarounds.
+test("the default Drizzle command resolves application imports and emits reservation SQL", () => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "drizzle-default-"));
+  try {
+    for (const name of ["package.json", "drizzle.config.js", "envConfig.js"]) {
+      cpSync(path.join(root, name), path.join(temporary, name));
+    }
+    cpSync(
+      path.join(root, "lib/db/schema"),
+      path.join(temporary, "lib/db/schema"),
+      { recursive: true },
+    );
+    symlinkSync(
+      path.join(root, "node_modules"),
+      path.join(temporary, "node_modules"),
+      process.platform === "win32" ? "junction" : "dir",
+    );
+    const env = {
+      ...process.env,
+      DRIZZLE_DATABASE_URL: "postgresql://fixture:fixture@127.0.0.1:1/fixture",
+    };
+    delete env.TSX_TSCONFIG_PATH;
+    const run = spawnSync(process.execPath, [binary, "generate"], {
+      cwd: temporary,
+      env,
+      encoding: "utf8",
+      timeout: 30_000,
+    });
+    assert.equal(run.status, 0, run.stdout + run.stderr);
+    const migrations = path.join(temporary, "lib/db/migrations");
+    assert.ok(existsSync(migrations), run.stdout + run.stderr);
+    const sqlFiles = readdirSync(migrations).filter((file) =>
+      file.endsWith(".sql"),
+    );
+    assert.equal(sqlFiles.length, 1, run.stdout + run.stderr);
+    const sql = readFileSync(path.join(migrations, sqlFiles[0]), "utf8");
+    assert.match(sql, /CREATE TABLE "reservation"/);
+    assert.match(sql, /REFERENCES "public"\."user"/);
   } finally {
     rmSync(temporary, { recursive: true, force: true });
   }

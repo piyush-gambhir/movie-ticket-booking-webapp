@@ -15,7 +15,8 @@
     "db:studio": "drizzle-kit studio",
     "db:seed": "node lib/db/seed.js",
     "db:sync": "pnpm run db:generate && pnpm run db:migrate && pnpm run db:push",
-    "build:ci": "node scripts/build-ci.mjs"
+    "build:ci": "node scripts/build-ci.mjs",
+    "test:drizzle-security": "node --test tests/security/drizzle-loader.test.mjs"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",

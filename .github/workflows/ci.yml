@@ -28,5 +28,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm test:drizzle-security
+      - run: pnpm audit --audit-level low
       - run: pnpm run lint
       - run: pnpm run build:ci

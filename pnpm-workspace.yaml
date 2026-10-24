@@ -17,3 +17,8 @@ minimumReleaseAgeExclude:
   - eslint-config-next@16.4.3
   - next@16.4.3
   - "@next/bundle-analyzer@16.4.3"
+
+overrides:
+  # Drizzle Kit 0.31.11 bundles tsx and never imports the old loader.
+  # test:drizzle-security verifies the exact CLI and offline SQL generation.
+  "drizzle-kit@0.31.11>@esbuild-kit/esm-loader": "-"

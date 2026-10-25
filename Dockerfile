@@ -12,7 +12,19 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN pnpm run build
+ARG NEXT_PUBLIC_APP_URL=http://127.0.0.1:3001
+ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+# Synthetic build-only values; runtime credentials must be supplied separately.
+RUN AUTH_SECRET=container-build-only-not-a-real-secret \
+    AUTH_GOOGLE_ID=container-build-only-google-id \
+    AUTH_GOOGLE_SECRET=container-build-only-google-secret \
+    RESEND_API_KEY=re_container_build_only_not_a_real_key \
+    DRIZZLE_DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build \
+    TMDB_API_KEY=container-build-only-not-a-real-key \
+    TYPESENSE_HOST=127.0.0.1 TYPESENSE_PORT=8108 TYPESENSE_PROTOCOL=http \
+    TYPESENSE_API_KEY=container-build-only-not-a-real-key \
+    GOOGLE_TAG_MANAGER_ID=GTM-CONTAINER-BUILD \
+    pnpm run build
 
 FROM base AS runner
 WORKDIR /app
@@ -37,4 +49,5 @@ EXPOSE 3001
 
 ENV PORT=3001
 
-CMD HOSTNAME='0.0.0.0' node server.js
+ENV HOSTNAME=0.0.0.0
+CMD ["node", "server.js"]

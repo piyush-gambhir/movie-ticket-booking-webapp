@@ -205,7 +205,11 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  deepmerge@>=4.2.0 <=4.3.1: 4.3.1
   drizzle-kit@0.31.11>@esbuild-kit/esm-loader: '-'
+
+patchedDependencies:
+  deepmerge@4.3.1: a502f744ddf4e378b546e9aa607bb91b859bece527fdea5b90266633479b65c6
 
 importers:
 
@@ -5294,7 +5298,7 @@ snapshots:
 
   deep-is@0.1.4: {}
 
-  deepmerge@4.3.1: {}
+  deepmerge@4.3.1(patch_hash=a502f744ddf4e378b546e9aa607bb91b859bece527fdea5b90266633479b65c6): {}
 
   define-data-property@1.1.4:
     dependencies:
@@ -5922,7 +5926,7 @@ snapshots:
   html-to-text@9.0.5:
     dependencies:
       '@selderee/plugin-htmlparser2': 0.11.0
-      deepmerge: 4.3.1
+      deepmerge: 4.3.1(patch_hash=a502f744ddf4e378b546e9aa607bb91b859bece527fdea5b90266633479b65c6)
       dom-serializer: 2.0.0
       htmlparser2: 8.0.2
       selderee: 0.11.0

@@ -5,6 +5,7 @@ FROM base AS builder
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY patches ./patches
 RUN npm install --global --allow-scripts=pnpm pnpm@12.15.0
 RUN pnpm install --frozen-lockfile
 COPY . .

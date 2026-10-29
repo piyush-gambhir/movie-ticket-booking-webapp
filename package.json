@@ -16,7 +16,9 @@
     "db:seed": "node lib/db/seed.js",
     "db:sync": "pnpm run db:generate && pnpm run db:migrate && pnpm run db:push",
     "build:ci": "node scripts/build-ci.mjs",
-    "test:drizzle-security": "node --test tests/security/drizzle-loader.test.mjs"
+    "test:drizzle-security": "node --test tests/security/drizzle-loader.test.mjs",
+    "bundle:analyze": "next analyze --output",
+    "bundle:export": "next analyze export"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",

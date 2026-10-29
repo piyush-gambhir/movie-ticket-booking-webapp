@@ -28,7 +28,7 @@ QuickNix is a movie booking web app built for the StarHack hackathon. It leverag
 
 ## Setup Instructions
 
-Use Node.js 26.12.1 for local development and pnpm 12.15.0. Node 24.22.1 remains supported for Vercel hosting.
+Use Node.js 26.13.0 for local development and pnpm 12.15.0. Vercel selects Node 26 through the explicit `26.x` engine range.
 `pnpm-lock.yaml` is the supported reproducible dependency graph used by CI. The
 obsolete Bun binary lockfile has been retired; Bun installation is not supported
 for this repository.

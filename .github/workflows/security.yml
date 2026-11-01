@@ -57,7 +57,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: node scripts/check-deepmerge-patch.mjs
-      - run: pnpm audit --audit-level low
+      - run: node scripts/audit-dependencies.mjs . pnpm
   security:
     name: Security checks
     if: always()

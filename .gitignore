@@ -49,3 +49,6 @@ next-env.d.ts
 
 # db migrations 
 /lib/db/migrations
+
+# Local bundle graph exports
+/.bundle-analysis/

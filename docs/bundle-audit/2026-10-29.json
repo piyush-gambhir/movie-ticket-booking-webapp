@@ -1,0 +1,848 @@
+{
+  "date": "2026-10-29",
+  "repository": "piyush-gambhir/movie-ticket-booking-webapp",
+  "base": "release",
+  "base_sha": "871a21c239c618c44835346d97e292f008cca675",
+  "mode": "audit",
+  "publication_blocker": null,
+  "apps": [
+    {
+      "path": ".",
+      "declared_next": "16.4.3",
+      "installed_next": "16.4.3",
+      "snapshot": "audit-20261029-baseline",
+      "graph_sha256": "38a8057592f8548db8f8f26d24464b37936b1ad5edd5cc5e8b44079e0b3857de",
+      "error": null,
+      "analysis": {
+        "meta": {
+          "type": "meta",
+          "schema_version": 1,
+          "snapshot_name": "audit-20261029-baseline",
+          "module_index_hash": "c0e1c6bc5c76a899",
+          "route_count": 25,
+          "selected_routes": 25
+        },
+        "record_counts": {
+          "meta": 1,
+          "module": 3421,
+          "route": 25,
+          "output": 4393,
+          "part": 22598,
+          "group": 415
+        },
+        "metric": "Sum of attributed compressed bytes for JavaScript outputs with [client-fs] provenance; includes deferred outputs and is not measured transfer or initial-load size.",
+        "unique_client_js_compressed_attribution": 497682,
+        "route_stats": [
+          {
+            "route": "/admin",
+            "client_js_compressed_attribution": 409273,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 21,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/profile",
+            "client_js_compressed_attribution": 367509,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 19,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/signin",
+            "client_js_compressed_attribution": 340098,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/signup",
+            "client_js_compressed_attribution": 337602,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/movies",
+            "client_js_compressed_attribution": 335731,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 19,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/",
+            "client_js_compressed_attribution": 334506,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/movies/[id]",
+            "client_js_compressed_attribution": 334075,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/payment",
+            "client_js_compressed_attribution": 326804,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/cinemas",
+            "client_js_compressed_attribution": 324837,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/buytickets",
+            "client_js_compressed_attribution": 324101,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 18,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/booking",
+            "client_js_compressed_attribution": 323340,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 17,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/offers",
+            "client_js_compressed_attribution": 323340,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 17,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/signout",
+            "client_js_compressed_attribution": 276501,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 14,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/_not-found",
+            "client_js_compressed_attribution": 273597,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 13,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/forgot-password",
+            "client_js_compressed_attribution": 273597,
+            "bootstrap_js_compressed_attribution": 164085,
+            "client_js_files": 13,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/auth/[...nextauth]",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/movies/[id]",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/theater/[id]",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/user/[userEmail]",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/movies",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/theater",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/api/v1/user",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/favicon.ico",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/robots.txt",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          },
+          {
+            "route": "/sitemap.xml",
+            "client_js_compressed_attribution": 0,
+            "bootstrap_js_compressed_attribution": 0,
+            "client_js_files": 0,
+            "entries_coverage": "exact",
+            "groups_coverage": "exact"
+          }
+        ],
+        "top_sources": [
+          {
+            "source": "node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.production.js",
+            "compressed_attribution": 63931,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/build/polyfills/polyfill-nomodule.js",
+            "compressed_attribution": 39434,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/recoil/es/index.js",
+            "compressed_attribution": 22080,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/react-hook-form/dist/index.esm.mjs",
+            "compressed_attribution": 13266,
+            "routes": ["/signin", "/signup"]
+          },
+          {
+            "source": "node_modules/zod/v4/core/schemas.js",
+            "compressed_attribution": 8981,
+            "routes": ["/admin", "/signin", "/signup"]
+          },
+          {
+            "source": "node_modules/@radix-ui/react-scroll-area/dist/index.mjs",
+            "compressed_attribution": 8595,
+            "routes": ["/movies/[id]", "/profile"]
+          },
+          {
+            "source": "node_modules/tailwind-merge/dist/bundle-mjs.mjs",
+            "compressed_attribution": 8422,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.production.js",
+            "compressed_attribution": 7780,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/embla-carousel/esm/embla-carousel.esm.js",
+            "compressed_attribution": 6763,
+            "routes": ["/"]
+          },
+          {
+            "source": "node_modules/@radix-ui/react-select/dist/index.mjs",
+            "compressed_attribution": 6637,
+            "routes": ["/movies"]
+          },
+          {
+            "source": "node_modules/next/dist/client/components/segment-cache/cache.js",
+            "compressed_attribution": 6396,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/client/app-dir/link.js",
+            "compressed_attribution": 6345,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/zod/v4/core/util.js",
+            "compressed_attribution": 4721,
+            "routes": ["/admin", "/signin", "/signup"]
+          },
+          {
+            "source": "node_modules/@radix-ui/react-menu/dist/index.mjs",
+            "compressed_attribution": 4376,
+            "routes": [
+              "/",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/shared/lib/utils.js",
+            "compressed_attribution": 4300,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/shared/lib/get-img-props.js",
+            "compressed_attribution": 4216,
+            "routes": [
+              "/",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/client/components/render-tree.js",
+            "compressed_attribution": 3996,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/@radix-ui/react-toast/dist/index.mjs",
+            "compressed_attribution": 3970,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/next/dist/client/components/segment-cache/scheduler.js",
+            "compressed_attribution": 3968,
+            "routes": [
+              "/",
+              "/_not-found",
+              "/admin",
+              "/booking",
+              "/buytickets",
+              "/cinemas",
+              "/forgot-password",
+              "/movies",
+              "/movies/[id]",
+              "/offers",
+              "/payment",
+              "/profile",
+              "/signin",
+              "/signout",
+              "/signup"
+            ]
+          },
+          {
+            "source": "node_modules/zod/v4/classic/schemas.js",
+            "compressed_attribution": 3382,
+            "routes": ["/admin", "/signin", "/signup"]
+          }
+        ],
+        "top_packages": [
+          ["next", 237906],
+          ["(application)", 45563],
+          ["zod", 33845],
+          ["recoil", 22080],
+          ["react-day-picker", 19441],
+          ["react-hook-form", 13266],
+          ["lucide-react", 12113],
+          ["date-fns", 10444],
+          ["@radix-ui/react-scroll-area", 8595],
+          ["tailwind-merge", 8422],
+          ["embla-carousel", 6763],
+          ["@radix-ui/react-select", 6637],
+          ["@radix-ui/react-menu", 4376],
+          ["@radix-ui/react-toast", 3970],
+          ["@radix-ui/react-checkbox", 3206]
+        ],
+        "duplicate_browser_versions": {},
+        "graph": {
+          "emitted_members": 264,
+          "sync_edges": 816,
+          "async_edges": 0,
+          "communities": 10,
+          "parameters": "NetworkX Louvain, resolution=1, weight=1 per distinct directed edge/kind before symmetrization, seed=0; seed=1 stability comparison.",
+          "stable_partition_across_seeds": false,
+          "ranked_communities": [
+            {
+              "community": 8,
+              "modules": 41,
+              "unambiguous_compressed_attribution": 102425,
+              "largest_packages": [
+                ["next", 105225],
+                ["@swc/helpers", 76]
+              ]
+            },
+            {
+              "community": 5,
+              "modules": 72,
+              "unambiguous_compressed_attribution": 76140,
+              "largest_packages": [
+                ["(application)", 26461],
+                ["recoil", 22080],
+                ["lucide-react", 4407],
+                ["next", 3423]
+              ]
+            },
+            {
+              "community": 6,
+              "modules": 49,
+              "unambiguous_compressed_attribution": 52063,
+              "largest_packages": [["next", 52063]]
+            },
+            {
+              "community": 9,
+              "modules": 54,
+              "unambiguous_compressed_attribution": 24569,
+              "largest_packages": [
+                ["next", 24248],
+                ["@swc/helpers", 321]
+              ]
+            },
+            {
+              "community": 2,
+              "modules": 29,
+              "unambiguous_compressed_attribution": 16363,
+              "largest_packages": [["next", 16363]]
+            },
+            {
+              "community": 0,
+              "modules": 15,
+              "unambiguous_compressed_attribution": 5317,
+              "largest_packages": [
+                ["third-party-capital", 2797],
+                ["@next/third-parties", 2494],
+                ["next", 26]
+              ]
+            },
+            {
+              "community": 4,
+              "modules": 1,
+              "unambiguous_compressed_attribution": 686,
+              "largest_packages": [["aria-hidden", 686]]
+            },
+            {
+              "community": 3,
+              "modules": 1,
+              "unambiguous_compressed_attribution": 390,
+              "largest_packages": [["@radix-ui/number", 390]]
+            }
+          ],
+          "unmapped_or_ambiguous_compressed_attribution": 219594
+        },
+        "candidates": [
+          {
+            "package": "zod",
+            "unique_compressed_attribution": 33845,
+            "route": "/admin",
+            "roots": [
+              "[project]/app/(app)/error.js [app-client] (ecmascript)",
+              "[project]/components/admin/Movies.jsx [app-client] (ecmascript)",
+              "[project]/components/admin/Theaters.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Footer.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Header.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/tabs.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/toaster.jsx [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/ThirdPartyScriptEmbed.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/ga.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/gtm.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-next-turbopack.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/builtin/global-error.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-page.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-segment.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/layout-router.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/render-from-template-context.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/script.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/metadata/generate/icon-mark.js [app-client] (ecmascript)",
+              "[project]/providers/NextAuthSessionProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/RecoilRootProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/ThemeProvider.jsx [app-client] (ecmascript)"
+            ],
+            "targets": [
+              "[project]/node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/external.js [app-client] (ecmascript) <export * as z .object>"
+            ],
+            "missing_roots": 0,
+            "status": "provisional; render optionality and browser timing are unverified",
+            "cut": [],
+            "cut_status": "No synchronous root-to-target path in the known emitted subgraph; inspect async or render-dependent triggers."
+          },
+          {
+            "package": "recoil",
+            "unique_compressed_attribution": 22080,
+            "route": "/admin",
+            "roots": [
+              "[project]/app/(app)/error.js [app-client] (ecmascript)",
+              "[project]/components/admin/Movies.jsx [app-client] (ecmascript)",
+              "[project]/components/admin/Theaters.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Footer.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Header.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/tabs.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/toaster.jsx [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/ThirdPartyScriptEmbed.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/ga.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/gtm.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-next-turbopack.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/builtin/global-error.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-page.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-segment.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/layout-router.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/render-from-template-context.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/script.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/metadata/generate/icon-mark.js [app-client] (ecmascript)",
+              "[project]/providers/NextAuthSessionProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/RecoilRootProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/ThemeProvider.jsx [app-client] (ecmascript)"
+            ],
+            "targets": [
+              "[project]/node_modules/.pnpm/recoil@0.7.7_react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/recoil/es/index.js [app-client] (ecmascript)"
+            ],
+            "missing_roots": 0,
+            "status": "provisional; render optionality and browser timing are unverified",
+            "cut": [],
+            "cut_capacity": 1728,
+            "cut_status": "No editable cut with bootstrap, client-reference roots, layouts and dependency internals protected."
+          },
+          {
+            "package": "react-day-picker",
+            "unique_compressed_attribution": 19441,
+            "route": null,
+            "roots": [],
+            "targets": [],
+            "missing_roots": 0,
+            "status": "attribution-only investigation; exact emitted identity membership is unavailable",
+            "cut": [],
+            "cut_status": "A directed cut cannot be established for this attributed contributor because no exact emitted module membership joins to it."
+          },
+          {
+            "package": "react-hook-form",
+            "unique_compressed_attribution": 13266,
+            "route": null,
+            "roots": [],
+            "targets": [],
+            "missing_roots": 0,
+            "status": "attribution-only investigation; exact emitted identity membership is unavailable",
+            "cut": [],
+            "cut_status": "A directed cut cannot be established for this attributed contributor because no exact emitted module membership joins to it."
+          },
+          {
+            "package": "lucide-react",
+            "unique_compressed_attribution": 12113,
+            "route": "/admin",
+            "roots": [
+              "[project]/app/(app)/error.js [app-client] (ecmascript)",
+              "[project]/components/admin/Movies.jsx [app-client] (ecmascript)",
+              "[project]/components/admin/Theaters.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Footer.jsx [app-client] (ecmascript)",
+              "[project]/components/app/Header.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/tabs.jsx [app-client] (ecmascript)",
+              "[project]/components/ui/toaster.jsx [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/ThirdPartyScriptEmbed.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/ga.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/@next+third-parties@16.4.3_next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-d_7eadf61ce03c0c2bfe6f2cf8aa21e90a/node_modules/@next/third-parties/dist/google/gtm.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/app-next-turbopack.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/builtin/global-error.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-page.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/client-segment.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/layout-router.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/components/render-from-template-context.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/client/script.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/next@16.4.3_@babel+core@7.29.7_supports-color@7.2.0__react-dom@19.3.1_react@19.3.1__react@19.3.1/node_modules/next/dist/lib/metadata/generate/icon-mark.js [app-client] (ecmascript)",
+              "[project]/providers/NextAuthSessionProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/RecoilRootProvider.jsx [app-client] (ecmascript)",
+              "[project]/providers/ThemeProvider.jsx [app-client] (ecmascript)"
+            ],
+            "targets": [
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/Icon.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/createLucideIcon.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/calendar.mjs [app-client] (ecmascript)",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/clapperboard.mjs [app-client] (ecmascript) <export default as Clapperboard>",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/loader-circle.mjs [app-client] (ecmascript) <export default as Loader2>",
+              "[project]/node_modules/.pnpm/lucide-react@1.61.0_react@19.3.1/node_modules/lucide-react/dist/esm/icons/pencil.mjs [app-client] (ecmascript) <export default as Pencil>"
+            ],
+            "missing_roots": 0,
+            "status": "provisional; render optionality and browser timing are unverified",
+            "cut": [],
+            "cut_capacity": 6912,
+            "cut_status": "No editable cut with bootstrap, client-reference roots, layouts and dependency internals protected."
+          }
+        ],
+        "client_dependency_scan": [
+          {
+            "source": "components/auth/SignInWithPasswordForm.jsx",
+            "emitted_identities": [
+              "[project]/components/auth/SignInWithPasswordForm.jsx [app-client] (ecmascript)"
+            ],
+            "routes": ["/signin"],
+            "compressed_attribution": 621,
+            "disposition": "unverified",
+            "reason": "Ownership and surviving implementation need manual inspection; naming and module membership do not establish a leak.",
+            "server_action_source": false
+          },
+          {
+            "source": "components/auth/SignOut.jsx",
+            "emitted_identities": [
+              "[project]/components/auth/SignOut.jsx [app-client] (ecmascript)"
+            ],
+            "routes": ["/signout"],
+            "compressed_attribution": 614,
+            "disposition": "unverified",
+            "reason": "Ownership and surviving implementation need manual inspection; naming and module membership do not establish a leak.",
+            "server_action_source": false
+          },
+          {
+            "source": "components/auth/SignUpWithPasswordForm.jsx",
+            "emitted_identities": [
+              "[project]/components/auth/SignUpWithPasswordForm.jsx [app-client] (ecmascript)"
+            ],
+            "routes": ["/signup"],
+            "compressed_attribution": 488,
+            "disposition": "unverified",
+            "reason": "Ownership and surviving implementation need manual inspection; naming and module membership do not establish a leak.",
+            "server_action_source": false
+          }
+        ],
+        "possible_server_only_leaks": [],
+        "suppressed_matches": [],
+        "coverage": {
+          "unsupported_client_js_outputs": [],
+          "unknown_route_entries": [],
+          "unknown_route_groups": [],
+          "groups_without_joined_trigger": 0,
+          "sync_dependencies_absent_from_emitted_subgraph": 74,
+          "attribution_conflicts": 0,
+          "action_like_identities_requiring_source_mapping": 2,
+          "limits": [
+            "All minimum cuts are provisional; optionality, module side effects and actual mount/preload timing have not been behavior-tested.",
+            "Source-to-output attribution is distinct from exact module identity; ambiguous community bytes are excluded from community ranking.",
+            "No production browser requests, cold-navigation timing, interaction timing, Web Vitals or emitted implementation contents were inspected.",
+            "Potential Server Action stubs and ownership matches remain unverified until source-to-reference mapping and emitted contents are inspected."
+          ]
+        }
+      }
+    }
+  ],
+  "verification": [
+    {
+      "app": ".",
+      "command": "pnpm run lint",
+      "exit_code": 0,
+      "seconds": 3.6
+    },
+    {
+      "app": "(repository)",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "seconds": 0.0
+    }
+  ]
+}

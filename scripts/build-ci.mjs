@@ -1,6 +1,5 @@
 import { spawnSync } from "node:child_process";
 
-// Synthetic build fixtures only. This command never supplies production credentials.
 const buildEnv = {
   AUTH_SECRET: "ci-build-only-not-a-production-secret",
   AUTH_GOOGLE_ID: "ci-build-only-google-client",

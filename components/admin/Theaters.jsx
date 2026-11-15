@@ -45,7 +45,7 @@ import {
   deleteTheater,
 } from "@/actions/theaters";
 
-import AddTheaterForm from "@/components/admin/AddTheaterForm"; // Ensure this path is correct
+import AddTheaterForm from "@/components/admin/AddTheaterForm";
 
 export default function Theaters() {
   const [theaters, setTheaters] = useState([]);
@@ -129,9 +129,8 @@ export default function Theaters() {
     setSorting(newSort);
   };
 
-  // Pagination logic with ellipsis
   const paginationRange = useMemo(() => {
-    const totalPagesToShow = 5; // Number of pagination items to show
+    const totalPagesToShow = 5;
     const totalPages = pagination.totalPages;
     const currentPage = page;
 
@@ -139,8 +138,8 @@ export default function Theaters() {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    const startPages = [1, 2]; // First pages to always show
-    const endPages = [totalPages - 1, totalPages]; // Last pages to always show
+    const startPages = [1, 2];
+    const endPages = [totalPages - 1, totalPages];
     const middleRange = [];
 
     if (currentPage > 2 && currentPage < totalPages - 1) {
@@ -151,14 +150,13 @@ export default function Theaters() {
       middleRange.push(currentPage - 1, currentPage);
     }
 
-    // Merge everything together with ellipsis
     return [
       ...startPages,
       currentPage > 3 ? "..." : null,
       ...middleRange,
       currentPage < totalPages - 2 ? "..." : null,
       ...endPages,
-    ].filter(Boolean); // Remove null values
+    ].filter(Boolean);
   }, [pagination.totalPages, page]);
 
   return (

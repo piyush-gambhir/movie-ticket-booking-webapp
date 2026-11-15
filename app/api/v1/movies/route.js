@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ilike, asc, desc, count, and, ne } from "drizzle-orm"; // import 'and' and 'ne' for new conditions
+import { ilike, asc, desc, count, and, ne } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -23,7 +23,6 @@ export async function GET(request) {
 
     const offset = (queryParams.page - 1) * queryParams.limit;
 
-    // Determine sort order and field
     const sortOrder = queryParams.order === "asc" ? asc : desc;
     let sortField;
     if (queryParams.sort === "title") {
@@ -34,19 +33,16 @@ export async function GET(request) {
       sortField = movies.createdAt;
     }
 
-    // Build query condition
     let whereCondition;
     if (queryParams.query) {
       whereCondition = ilike(movies.title, `%${queryParams.query}%`);
     }
 
-    // Add additional conditions for backdropPath and posterPath
     const pathCondition = and(
       ne(movies.backdropPath, "https://image.tmdb.org/t/p/w500/None"),
       ne(movies.posterPath, "https://image.tmdb.org/t/p/w500/None"),
     );
 
-    // Combine conditions if query is present
     if (whereCondition) {
       whereCondition = and(whereCondition, pathCondition);
     } else {
@@ -61,7 +57,6 @@ export async function GET(request) {
     const totalCount = parseInt(totalMoviesResult[0].count, 10);
     const totalPages = Math.ceil(totalCount / queryParams.limit);
 
-    // Fetch movies with pagination and sorting
     const allMovies = await db
       .select()
       .from(movies)

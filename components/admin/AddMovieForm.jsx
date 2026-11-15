@@ -24,7 +24,7 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
     backdropPath: "",
     posterPath: "",
     overview: "",
-    releaseDate: "", // Initialize as an empty string for DatePicker compatibility
+    releaseDate: "",
     popularity: "",
     adult: false,
     mediaType: "",
@@ -36,8 +36,8 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // State for loading status
-  const [apiError, setApiError] = useState(null); // State for API errors
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
     if (movie) {
@@ -45,7 +45,7 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
         ...movie,
         releaseDate: movie.releaseDate
           ? new Date(movie.releaseDate).toISOString()
-          : "", // Convert date to ISO string
+          : "",
       });
     }
   }, [movie]);
@@ -68,7 +68,6 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
     setMovieData((prev) => ({ ...prev, [name]: parsedValue }));
     validateField(name, parsedValue);
 
-    // If the imdbId field changes, fetch movie data
     if (name === "imdbId" && value) {
       setIsLoading(true);
       setApiError(null);
@@ -137,7 +136,7 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
       if (result.success) {
         onSuccess();
         setMovieData({
-          id: "", // Reset id after successful submission
+          id: "",
           imdbId: "",
           title: "",
           originalTitle: "",
@@ -248,7 +247,6 @@ export default function AddMovieForm({ movie = null, onClose, onSuccess }) {
             />
             <Label htmlFor="adult">Adult Content</Label>
           </div>
-          {/* {apiError && <div className="text-red-500">{apiError}</div>} */}
           {formError && (
             <div className="text-red-500">
               {Array.isArray(formError)

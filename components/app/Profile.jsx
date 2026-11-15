@@ -75,7 +75,6 @@ export default function Profile({ userDetails }) {
                     className="col-span-2"
                   />
                 </div>
-                {/* Date of Birth */}
                 <div className="grid grid-cols-5">
                   <Label htmlFor="dob" className="flex items-center text-sm">
                     Date of Birth

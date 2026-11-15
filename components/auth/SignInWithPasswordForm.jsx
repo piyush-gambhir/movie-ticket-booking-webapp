@@ -42,17 +42,15 @@ export default function SignInWithPasswordForm() {
       toast({
         title: "Error",
         description: "Incorrect password",
-        variant: "destructive", // You can customize this according to your toast system
+        variant: "destructive",
       });
     } else if (result?.error === "Incorrect provider!") {
-      // Show toast for 404 response
       toast({
         title: "Error",
         description: "User does not exist",
-        variant: "destructive", // You can customize this according to your toast system
+        variant: "destructive",
       });
     } else if (result?.error) {
-      // Show toast for any other non-200 response
       toast({
         title: "Error",
         description: "An unexpected error occurred",

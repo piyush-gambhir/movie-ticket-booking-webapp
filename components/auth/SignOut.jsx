@@ -11,18 +11,17 @@ export default function Component() {
   const logoutButtonRef = useRef(null);
 
   const handleLogout = async () => {
-    await logout(); // Wait for the logout to complete
-    router.push("/signin"); // Redirect after logout is complete
+    await logout();
+    router.push("/signin");
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (logoutButtonRef.current) {
-        logoutButtonRef.current.click(); // Trigger the logout button click after 2 seconds
+        logoutButtonRef.current.click();
       }
-    }, 2000); // 2000 milliseconds = 2 seconds
+    }, 2000);
 
-    // Cleanup the timeout if the component is unmounted or if the effect is re-run
     return () => clearTimeout(timer);
   }, [router]);
 

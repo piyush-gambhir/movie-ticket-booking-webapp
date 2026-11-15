@@ -101,14 +101,12 @@ export default function Movies() {
   return (
     <main className="container mx-auto flex min-h-screen px-4 py-8">
       <section className="flex-1">
-        {/* Use the separated SearchFilters component */}
         <SearchFilters
           filters={filters}
           setFilters={setFilters}
           handleSearchChange={handleSearchChange}
         />
 
-        {/* Movies List */}
         {loading ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {Array.from({ length: moviesPerPage }).map((_, i) => (
@@ -129,7 +127,6 @@ export default function Movies() {
               ))}
             </div>
 
-            {/* Pagination */}
             <Pagination className="mt-4">
               <PaginationContent>
                 <PaginationItem>

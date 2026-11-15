@@ -13,8 +13,6 @@ const legacyPackageIntegrity =
   "sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==";
 const legacySourceSha256 =
   "746849f267c4868a53729225bd85c7dccd387712136fb305fcc0a3eadd4a3d9d";
-// Upstream identifies the 10.2.6 preprocessing code; reviewed database ranges also flag v3.
-// https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249
 const installedManager = existsSync(path.join(cwd, "node_modules/.pnpm"))
   ? "pnpm"
   : "npm";

@@ -110,9 +110,8 @@ export default function Movies() {
     setSorting(newSorting);
   };
 
-  // Pagination logic with ellipsis
   const paginationRange = useMemo(() => {
-    const totalPagesToShow = 5; // Number of pagination items to show
+    const totalPagesToShow = 5;
     const totalPages = pagination.totalPages;
     const currentPage = page;
 
@@ -120,8 +119,8 @@ export default function Movies() {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    const startPages = [1, 2]; // First pages to always show
-    const endPages = [totalPages - 1, totalPages]; // Last pages to always show
+    const startPages = [1, 2];
+    const endPages = [totalPages - 1, totalPages];
     const middleRange = [];
 
     if (currentPage > 2 && currentPage < totalPages - 1) {
@@ -132,14 +131,13 @@ export default function Movies() {
       middleRange.push(currentPage - 1, currentPage);
     }
 
-    // Merge everything together with ellipsis
     return [
       ...startPages,
       currentPage > 3 ? "..." : null,
       ...middleRange,
       currentPage < totalPages - 2 ? "..." : null,
       ...endPages,
-    ].filter(Boolean); // Remove null values
+    ].filter(Boolean);
   }, [pagination.totalPages, page]);
 
   return (
@@ -206,7 +204,6 @@ export default function Movies() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* Button to open the dialog for adding a new movie */}
           <Dialog open={isMovieDialogOpen} onOpenChange={setIsMovieDialogOpen}>
             <Button
               variant="outline"
@@ -226,7 +223,6 @@ export default function Movies() {
                     : "Enter the details of the new movie."}
                 </DialogDescription>
               </DialogHeader>
-              {/* Include the AddMovieForm here */}
               <AddMovieForm
                 movie={editingMovie}
                 onClose={() => setIsMovieDialogOpen(false)}

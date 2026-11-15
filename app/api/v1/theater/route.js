@@ -74,12 +74,12 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const theaterData = addTheaterSchema.parse(body); // Validate request body using zod schema
+    const theaterData = addTheaterSchema.parse(body);
 
     const [newTheater] = await db
-      .insert(theaters) // Insert the validated data into the database
+      .insert(theaters)
       .values(theaterData)
-      .returning() // Return the inserted data
+      .returning()
       .execute();
 
     return NextResponse.json(newTheater);

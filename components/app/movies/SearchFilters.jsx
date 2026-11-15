@@ -14,7 +14,6 @@ import SearchBar from "@/components/common/SearchBar";
 const SearchFilters = ({ filters, setFilters, handleSearchChange }) => {
   return (
     <div className="mb-8 flex flex-col gap-4 md:flex-row">
-      {/* Use the SearchBar component */}
       <SearchBar
         placeholder="Search Movies"
         searchValue={filters.search}

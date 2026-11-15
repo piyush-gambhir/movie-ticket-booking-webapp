@@ -31,7 +31,7 @@ export default function BookingConfirmationEmail({
             <Container className="mx-auto my-[40px] w-[465px] rounded-lg bg-white p-[20px] shadow-lg">
               <Section className="mb-[32px] mt-[32px] text-center">
                 <Img
-                  src="https://example.com/logo.png" // Replace with your logo URL
+                  src="https://example.com/logo.png"
                   alt="Cinema Logo"
                   className="mx-auto mb-4 w-[100px]"
                 />

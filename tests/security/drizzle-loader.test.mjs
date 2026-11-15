@@ -87,7 +87,6 @@ test("offline generation retains TypeScript enum and schema-loader behavior", ()
   }
 });
 
-// Exercise the repository's real default config without loader environment workarounds.
 test("the default Drizzle command resolves application imports and emits reservation SQL", () => {
   const temporary = mkdtempSync(path.join(tmpdir(), "drizzle-default-"));
   try {

@@ -12,7 +12,7 @@ import {
 export async function GET(request, props) {
   const params = await props.params;
   try {
-    const parsedParams = theaterSchema.parse(params); // Validate params using Zod
+    const parsedParams = theaterSchema.parse(params);
     const theater = await db
       .select()
       .from(theaters)
@@ -42,8 +42,8 @@ export async function PUT(request, props) {
   const params = await props.params;
   try {
     const body = await request.json();
-    const validatedData = updateTheaterSchema.parse(body); // Validate body using Zod
-    const parsedParams = theaterSchema.parse(params); // Validate params using Zod
+    const validatedData = updateTheaterSchema.parse(body);
+    const parsedParams = theaterSchema.parse(params);
 
     const updatedtheater = await db
       .update(theaters)
@@ -74,7 +74,7 @@ export async function PUT(request, props) {
 export async function DELETE(request, props) {
   const params = await props.params;
   try {
-    const parsedParams = deleteTheaterSchema.parse(params); // Validate params using Zod
+    const parsedParams = deleteTheaterSchema.parse(params);
 
     const deletedtheater = await db
       .delete(theaters)

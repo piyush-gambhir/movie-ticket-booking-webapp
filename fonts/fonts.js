@@ -1,6 +1,5 @@
 import localFont from "next/font/local";
 
-// Google Fonts
 import { Inter as InterFont } from "next/font/google";
 import { Poppins as PoppinsFont } from "next/font/google";
 

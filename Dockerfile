@@ -15,7 +15,6 @@ ENV NODE_ENV=production
 
 ARG NEXT_PUBLIC_APP_URL=http://127.0.0.1:3001
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-# Synthetic build-only values; runtime credentials must be supplied separately.
 RUN AUTH_SECRET=container-build-only-not-a-real-secret \
     AUTH_GOOGLE_ID=container-build-only-google-id \
     AUTH_GOOGLE_SECRET=container-build-only-google-secret \
